@@ -1,0 +1,255 @@
+% !TEX root = ../../proyect.tex
+
+\section{Casos de uso}\label{sec:casos-uso}
+En esta sección, se presentan los casos de uso para la plataforma en línea de venta de productos. Estos casos de uso se han diseñado para permitir a los usuarios comprar y vender productos de forma eficiente y efectiva. Los casos de uso proporcionan una descripción detallada de las diferentes funcionalidades de la plataforma, y se han organizado en función del tipo de usuario que interactúa con el sistema.
+
+Estos casos de uso describen los diferentes escenarios de interacción entre los usuarios (actores) y el sistema. Cada caso de uso describe una acción específica que el usuario puede realizar y cómo el sistema responde a ella, incluyendo los pasos que el usuario debe seguir para completar la acción, y se detallan posibles excepciones y flujos alternativos que el sistema puede tomar.
+
+\begin{enumerate}[CU-1:]
+\item{Registro de usuario}
+\begin{itemize}
+	\item \textbf{Actor:} Usuario
+	\item \textbf{Descripción:} Permite al usuario crear una cuenta en la aplicación.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El usuario accede a la página de registro.
+		\item El sistema muestra un formulario de registro con los campos obligatorios: nombre, correo electrónico y contraseña.
+		\item El usuario rellena el formulario con sus datos personales y confirma su registro.
+		\item El sistema verifica que los datos sean válidos, crea una cuenta para el usuario y lo redirige a la página de inicio de sesión
+	\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item[4a.] Si el correo electrónico ya está registrado, el sistema muestra un mensaje de error y pide al usuario que proporcione otro correo electrónico.
+		\end{itemize}
+\end{itemize}
+
+\item{Inicio de sesión}
+\begin{itemize}
+	\item \textbf{Actor:} Usuario registrado
+	\item \textbf{Descripción:} Permite al usuario iniciar sesión en su cuenta de la aplicación.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El usuario accede a la página de inicio de sesión.
+		\item El sistema muestra un formulario para introducir el correo electrónico y la contraseña del usuario.
+		\item El usuario introduce su correo electrónico y su contraseña.
+		\item El sistema comprueba que los datos son correctos, concede el acceso a la cuenta del usuario y lo redirige a su página de inicio.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item[4a.] Si los datos son incorrectos, el sistema muestra un mensaje de error y solicita que se vuelvan a introducir.
+		\end{itemize}
+	\item \textbf{Excepciones:}
+		\begin{itemize}
+		\item[4a.] Si el sistema detecta algún problema técnico, muestra un mensaje de error y pide al usuario que lo intente más tarde.
+		\end{itemize}
+\end{itemize}
+
+\item{Edición de perfil de usuario}
+\begin{itemize}
+	\item \textbf{Actor:} Usuario
+	\item \textbf{Descripción:} Permite al usuario editar su información personal y de contacto.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El usuario accede a la sección de \textquote{Editar perfil} en su cuenta.
+		\item El sistema muestra la información personal y de contacto del usuario.
+		\item El usuario edita los campos que desee modificar y confirma los cambios.
+		\item El sistema actualiza la información del perfil del usuario.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item[3a.] Si el usuario desea cancelar la edición de su perfil, puede seleccionar la opción de \textquote{Cancelar} y el sistema no realizará cambios en la información del perfil.
+		\item[4a.] Si el usuario no completa algún campo obligatorio, el sistema mostrará un mensaje de error y no permitirá la confirmación de los cambios hasta que el campo sea completado correctamente.
+		\end{itemize}
+\end{itemize}
+
+\item{Gestión de usuarios}
+\begin{itemize}
+	\item \textbf{Actor:} Administrador
+	\item \textbf{Descripción:} Permite al administrador gestionar la información de los usuarios registrados en la plataforma.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El administrador accede a la sección de gestión de usuarios.
+		\item El sistema muestra una lista de todos los usuarios registrados en la plataforma.
+		\item El administrador selecciona un usuario de la lista para ver su información.
+		\item El sistema muestra la información del usuario seleccionado, incluyendo su nombre, correo electrónico, fecha de registro y historial de compras en el caso de un consumidor (o ventas y productos publicados en el caso de un productor).
+		\item El administrador tiene la opción de editar la información del usuario o de eliminarlo de la plataforma.
+		\item El sistema actualiza la lista de usuarios después de realizar cualquier cambio.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+	\begin{itemize}
+		\item [5a.] Si se elige bloquear o eliminar un usuario, el sistema solicita confirmación antes de llevar a cabo la acción.
+		\end{itemize}
+\end{itemize}
+
+\item{Gestión de productos}
+\begin{itemize}
+	\item \textbf{Actor:} Administrador
+	\item \textbf{Descripción:} Permite al administrador gestionar los productos de la plataforma.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El administrador accede al panel de administración de productos.
+		\item El sistema muestra la lista de productos disponibles en la plataforma.
+		\item El administrador puede modificar información de los productos existentes (nombre, descripción, precio, categoría, etc.) o eliminarlos de la plataforma.
+		\item El administrador confirma la acción correspondiente.
+		\item El sistema registra la acción y muestra un mensaje de confirmación.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item [2a.] Si no hay productos registrados en la plataforma, el sistema muestra un mensaje indicando que no hay productos disponibles.
+		\item [3a.] Si el administrador intenta realizar una acción no permitida (por ejemplo, eliminar un producto que tiene órdenes pendientes o que no le pertenece), el sistema muestra un mensaje de error indicando que la acción no es posible.
+		\end{itemize}
+\end{itemize}
+
+\item{Gestión de pedidos}
+\begin{itemize}
+	\item \textbf{Actor:} Administrador
+	\item \textbf{Descripción:} Permite al administrador gestionar los pedidos recibidos en la plataforma.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El administrador accede a la sección de pedidos en su panel de control.
+		\item El sistema muestra una lista con los pedidos recibidos, indicando el número de pedido, la fecha, el comprador y el estado del pedido.
+		\item El administrador selecciona el pedido que desea gestionar.
+		\item El sistema muestra la información detallada del pedido, incluyendo el consumidor y el productor involucrados, los productos comprados y el método de pago utilizado.
+		\item El administrador modifica los detalles del pedido según corresponda.
+		\item El sistema actualiza el estado del pedido en la base de datos y notifica al comprador del cambio de estado.
+		\item El administrador puede añadir notas internas al pedido si lo considera necesario.
+		\item El sistema registra las notas internas en la base de datos y las presenta en la sección correspondiente del pedido.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item [5a.] Si el administrador detecta algún problema con el pago o la dirección de envío, puede contactar al comprador para solicitar la corrección de los datos.
+		\item [6a.] Si el administrador cancela el pedido, el sistema emite un reembolso al comprador si corresponde y actualiza el inventario de los productos en la base de datos.
+		\end{itemize}
+\end{itemize}
+
+\item{Búsqueda de productos}
+\begin{itemize}
+	\item \textbf{Actor:} Consumidor
+	\item \textbf{Descripción:} Permite al consumidor buscar productos en la aplicación.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El consumidor accede a la página de búsqueda de productos.
+		\item El sistema presenta una barra de búsqueda.
+		\item El consumidor introduce el término de búsqueda.
+		\item El sistema muestra una lista de palabras clave que coinciden con el término de búsqueda
+		\item El consumidor hace clic en el botón \textquote{buscar}
+		\item El sistema muestra una lista de productos incluyendo su primera imagen, título, precio y distancia
+		\item El consumidor hace clic en el producto para acceder a su página de información.
+		\item El sistema muestra la información del producto, incluyendo sus imágenes, título, descripción, categoría, precio, disponibilidad y ubicación.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+	\begin{enumerate}
+		\item[6a.] Si no se encuentra ningún producto que coincida con el término de búsqueda, el sistema muestra un mensaje indicando que no se han encontrado resultados.
+		\end{enumerate}
+	\item \textbf{Excepciones:}
+	\begin{enumerate}
+		\item[6a.] Si el término de búsqueda introducido por el consumidor contiene caracteres no alfanuméricos, el sistema muestra un mensaje de error indicando que el término de búsqueda es incorrecto.
+		\end{enumerate}
+\end{itemize}
+
+\item{Publicación de productos}
+\begin{itemize}
+	\item \textbf{Actor:} Productor
+	\item \textbf{Descripción:} Permite al productor publicar un nuevo producto en la plataforma.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El productor accede al apartado de \textquote{Publicar producto} en su perfil.
+		\item El sistema muestra un formulario con los campos para introducir la información del producto: imágenes, título, descripción, categoría, precio, disponibilidad y ubicación
+		\item El productor completa los campos y envía el formulario.
+		\item El sistema valida la información y registra el nuevo producto en la base de datos y muestra una confirmación de que el producto ha sido publicado con éxito.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item[2a.] El productor decide no publicar el producto: Si el productor decide no publicar el producto, puede cancelar el proceso y volver al menú principal.
+		\item[3a.] El formulario contiene errores: Si el formulario contiene errores o información incompleta, el sistema muestra una notificación de error y pide al productor que corrija los campos necesarios.
+		\end{itemize}
+\end{itemize}
+
+\item{Compra de productos}
+\begin{itemize}
+	\item \textbf{Actor:} Consumidor
+	\item \textbf{Descripción:} Permite al consumidor adquirir un producto específico.
+	\item \textbf{Precondiciones:} El consumidor ha iniciado sesión y ha buscado y seleccionado el producto que desea adquirir.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El consumidor accede a la página del producto que desea adquirir.
+		\item El sistema muestra la información del producto, incluyendo su precio y la opción de adquirirlo.
+		\item El consumidor selecciona la opción de adquirir el producto.
+		\item El sistema muestra al consumidor la confirmación de la compra y el precio total.
+		\item El consumidor confirma la compra.
+		\item El sistema registra la compra, la hace llegar al productor correspondiente y presenta al consumidor la información de contacto del productor.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+	\begin{enumerate}
+		\item [2a.] Si el sistema detecta que el producto ya ha sido vendido, se mostrará un mensaje de que el producto ya no está disponible.
+		\item [4a.] Si el consumidor cambia de opinión o detecta un error, puede cancelar la compra en lugar de confirmarla.
+		\item [7a.] Si el consumidor no puede contactar con el productor en un plazo después de la compra, se le dará la opción de cancelar la compra y recibir un reembolso en el caso de haber pagado mediante la aplicación
+		\end{enumerate}
+	\item \textbf{Excepciones:}
+	\begin{enumerate}
+		\item[5a.] Si el consumidor no ha iniciado sesión, se le solicitará que inicie sesión antes de poder adquirir el producto.
+		\item[6a.] Si el sistema detecta que el consumidor ha proporcionado información de pago incorrecta o no válida, se le solicitará que proporcione información de pago correcta antes de poder confirmar la compra.
+		\end{enumerate}
+\end{itemize}
+
+\item{Cancelación de pedido}
+\begin{itemize}
+\item \textbf{Actor:} Consumidor
+\item \textbf{Descripción:} Permite al consumidor cancelar un pedido antes de su confirmación por parte del productor
+\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+\item El consumidor accede a su historial de pedidos.
+\item El sistema muestra una lista de los pedidos realizados por el consumidor.
+\item El consumidor selecciona el pedido que desea cancelar.
+\item El sistema muestra la información del pedido, incluyendo la opción de cancelarlo.
+\item El consumidor confirma la cancelación del pedido.
+\item El sistema cancela el pedido y emite un reembolso al consumidor si corresponde.
+\end{enumerate}
+\item \textbf{Flujos alternativos:}
+\begin{enumerate}
+\item [4a.] Si el pedido ya ha sido confirmado por el productor, el sistema notifica al consumidor que no es posible cancelar el pedido.
+\item [5a.] Si se ha realizado un pago con tarjeta de crédito, el reembolso puede tardar varios días hábiles en aparecer en la cuenta del consumidor.
+\end{enumerate}
+\end{itemize}
+
+\item{Consulta de pedidos recibidos}
+\begin{itemize}
+	\item \textbf{Actor:} Productor
+	\item \textbf{Descripción:} Permite al productor ver los pedidos recibidos por sus productos.
+	\item \textbf{Flujo básico de eventos:}
+	\begin{enumerate}[1:]
+		\item El productor accede a la sección de \textquote{Pedidos recibidos} en su perfil de usuario.
+		\item El sistema muestra una lista de los pedidos recibidos, ordenados por fecha de solicitud.
+		\item El productor selecciona un pedido de la lista para ver más detalles.
+		\item El sistema muestra la información del pedido, incluyendo el nombre y la dirección del comprador, los productos solicitados, el precio total y el estado actual del pedido.
+		\end{enumerate}
+	\item \textbf{Flujos alternativos:}
+		\begin{itemize}
+		\item [2a.] Si el productor no tiene ningún pedido recibido, el sistema muestra un mensaje indicando que no hay pedidos disponibles.
+		\item [3a.] Si el productor selecciona un pedido que ha sido cancelado o finalizado, el sistema muestra la información del pedido pero indica que ya no puede ser modificado.
+		\end{itemize}
+\end{itemize}
+
+\item{Rechazo de pedido}
+\begin{itemize}
+\item \textbf{Actor:} Productor
+\item \textbf{Descripción:} Permite al productor rechazar un pedido recibido del consumidor.
+\item \textbf{Precondición:} El productor ha recibido un pedido del consumidor.
+\item \textbf{Flujo básico de eventos:}
+\begin{enumerate}[1:]
+\item El productor accede a la lista de pedidos recibidos.
+\item El sistema muestra la lista de pedidos recibidos.
+\item El productor selecciona el pedido que desea rechazar.
+\item El sistema muestra la información del pedido, incluyendo la opción de rechazarlo.
+\item El productor selecciona la opción de rechazar el pedido.
+\item El sistema muestra un mensaje de confirmación para rechazar el pedido y da la posibilidad al productor de añadir una nota para el consumidor.
+\item El productor confirma la acción.
+\item El sistema registra la cancelación del pedido y notifica al comprador.
+\end{enumerate}
+\item \textbf{Flujos alternativos:}
+\begin{itemize}
+\item[5a.] Si el pedido ya ha sido entregado al comprador, el productor no podrá rechazarlo.
+\item[7a.] Si el productor decide no rechazar el pedido, éste sigue su curso.
+\end{itemize}
+\end{itemize}
+\end{enumerate}

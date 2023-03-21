@@ -1,0 +1,428 @@
+% !TEX root = ../../proyect.tex
+
+\chapter{Introducción}\label{cap1} % TODO: Como llamo a este capítulo?
+
+\section{Introducción al problema}\label{sec:intro}
+
+% Buscar información más reciente (2021, 2022)
+Los productores locales son fundamentales para el desarrollo de la economía local, sin embargo, suelen enfrentarse a importantes dificultades a la hora de vender sus productos. Según el Índice de Precios Percibidos (IPP)\footnote{https://www.mapa.gob.es/es/estadistica/temas/estadisticas-agrarias/economia/precios-percibidos-pagados-salarios/precios-percibidos-por-los-agricultores-y-ganaderos}, los precios que reciben los agricultores y ganaderos por sus productos han bajado un 2,6\% en 2020 respecto al año anterior, mientras que la diferencia entre lo que pagan los consumidores y lo que reciben los productores por los alimentos se ha multiplicado por 5,4 en enero de 2020 según el Índice de Precios en Origen y Destino (IPOD)\footnote{https://www.ocu.org/alimentacion/alimentos/noticias/consumidores-produccion-agraria}. Esto se suma al hecho de que muchos productores locales no tengan acceso a los recursos y la infraestructura necesarios para comercializar sus productos con eficacia.
+
+Otro problema creciente es la complejidad de las cadenas de transporte globalizadas, que las hace especialmente vulnerables a interrupciones como las que hemos visto durante la pandemia, lo que puede tener graves consecuencias para el suministro de alimentos (véase la figura \ref{fig:cadena-tradicional}). En este contexto es importante apoyar la producción local de alimentos y fomentar su distribución a través de canales directos y eficientes.
+
+Además de esto, el sector alimentario español ha tenido que afrontar el reciente aumento de los costes de producción y transporte y las prácticas desleales de venta a pérdidas\footnote{https://revistas.eleconomista.es/agro/2021/octubre/paso-adelante-contra-la-venta-a-perdidas-sera-el-definitivo-XG9282642}, siendo indispensable apostar por la innovación y la digitalización para mejorar su competitividad y sostenibilidad\footnote{https://www.eleconomista.es/retail-consumo/noticias/12164072/02/23/La-alimentacion-achaca-la-inflacion-a-los-costes-y-apuesta-por-innovar.html}. Todo esto hace evidente el problema al que se enfrentan los productores locales y la necesidad de encontrar soluciones para ellos.
+
+\figura{0.75}{img/solucion/cadena-tradicional}{Diagrama de la cadena de suministro tradicional en la agricultura}{fig:cadena-tradicional}{}
+
+El objetivo de este proyecto es analizar las dificultades a las que se enfrentan los productores locales en la venta de sus productos y proponer soluciones para mejorar la situación. Para ello, se ha llevado a cabo un análisis de las soluciones ya existentes para lidiar con este problema. Los resultados de este análisis muestran la necesidad de una mayor promoción de los productos locales y el desarrollo de una plataforma en línea para conectar a los productores con  potenciales consumidores. En este trabajo se presentan soluciones concretas y viables para mejorar la comercialización de productos locales y apoyar a los productores en su lucha por una economía más justa y sostenible mediante la creación de una plataforma web de compraventa.
+
+\section{Descripción de la solución propuesta}\label{sec:descripcion-solucion}
+
+Para abordar los retos a los que se enfrentan los productores locales, proponemos una plataforma que facilite la venta directa de sus productos a los consumidores, sin necesidad de intermediarios (véase la figura \ref{fig:cadena-directa}). Esta plataforma ofrecerá una forma sencilla, cómoda y eficaz de conectar a productores y compradores, lo que permitirá a los productores obtener un precio justo por sus productos y llegar a nuevos clientes, y a los compradores acceder a una mayor variedad de productos locales. 
+
+\figura{0.75}{img/solucion/cadena-moderna}{Diagrama de nuestra propuesta de cadena de suministro directa}{fig:cadena-directa}{}
+
+La aplicación empleará tecnologías web adaptables a dispositivos móviles y se centrará en la sencillez y facilidad de uso, lo que permitirá a los productores poner a la venta sus productos y a los compradores examinarlos y comprarlos con facilidad. La plataforma permitirá a los productores locales conectar con compradores potenciales de su zona, lo que ayudará a garantizar que los productores puedan obtener un precio justo por sus productos.
+
+En conjunto, nuestra plataforma ofrecerá una solución integral que ayudará a los productores locales a vender sus productos directamente a los consumidores y a hacer crecer sus negocios. En resumen, nuestra aplicación tiene como objetivo crear una conexión directa entre productores y compradores, facilitando la venta de productos locales y fomentando la economía local.
+
+\section{Estudio de trabajo relacionado}\label{sec:estudio-trabajo-relacionado}
+
+Vamos a realizar un análisis de otras plataformas que permiten a los productores locales vender sus productos directamente a los consumidores o, en su defecto, aplicaciones similares de compraventa. Este análisis nos ayudará a entender las principales características y funcionalidades de estos productos, así como a identificar cualquier vacío en el mercado que nuestra aplicación pueda cubrir. Al conocer lo que ya existe, podemos asegurarnos de que nuestra aplicación ofrezca un valor único a los usuarios y se diferencie de la competencia. Además, podemos utilizar esta información para diseñar y desarrollar nuestra aplicación, asegurándonos de que ofrece una experiencia de usuario atractiva y satisface las necesidades de los productores y compradores locales.
+
+En una primera búsqueda encontramos que se nos ofrecen hasta decenas de aplicaciones móviles cuya finalidad es, en esencia, la misma que la de nuestro proyecto: que los productores locales puedan vender sus productos sin intermediarios. La mayoría de ellas surgen y operan únicamente en países en los que predominan en su mayoría las zonas rurales, como son India o Perú. Otras surgen en España, principalmente con la finalidad de exportar productos agroalimentarios al resto de Europa. Realizaremos un estudio de todas ellas repasando su trayectoria, las funcionalidades que ofrecen y los puntos fuertes y débiles de cada una de ellas.
+
+\subsection{Naranjas Del Carmen}
+
+Naranjas del Carmen es una plataforma web que lleva el nombre del mismo huerto donde se produce la cosecha en Valencia. El modelo de negocio principal es el del cultivo de naranjas ecológicas bajo demanda. Para poder pedir naranjas es necesario adoptar un naranjo de su huerta.
+
+La web está estructurada en un diseño de una sola página y se divide en secciones. Primero se explica cómo funciona la plataforma, y a continuación se disponen una serie de \textquote{banners} que destacan cada uno de los productos principales que se ofertan, con enlaces para ir a comprar cada uno de ellos (véase la figura \ref{fig:delcarmen-landing}).
+
+\figura{0.75}{img/naranjas-del-carmen/landing}{Página de inicio de Naranjas del Carmen}{fig:delcarmen-landing}{}
+
+\subsubsection{Historia}
+
+Los orígenes\footnote{https://www.naranjasdelcarmen.com/emprendedores} de la página web se remontan al año 2011, cuando los hermanos valencianos Gabriel (28) y Gonzalo (25) Úrculo deciden dejar sus trabajos para recuperar el huerto de su abuelo durante la crisis económica, que hasta entonces había estado abandonado. Tras conseguir ponerlo en marcha con la ayuda de un crédito y su familia, y tras una primera cosecha poco fructífera a causa de los intermediarios, los hermanos lanzan la plataforma web \textquote{Naranjas del Carmen}. La finalidad de la web es la de vender los productos que cultivaban en su huerto de Valencia, Naranjas Del Carmen. En la primera temporada de la web envían naranjas a 150 hogares, principalmente familia, amigos y amigos de amigos.
+
+En 2013 se colocan las primeras colmenas de abejas en el huerto. Las abejas polinizan las flores de azahar de sus naranjos y aportan auténtica miel de azahar directa del panal. Los hermanos comienzan también a vender miel, con 500 familias como clientes.
+
+En 2014 comienzan con la producción de aceite de oliva virgen extra ecológico en Altura (Castellón), comienzan a renovar los naranjos arrancando árboles muertos y preparan los terrenos para nuevas plantaciones
+
+En 2015, los hermanos Gabriel y Gonzalo deciden ampliar el negocio, dando empleo a 10 personas más y preparando una zona para una huerta. Cultivan fruta y verdura típicas de la huerta valenciana mediterránea. En este año también surge CrowdFarming, bajo la idea de que los naranjos se vayan plantando por encargo de las familias que les piden naranjas, y a cada naranjo se le cuelga un cartel con el nombre escogido por su dueño.
+
+Para el año 2016 ya hay más de 1000 árboles con dueño. Cada uno de ellos se fotografía una vez al año para que los dueños puedan seguir su evolución. A partir de este momento, la plataforma de CrowdFarming comienza a crecer a buen ritmo: Se inicia la producción en abejas, con más de 200 personas adoptando una colmena en los campos de El Carmen.
+
+En el año 2018 se unen nuevos agricultores a la ya establecida plataforma CrowdFarming, permitiendo a ciudadanos de todo Europa adoptar o plantar árboles de agricultores de cualquier parte del mundo.
+
+Hasta el día de hoy, los fundadores de la plataforma Naranjas del Carmen han estado apostando por el crecimiento de la plataforma hermana, CrowdFarming, más accesible para los consumidores. Naranjas del Carmen sigue operando, subsidiada principalmente por el mantenimiento que pagan los clientes que han adoptado árboles y colmenas en la finca.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Adoptar de un árbol o colmena de la finca para recibir su producción anualmente, siguiendo un modelo de \textquote{suscripción} (véase la figura \ref{fig:delcarmen-landing}).
+
+	\item Comprar cajas de productos de la huerta de El Carmen. Estos engloban productos mediterráneos, cítricos, caquis, tomates, naranjas, miel y un largo etcétera.
+
+	\item El portal dispone de un blog de agricultura y apicultura con artículos periódicos. Esto ayuda a mantener un mejor posicionamiento en buscadores y a atraer potenciales clientes al portal (véase la figura \ref{fig:delcarmen-blog}). El blog sigue un diseño en 3 bloques claramente diferenciados: barra de navegación, artículos en cuadrícula y barra lateral a la derecha.
+
+\end{itemize}
+
+\figura{0.75}{img/naranjas-del-carmen/blog}{Blog de Naranjas del Carmen}{fig:delcarmen-blog}{}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Productos ecológicos y de alta calidad: La plataforma ofrece naranjas, miel y aceite de oliva ecológicos y de alta calidad, cultivados en un huerto tradicional valenciano.
+
+	\item Modelo innovador: La adopción de árboles de Naranjas Del Carmen permite a los consumidores participar en el cultivo y producción de sus propios productos, conociendo así su origen y la forma en que se cultivan e involucrándolos en su desarrollo.
+
+	\item Fomento de la agricultura local: La plataforma apoya la agricultura local y tradicional para ofrecer productos frescos y de calidad.
+
+	\item Conciencia ambiental: Al cultivar productos ecológicos y fomentar la agricultura local, la plataforma también contribuye a una conciencia ambiental y a un futuro más sostenible. Recientemente han reducido considerablemente el uso de plástico en sus productos.
+
+	\item Sentido de comunidad: La plataforma fomenta una comunidad de agricultores y consumidores que comparten una pasión por la agricultura y los productos frescos y naturales.
+
+\end{itemize}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item Inversión inicial: Ese necesario adoptar un árbol o colmena para poder acceder a los productos, lo que puede hacer que la plataforma no esté al alcance de todos los consumidores. No obstante, es posible hacer pedidos de menor cantidad para probar la cosecha antes de adoptar un árbol o colmena.
+
+	\item Requiere compromiso: La adopción de un árbol o colmena requiere un compromiso a largo plazo, lo que puede ser un obstáculo para algunos consumidores. Esencialmente, se convierte en un modelo de suscripción en el que hay que pagar anualmente para recibir la cosecha (véase la figura \ref{fig:delcarmen-adoptar}).
+
+\end{itemize}
+
+\figura{0.75}{img/naranjas-del-carmen/adoptar-naranjo}{Página de adoptar un naranjo en Naranjas del Carmen}{fig:delcarmen-adoptar}{}
+
+\subsection{CrowdFarming}
+
+CrowdFarming es una plataforma web y móvil que permite comprar productos de temporada sin intermediarios, promoviendo una agricultura europea más humana y sostenible. La idea surge de los creadores de plataforma Naranjas del Carmen, con la diferencia de que CrowdFarming evoluciona a un modelo de \textquote{marketplace} en el que no es necesario adoptar un árbol para poder adquirir productos como ocurría en la plataforma hermana.
+
+La web de CrowdFarming también apuesta por un diseño de una sola página. El contenido se divide a lo largo de la página principal en secciones delimitadas por colores: Se muestra una cabecera de tipo \textquote{Hero} con imagen y texto grandes, seguida de maneras de generar impacto en CrowdFarming (véase la figura \ref{fig:crowd-impacto}), una lista de productos disponibles (véase la figura \ref{fig:crowd-productos}), estadísticas de uso de la plataforma y una sección destacada de productores, que ofrece un vistazo rápido a la funcionalidad principal del portal: el mercado de compraventa.
+
+\figura{0.75}{img/crowdfarming/impacto}{Maneras de generar impacto mediante CrowdFarming}{fig:crowd-impacto}{}
+
+\figura{0.75}{img/crowdfarming/productos}{Oferta de productos en CrowdFarming}{fig:crowd-productos}{}
+
+\subsubsection{Historia}
+
+La historia de CrowdFarming se remonta al año 2015. Los hermanos Gabriel y Gonzalo Úrculo, tras el éxito de la plataforma analizada previamente, Naranjas del Carmen, deciden lanzar una plataforma web que permitiera a otros productores locales vender sus productos por internet. Con el tiempo ampliaron su negocio a la producción de miel de azahar y aceite de oliva virgen extra ecológico. La idea de CrowdFarming tuvo una respuesta positiva y rápidamente comenzaron a unirse nuevos agricultores a la plataforma, permitiendo a los ciudadanos de toda Europa poder adoptar árboles del campo para recibir su cosecha o comprar directamente cajas de productos de temporada a los agricultores. Con más de 1000 árboles con dueño y la creciente adopción de colmenas, la plataforma de CrowdFarming ha demostrado ser un modelo de negocio sostenible y comprometido con la agricultura ecológica y local.
+
+Actualmente la plataforma da un espacio de venta a 272 productores de 8 países que venden sus productos directamente al consumidor. Entre todos suman más de 440.000 árboles adoptados y más de 3.680.000 cajas de productos frescos enviadas directamente del agricultor a los consumidores.
+
+Desde la página principal de CrowdFarming se nos da la opción de adoptar un árbol o de comprar una caja de productos de temporada (véase la figura \ref{fig:crowd-impacto}). Esta segunda opción resulta interesante si no tenemos la intención de consumir los productos de forma recurrente o si queremos hacer un primer pedido de prueba para evaluar la calidad de la producción.
+
+% TODO: El enlace no funciona porque tengo que escapar los símbolos de % usando \ y url{} me los incluye en el documento, rompiendo la URL. Buscar alternativa.
+Tal y como reportan en su informe de impacto y transparencia de 2021\footnote{https://common.crowdfarming.com/transparency/es/ES\%20-\%20Informe\%20de\%20Impacto\%20y\%20Transparencia.pdf}, los países que más compran productos de España en la plataforma son Alemania (52,68\%), Francia (8,44\%) y Austria (6,49\%). Con esto podemos identificar que la fuente de ingresos principal de CrowdFarming en la actualidad es la comisión por cada venta, que en su mayoría provienen de países extranjeros.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Adoptar un árbol o colmena de un productor local para recibir su producción anualmente, siguiendo un modelo de \textquote{suscripción} (véase la figura \ref{fig:crowd-impacto}).
+
+	\item Planear compras recurrentes y establecer fechas para recibir las cosechas.
+
+	\item Darse de alta como vendedor en la plataforma.
+
+	\item Comprar productos a agricultores independientes (modelo \textquote{marketplace}).
+
+	\item Opción para empresas: Se paga por empleado, quienes reciben la cosecha en su casa; o como oficina, para recibir paquetes de fruta de temporada en la misma (véase la figura \ref{fig:crowd-empresas}).
+
+	\item La aplicación web también dispone de un blog de agricultura, recetas sostenibles y podcast. Con esto se fomenta el sentimiento de comunidad que promueve la aplicación y también ayuda a mantener un mejor posicionamiento en buscadores y a atraer potenciales clientes al portal (véase la figura \ref{fig:crowd-blog}).
+
+\end{itemize}
+
+\figura{0.75}{img/crowdfarming/empresas}{Planes para empresas de Crowdfarming}{fig:crowd-empresas}{}
+
+\figura{0.75}{img/crowdfarming/blog}{Blog de Crowdfarming}{fig:crowd-blog}{}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Acceso a productos frescos y de calidad: Al comprar directamente de los agricultores, los consumidores tienen acceso a productos frescos y de calidad, cultivados de forma ecológica y sostenible.
+
+	\item Apoyo a la agricultura local: Al comprar a través de CrowdFarming, los consumidores están apoyando a la agricultura local y reduciendo su huella de carbono, ya que los productos no tienen que ser transportados desde lejanas regiones.
+
+	\item Oferta variada de productos: Dado que la plataforma no es centralizada, sino que hay agricultores en varias partes de Europa, es posible ofrecer diferentes tipos de alimentos de temporada (véase la figura \ref{fig:crowd-productos}).
+
+	\item Menos intermediarios: El modelo de negocio de CrowdFarming favorece la ausencia de intermediarios físicos, lo que mejora la calidad de los alimentos cuando llegan al consumidor final y hace más rápida la llegada de los productos a los mismos.
+
+	\item Producción de alimentos más frescos: Al reducir el número de intermediarios también se reduce el tiempo entre que se recolecta la producción y se consume, resultando en alimentos más frescos para el consumidor.
+
+	\item Mayor transparencia en el proceso de producción: Al tener acceso directo a los agricultores, los consumidores pueden conocer mejor la forma en que se producen los productos y estar seguros de su calidad y origen.
+
+	\item Presencia notable en internet: La web y las aplicaciones de Android e iOS tienen una estética cuidada y homogénea, lo que da confianza a los usuarios en la empresa. Además disponen de un equipo de marketing que se encarga de asegurar la presencia de CrowdFarming en redes sociales.
+
+\end{itemize}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item Presencia de intermediarios: Aunque la plataforma haga desaparecer los intermediarios físicos habituales que intervienen un supermercado, se convierte en sí misma en un intermediario que disminuye el rendimiento económico de la cosecha para el agricultor. El agricultor recibe el 50\% del precio de venta base mientras que el resto se divide en transporte (25\%), comisión del servicio (22\%) y comisión de los métodos de pago (3\%)\footnote{https://support.crowdfarming.com/l/es/article/l93g2eb445-transparencia-economica}.
+
+	\item Diferencias de calidad: Al ser una plataforma que une a muchos productores, la calidad de los productos puede variar de un productor a otro, lo que puede generar insatisfacción entre los consumidores.
+
+	\item Costes de envío: El envío directo de los productos frescos desde el agricultor al consumidor puede resultar en costos de envío elevados, especialmente si el agricultor se encuentra muy lejos de una zona urbana.
+
+\end{itemize}
+
+\subsection{Farm To People}
+
+Farm To People es una empresa que tiene como finalidad poner alimentos frescos al alcance de los habitantes de Nueva York. Ofrecen acceso a mercados de agricultores y granjeros para conseguir alimentos sostenibles. Su misión es la de construir un sistema alimentario justo, transparente, sostenible, ético, diverso y seguro. Disponen de una red de más de 150 granjas a menos de 500km de la ciudad de Nueva York y más de 800 productos distintos.
+
+La web de Farm To People sigue una estructura de una sola página con bloques a lo largo de la misma delimitados por colores. Tanto la distribución como el estilo de la web y la paleta de colores empleada son muy similares a los que encontramos en la plataforma CrowdFarming, viendo un patrón claro de similitudes entre las dos plataformas (véase la figura \ref{fig:ftp-landing}).
+
+\figura{0.75}{img/ftp/landing}{Página principal de Farm to People}{fig:ftp-landing}{}
+
+\subsubsection{Historia}
+
+Farm To People\footnote{https://farmtopeople.com/about-us} nació en 2013 de una pasión compartida por padre e hijo por la comida saludable, fruto de pequeños productores que siguen métodos tradicionales.
+
+Su fundador, David Robinov, ha sido un emprendedor en serie desde 1981. Con seis mercados minoristas naturales exitosos en el área de Nueva York también cofundó Organic Brands, LLC y desarrolló la línea de productos Mediterranean Organic. A través de Farm To People, David espera retribuir y apoyar a la próxima generación de pequeños agricultores. Es mentor y socio de su hijo, Michael, quien, después de un breve período en la Escuela de Artes Tisch de la Universidad de Nueva York, decidió seguir su pasión por la comida.
+
+Con las grandes empresas tomando el control de la industria alimentaria, los fundadores David y Michael creen que es más importante que nunca hacer saber a la gente de dónde vienen los alimentos que consumen y quiénes son las personas que los preparan. Lo que buscan conseguir con Farm To People es que una plataforma que pueda ayudar a iniciar esta conversación y brindar negocios transparentes a los consumidores que deseen construir un mejor sistema alimentario.
+
+Desde el comienzo de la pandemia ha tenido lugar un cambio importante en la plataforma, que ha dejado de ofrecer la posibilidad de hacer envíos nacionales para centrarse sólo en el reparto a domicilio en la ciudad de Nueva York.
+
+Recientemente ha abierto en Brooklyn el llamado \textquote{Farm to People Kitchen \& Bar}, que sirve platos de temporada elaborados únicamente con productos de agricultores y granjeros que colaboran con la plataforma.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Solicitar productos habituales mediante una suscripción semanal a los mismos, así como solicitar \textquote{Seasonal Produce Boxes} en diferentes tamaños con productos de temporada
+
+	\item Suscribirse a una lista de correo para recibir noticias sobre productos de temporada, recetas e inspiraciones de cocina
+
+	\item Donar comida a organizaciones que luchan contra el desperdicio de alimentos masivo y la desigualdad
+
+	\item Comprar productos frescos de temporada, productos elaborados o bebidas a modo de compra única
+
+	\item Hasta el día del envío se pueden añadir y eliminar elementos de la cesta. Cuando llegue este día, se procesarán y se cobrarán estos productos.
+
+	\item La plataforma cuenta con un blog de recetas\footnote{https://blog.farmtopeople.com/blogs/recipes-more} donde se plantean ideas y sugerencias en base a los ingredientes que se pueden adquirir en la web. El blog sigue una estructura de cuadrículas con fila de 3 elementos centrados (véase la figura \ref{fig:ftp-recetas}).
+
+\end{itemize}
+
+\figura{0.75}{img/ftp/recetas}{Blog de recetas de Farm To People}{fig:ftp-recetas}{}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Envíos planificados: Es posible saber con antelación el día en el que se entregarán los alimentos
+
+	\item Sistema de referidos: La plataforma ofrece \$20 a aquellos usuarios que inviten a otros amigos a la aplicación, dando a conocer el servicio.
+
+	\item Comidas preparadas: En la web también se pueden comprar platos ya preparados para recalentar, elaborados todos ellos con productos ecológicos (véase la figura \ref{fig:ftp-preparados}).
+
+\end{itemize}
+
+\figura{0.75}{img/ftp/preparados}{Comidas preparadas en Farm To People}{fig:ftp-preparados}{}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item Limitaciones geográficas: El servicio de reparto a domicilio sólo está disponible dentro de la ciudad de Nueva York por lo que actualmente no es posible comprar productos frescos desde otros estados
+	
+	\item Precios elevados: Al ser productos ecológicos y operar únicamente en la ciudad de Nueva York, el precio de los productos es bastante más caro de lo que se encontraría en un supermercado común, haciéndolo menos accesible al público general
+
+\end{itemize}
+
+\subsection{Kusikuy}
+
+Kusikuy es una aplicación móvil que permite la entrega a domicilio de una variedad de productos cosechados por más de 500 familias de agricultores conservacionistas de Cusco, Huancavelica, Puno y Apurímac. Detrás de la iniciativa se encuentra el ministro de Medio Ambiente de Perú, Modesto Montoya. El objetivo de esta iniciativa es hacer llegar a consumidores urbanos los productos nativos cultivados por productores rurales conservacionistas.
+
+La finalidad de la aplicación es la de relacionar a productores y consumidores de productos nativos cultivados por agricultores que viven en zonas altoandinas, haciendo accesibles más de 70 especies nativas (véase la figura \ref{fig:kusikuy-interfaz}).
+
+\figura{0.7}{img/kusikuy/interfaz}{Menú principal y productos a la venta en Kusikuy}{fig:kusikuy-interfaz}{}
+
+\subsubsection{Historia}
+
+La plataforma\footnote{https://www.gob.pe/institucion/minam/noticias/612964-aplicacion-digital-kusikuy-llevara-productos-de-nuestra-agrobiodiversidad-a-los-hogares-peruanos} tiene una trayectoria corta hasta el momento: Se lanzó el 31 de mayo de 2022 con el apoyo del Ministerio del Ambiente, el Ministerio de Desarrollo Agrario y Riego y otras instituciones públicas del Perú. Ha experimentado un crecimiento acelerado, siendo posible descargarla tanto en dispositivos Android como en iOS y acumulando ya más de 50.000 descargas en la tienda de aplicaciones de Google.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Entrega a domicilio: Kusikuy permite a los usuarios comprar productos agrícolas nativos y sostenibles, los cuales son entregados directamente en sus hogares. Esto ayuda a fomentar el consumo de productos locales y la agricultura sostenible.
+
+	\item Compra directa a los agricultores: Kusikuy permite a los agricultores vender directamente sus productos sin intermediarios, lo que mejora sus ingresos y fomenta la agricultura sostenible. La plataforma también ofrece una opción para que los agricultores puedan subir sus productos y administrar su inventario.
+
+	\item Soporte para pagos digitales: Kusikuy ofrece una plataforma de pagos en línea para hacer las transacciones de manera segura y fácil.
+
+	\item Información sobre los productos: La plataforma proporciona información detallada sobre los productos como su origen, variedad, características nutricionales y recetas de cocina. Esto ayuda a educar a los consumidores sobre la importancia de la agricultura sostenible y la diversidad de la gastronomía del país.
+
+	\item Información sobre los agricultores: Kusikuy proporciona información sobre los agricultores que producen los alimentos, lo cual permite a los usuarios conocer las historias de los agricultores, su filosofía de cultivo, y otros detalles relevantes.
+
+	\item Comentarios y calificaciones: Los usuarios pueden dar calificaciones y dejar comentarios sobre los productos y los agricultores que los producen. Esta funcionalidad ayuda a construir la confianza en la plataforma y a fomentar una comunidad de consumidores y productores.
+
+\end{itemize}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Mayor mercado: Permite que los agricultores conservacionistas de zonas altoandinas de Perú accedan a un mercado más amplio, llegando a consumidores urbanos.
+
+	\item Gran variedad: Da acceso a los consumidores de zonas urbanas a más de 70 especies nativas, que de otra manera podrían ser difíciles de encontrar en las ciudades. También es posible comprar productos ya elaborados (véase la figura \ref{fig:kusikuy-interfaz}).
+	
+	\item Agricultura sostenible: Ayuda a conservar de la biodiversidad en la región y apoya a los productores locales, que explotan sus tierras de forma más sostenible que los cultivos a gran escala.
+
+	\item Menos intermediarios: Proporciona un canal de venta directo a los agricultores, evitando a los intermediarios comunes y resultando en una mayor parte del precio de venta que va a parar a los productores.
+
+	\item Interfaz fácil de usar: La aplicación es intuitiva y fácil de usar, lo que la hace accesible para todos los usuarios. Los usuarios pueden navegar por las diferentes categorías, buscar productos específicos y agregarlos a su carrito de compras, haciéndola similar al resto de soluciones de e-commerce.
+
+\end{itemize}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item Plataforma nueva: La plataforma todavía no está muy extendida, lo que podría limitar la cantidad de consumidores y agricultores que participan en ella.
+
+	\item Al alcance de algunos: Es posible que el alcance de la plataforma se limite a un público con un mayor poder adquisitivo y que esté dispuesto a pagar más por productos más exclusivos.
+	
+	\item Transporte poco fiable: Puede ser difícil garantizar la calidad y frescura de los productos entregados a domicilio si la paquetería no es confiable o puede tener retrasos excesivos por problemas de infraestructura en el país. La fecha de entrega aproximada es para dentro de 2 semanas a partir de la compra, por lo que se hace imposible la compraventa de productos perecederos.
+	
+	\item Situación política y económica: El éxito de la plataforma podría depender de factores externos, como el acceso a internet en las zonas rurales o la estabilidad política y económica del país, que actualmente es delicada y que ya ha causado algunos problemas en las operaciones de Kusikuy.
+
+	\item Aplicación poco fiable: En mi caso personal de uso, al acceder a la aplicación tras varios días ha sido necesario borrar los datos de usuario y caché de la misma porque al abrir la aplicación se encontraba permanentemente en la pantalla de carga. Esto puede convertirse en un problema cuando usuarios menos experimentados usen la aplicación.
+
+\end{itemize}
+
+\subsection{Bijak}
+
+Bijak es una plataforma de comercio agrícola que ayuda a los comerciantes de la India a comprar y vender todo tipo de bienes relacionados con la agricultura. Cuenta con una comunidad de mas de 30.000 comerciantes clasificados en base a datos de sus transacciones realizadas, y cuenta también con los precios diarios de más de 2.000 mercados (mandis). La aplicación opera en 28 estados/territorios de unión de la India y cuenta con el apoyo del ministerio de ciencia y tecnología del gobierno.
+
+La página web presenta un diseño de una sola página con una barra de navegación con pestañas que se desplazan hasta cada una de las secciones mediante \textquote{anchors}. Lo primero que vemos al entrar a la web es una cabecera de tipo \textquote{Hero} con imagen y texto grandes (véase la figura \ref{fig:bijak-landing}), seguida por las categorías que se destacan en la barra de navegación superior: funcionalidades, testimonios de usuarios, estadísticas de uso, cobertura en medios de comunicación y empresas colaboradoras.
+
+\figura{0.75}{img/bijak/landing}{Página principal de Bijak}{fig:bijak-landing}{}
+
+\subsubsection{Historia}
+
+Bijak\footnote{https://www.bijak.in/careers/} se funda en Abril de 2019, y un mes después se lanza el producto mínimo viable para una región y un único producto de comercialización. En septiembre-octubre del mismo año, la aplicación recaudó 2,5 millones de dólares en una ronda de financiación inicial y lanzó la segunda versión de la aplicación.
+
+En enero del 2020, Bijak ya tenía presencia en 16 estados y 200 regiones de la India, con un total de 47 productos disponibles. En abril del mismo año consiguen recaudar 12 millones de dólares para mejorar las capacidades tecnológicas de la aplicación.
+
+Recientemente, en enero de 2022, la aplicación ha recaudado otros 19 millones de dólares, elevando la financiación total hasta el momento de 33,5 millones de dólares. Actualmente hay 110 millones de agricultores que dependen de comerciantes de productos básicos para subsistir, sector que supone el 14 por ciento del PIB del país.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Acceso a una red de compradores y proveedores agrícolas: Bijak conecta a los comerciantes agrícolas de la India con una red de compradores y proveedores. Los usuarios pueden buscar y encontrar a otros comerciantes agrícolas, lo que les permite ampliar su red y encontrar nuevas oportunidades de negocio
+
+	\item Acceso a información de mercado: Bijak proporciona información diaria de más de 2.000 mercados (mandis) en toda la India, lo que permite a los usuarios obtener información sobre los precios y la demanda de los productos agrícolas en diferentes regiones.
+
+	\item Acceso a detalles de las transacciones realizadas y almacenamiento de los documentos pertinentes en el dispositivo móvil: La aplicación permite a los usuarios almacenar y acceder a los detalles de las transacciones realizadas. Esto les permite llevar un registro de sus transacciones pasadas y recuperar información importante, como los precios de compra y venta, en cualquier momento; así como generar facturas (véase la figura \ref{fig:bijak-facturas}).
+
+	\item Oferta de préstamos en tiempo real a los compradores para poder pagar al contado a los proveedores: Bijak ofrece préstamos en tiempo real a los compradores para que puedan pagar al contado a los proveedores y cerrar la transacción de manera inmediata. Esto acelera el proceso de comercio agrícola y ayuda a los usuarios a cerrar acuerdos más rápidamente.
+
+	\item Recibir notificaciones relevantes y enviar recordatorios de pagos a otros usuarios: La aplicación envía notificaciones relevantes a los usuarios, como recordatorios de pagos pendientes, fechas de entrega y actualizaciones de precios. Los usuarios también pueden enviar recordatorios de pago a otros usuarios para asegurarse de que se cumplan los plazos.
+
+	\item Hacer pagos rápidos y seguros a otros usuarios: Bijak permite a los usuarios hacer pagos rápidos y seguros a otros usuarios. Los usuarios pueden realizar pagos en línea o mediante la banca móvil, lo que facilita el proceso de comercio agrícola.
+
+	\item Valorar al resto de usuarios de la comunidad mediante un sistema de reseñas: La aplicación cuenta con un sistema de reseñas que permite a los usuarios valorar a otros miembros de la comunidad. Esto ayuda a los usuarios a tomar decisiones informadas sobre con quién hacer negocios y también fomenta un comportamiento positivo dentro de la comunidad.
+
+\end{itemize}
+
+\figura{0.4}{img/bijak/facturas}{Generador de facturas electrónicas de Bijak}{fig:bijak-facturas}{}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Conectividad: La aplicación conecta a los productores agrícolas con otros compradores y vendedores en toda la India, lo que les permite expandir su alcance más allá de los mandis locales.
+
+	\item Transparencia: La plataforma proporciona precios diarios de más de 2.000 mercados) en 28 de los estados y territorios de la unión de la India, lo que permite a los comerciantes tomar decisiones informadas sobre cuándo y cuánto comprar y vender su mercancía.
+
+	\item Seguridad: La aplicación permite enviar y recibir pagos de forma segura y ofrece garantías al comprador. Tanto compradores como vendedores están sujetos a un sistema de reseñas por parte de otros usuarios que hayan tenido interacciones comerciales con ellos.
+
+	\item Comunidad: Bijak cuenta con una comunidad de más de 30.000 comerciantes, brindando así a los usuarios una amplia red de contactos y oportunidades comerciales.
+
+	\item Aplicación multiplataforma: Bijak dispone de aplicaciones tanto para Android como para iOS, por lo que es accesible a la inmensa mayoría de usuarios que dispongan de un teléfono inteligente.
+
+	\item Apoyo del gobierno: Bijak cuenta con el apoyo del Ministerio de Ciencia y Tecnología del Gobierno de la India, lo que da a los usuarios más confianza en la aplicación y una sensación de seguridad.
+
+\end{itemize}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item Falta de regulación: Al ser una plataforma de comercio electrónico, puede haber una falta de regulación y protección contra prácticas comerciales engañosas o fraudulentas, más allá de la protección que ofrezca la propia aplicación.
+	
+	\item Desafíos logísticos: En el sector de la compraventa puede haber desafíos logísticos para la entrega de productos agrícolas desde diferentes partes de la India, lo que puede afectar la eficiencia y la rapidez del comercio.
+
+	\item Limitaciones geográficas: La aplicación está fuertemente ligada al país en el cual opera, la India, haciendo más difícil una posible expansión al mercado internacional. Además de esto, solo contempla actualmente 28 estados y territorios de la unión, quedando 8 de ellos sin acceso a la aplicación.
+
+	\item Necesidad de número de teléfono local: Actualmente no es posible explorar la aplicación sin antes registrarse con un número de teléfono de la India (véase la figura \ref{fig:bijak-login}).
+	
+\end{itemize}
+
+\figura{0.3}{img/bijak/login}{Página de inicio de sesión de Bijak}{fig:bijak-login}{}
+
+\subsection{Mandi Trades}
+
+Mandi Trades\footnote{https://www.livemint.com/Companies/yW1LDUCfWZDnnGYAPj1ddJ/Mandi-Trades-Sowing-the-seeds-of-genuine-profit.html}\textsuperscript{,}\footnote{https://www.livemint.com/Consumer/nQLEyDHTQvkVAodbfA6B9L/An-app-that-helps-farmers-cut-the-middleman-out.html} fue una aplicación diseñada para ayudar a los agricultores indios a vender sus productos directamente a los clientes. Los agricultores podían registrarse en la aplicación e introducir datos sobre sus productos en venta, ubicación y precio, que luego se cargaban en una base de datos escalable basada en la nube. La aplicación ofrecía a los compradores una vista cartográfica de los productos disponibles, con datos sobre el producto y ordenados por proximidad geográfica al agricultor. En la actualidad ha cesado su operación.
+
+\subsubsection{Historia}
+
+La aplicación fue lanzada en 2014 por Farmmobi Technologies, con una inversión del equivalente a unos 45.000\geneuro{}  por parte de Edvin Varghese y Murthy Gurunathan, trabajadores de Oracle. El objetivo detrás de Mandi Trades era resolver el problema del monopolio de los intermediarios en los mandis estatales.
+
+Aproximadamente un año después de su lanzamiento, la aplicación se lanzó en otros 5 idiomas (Hindi, Tamil, Telugu, Kannada y Malayalam) en su versión 2.0.
+
+En 2016 la aplicación contaba con 30.000 usuarios en India. La inclusión de los smartphones en las zonas rurales ayudó a la empresa a ampliar su base de clientes y a lanzar más funcionalidades. De la misma forma, utilizaron redes sociales como Twitter y Facebook para dar a conocer la aplicación.
+
+% Los underscores aparecen en el documento pero no al copiar la URL, alguna solución?
+En la actualidad, Mandi Trades ha cesado\footnote{https://tracxn.com/d/companies/mandi-trades/\_\_MW24-PY9aB99fPoGlulole0IqhO8UUO4acp\_SnuG9hk} su operación por causas que no podemos determinar con facilidad. Su última interacción en redes sociales fue en abril de 2018, y el dominio web \url{https://manditrades.com} ya no se encuentra registrado por la empresa, que se encuentra inactiva. Esto puede deberse a que el uso de smartphones no estaba tan extendido en las zonas rurales como en la actualidad y a que la empresa no tenía ningún plan financiero establecido para generar beneficios.
+
+\subsubsection{Funcionalidades}
+
+\begin{itemize}
+
+	\item Cuando un agricultor se registra en Mandi Trades, el sistema recoge información sobre sus productos y su ubicación y la almacena en una base de datos escalable basada en la nube.
+	
+	\item Para el comprador se ofrece una vista cartográfica de los productos disponibles con la información del producto, ordenada según su proximidad geográfica al agricultor.
+
+	\item Hay opciones para ayudar a los agricultores a planificar mejor, como la visualización de los precios actuales de los productos básicos en el comercio, la demanda de los productos disponibles en la aplicación, el clima y los cambios estacionales.
+
+\end{itemize}
+
+\subsubsection{Ventajas}
+
+\begin{itemize}
+
+	\item Ofrece a los agricultores una plataforma para vender sus cosechas directamente a los compradores, lo cual puede hacerles obtener un mejor precio por sus cosechas al eliminar a los intermediarios.
+
+	\item Proporciona información actualizada en tiempo real sobre los precios de los productos básicos y las tendencias del mercado.
+
+	\item  Da comodidad a los agricultores, permitiéndoles vender sus cosechas desde cualquier lugar con conexión a Internet.
+
+\end{itemize}
+
+\subsubsection{Inconvenientes}
+
+\begin{itemize}
+
+	\item La aplicación requiere un smartphone y conexión a Internet para su uso, lo cual no está al alcance de todos los agricultores de la India, aún menos en el 2014 cuando se lanzó la aplicación.
+
+	\item Los agricultores no están familiarizados con el uso de aplicaciones móviles de este tipo, lo que podría limitar su adopción. A esto se le suma una interfaz anticuada y con una experiencia de usuario poco cuidada (véase la figura \ref{fig:mandi-interfaz}).
+
+	\item El transporte de las cosechas a los compradores puede plantear problemas logísticos.
+
+	\item Podría haber problemas con los pagos y las disputas, ya que la aplicación no tiene presencia física para mediar en los conflictos.
+
+\end{itemize}
+
+\figura{0.75}{img/mandi-trades/interfaz}{Interfaz de Mandi Trades}{fig:mandi-interfaz}{}
+
+\include{Capitulos/capitulo1/comparativa-trabajo-relacionado}

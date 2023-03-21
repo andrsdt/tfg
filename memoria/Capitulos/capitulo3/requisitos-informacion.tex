@@ -1,0 +1,56 @@
+% !TEX root = ../../proyect.tex
+
+\section{Requisitos de información}\label{sec:requisitos-informacion}
+
+En esta sección definiremos los atributos que serán utilizados por el sistema, proporcionando una guía para el desarrollo de la base de datos y la interfaz de usuario. En nuestro caso, los principales objetos que estarán presentes en la aplicación son los siguientes: Usuario, Producto, Pedido y Calificación.
+
+\begin{enumerate}[{IRQ}-1:]
+	
+	\item \textbf{Usuario:}
+	\begin{itemize}
+		\item Identificador de usuario
+		\item Nombre de usuario
+		\item Contraseña
+		\item Correo electrónico
+		\item Número de teléfono
+		\item Ubicación
+		\item Tipo de usuario (Productor/Consumidor/Administrador)
+		\item Foto de perfil
+	\end{itemize}
+	
+    \item \textbf{Producto:}
+    \begin{itemize}
+        \item Identificador de producto
+        \item Nombre del producto
+        \item Descripción del producto
+        \item Categoría
+        \item Precio
+        \item Cantidad disponible
+        \item Fecha de cosecha
+        \item Fecha de caducidad (si corresponde)
+        \item Imágenes del producto
+        \item Ubicación de producción
+        \item Productor del producto
+\end{itemize}
+
+    \item \textbf{Pedido:}
+    \begin{itemize}
+        \item Identificador de pedido
+        \item Productos solicitados
+        \item Cantidad de cada producto solicitado
+        \item Fecha y hora del pedido
+        \item Consumidor que realiza el pedido
+        \item Productor que recibe el pedido
+    \end{itemize}
+
+    \item \textbf{Calificación:}
+    \begin{itemize}
+        \item Identificador de calificación
+        \item Comentario sobre el producto o productor
+        \item Puntuación (1-5 estrellas)
+        \item Fecha de la calificación
+        \item Usuario que realiza la calificación
+        \item Productor que recibe la calificación
+    \end{itemize}
+
+\end{enumerate}
