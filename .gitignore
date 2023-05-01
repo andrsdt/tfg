@@ -1,0 +1,24 @@
+# IDE configuration
+
+.vscode/
+
+# environment variables
+.env
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+/venv/
+/.venv/
+.idea/
+
+# pycache
+*.pyc
+
+# Local files
+server/files/

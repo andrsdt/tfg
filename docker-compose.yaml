@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  reverse-proxy:
+    container_name: reverse-proxy
+    build: ./nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    depends_on:
+      - server
+      - client
+  db:
+    image: "postgres:15"
+    environment:
+      - POSTGRES_DBNAME=grocerin
+      - POSTGRES_USER=grocerin
+      - POSTGRES_PASSWORD=grocerin
+      - POSTGRES_PORT=5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+  server:
+    build: ./server
+    container_name: server
+    command: bash -c "python /code/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./server:/code
+    expose:
+      - 8000
+    depends_on:
+      - db
+  client:
+    tty: true
+    container_name: client
+    build: ./client
+    command: npm run dev # TODO: change to npm run start in production
+    expose:
+      - 3000
+    volumes:
+      - ./client:/code
+      - /code/node_modules
+    environment:
+      # Enable hot reload:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - NODE_ENV=development
+volumes:
+  postgres_data:
