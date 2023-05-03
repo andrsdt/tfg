@@ -1,3 +1,4 @@
+# django-rest-cli
 Django>=2.2
 djangorestframework>=3.13.1
 python-decouple>=3.6
@@ -16,3 +17,6 @@ halo==0.0.31
 log-symbols==0.0.14
 spinners==0.0.24
 termcolor==2.3.0
+
+# Custom
+drf-standardized-errors==0.12.5

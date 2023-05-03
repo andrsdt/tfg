@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "users",
     # Third-party packages
     "drf_spectacular",
+    "drf_standardized_errors",
     "rest_framework",
     # Auth modules
     "rest_framework.authtoken",
@@ -110,6 +111,8 @@ REST_FRAMEWORK = {
     ),
     # Activate drf_spectacular
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # Activate drf_standardized_errors
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
 }
 
 # drf_spectacular config
@@ -133,7 +136,7 @@ JWT_AUTH_COOKIE = "auth"
 # NOTE: If we don't add this, we get a 403 error when sending petitions
 # once we are logged in. I don't know why this happens, given that we are
 # sending them from the same domain bc we are using nginx
-CSRF_TRUSTED_ORIGINS = ["http://*.localhost"]
+CSRF_TRUSTED_ORIGINS = ["http://*.localhost", "http://grocerin.test"]
 
 
 ALLOWED_HOSTS = ["*"]

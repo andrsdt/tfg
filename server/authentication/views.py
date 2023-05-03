@@ -1,39 +1,41 @@
 import json
 
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_POST
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 
-@ensure_csrf_cookie
-@api_view()
-@permission_classes([AllowAny])
-def set_csrf_token(request):
-    return JsonResponse({"message": "CSRF cookie set"})
+class CsrfTokenViewSet(GenericViewSet):
+    permission_classes = [AllowAny]
+
+    @action(detail=True, methods=["get"])
+    @ensure_csrf_cookie  # NOTE: if does not work, use @method_decorator(ensure...) or change the order
+    def set_csrf_token(self, request):
+        return Response({"message": "CSRF cookie set"})
 
 
-# TODO: extract logic to services.py
-@require_POST
-def login_view(request):
-    """
-    This will be `/api/login/` on `urls.py`
-    """
-    data = json.loads(request.body)
-    username = data.get("username")
-    password = data.get("password")
-    if username is None or password is None:
-        return JsonResponse(
-            {"errors": {"__all__": "Please enter both username and password"}},
-            status=400,
+class LoginViewSet(GenericViewSet):
+    permission_classes = [AllowAny]
+
+    @action(detail=True, methods=["post"])
+    def login(self, request):
+        data = json.loads(request.body)
+        username = data.get("username")
+        password = data.get("password")
+        if username is None or password is None:
+            return Response(
+                {"error": {"__all__": "Please enter both username and password"}},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return Response({"message": "Successful login"})
+        return Response(
+            {"error": "Invalid credentials"},
+            status=status.HTTP_401_UNAUTHORIZED,
         )
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return JsonResponse({"detail": "Success"})
-    return JsonResponse(
-        {"detail": "Invalid credentials"},
-        status=400,
-    )

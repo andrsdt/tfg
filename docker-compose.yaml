@@ -37,12 +37,12 @@ services:
     tty: true
     container_name: client
     build: ./client
-    command: npm run dev # TODO: change to npm run start in production
+    command: npm run dev # TODO: change to pnpm run start in production
     expose:
       - 3000
     volumes:
-      - ./client:/code
-      - /code/node_modules
+      - ./client:/app
+      - /app/node_modules
     environment:
       # Enable hot reload:
       - CHOKIDAR_USEPOLLING=true

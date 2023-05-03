@@ -1,10 +1,12 @@
+import { COLORS } from './src/constants/colors';
+
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
-  content: ['./pages/**/*.tsx', './components/**/*.tsx'],
+  content: ['./src/**/*.tsx', './src/**/*.tsx'],
   theme: {
-    colors: {
-      transparent: 'transparent',
-    },
+    // Colors defined in src/constants/colors.ts
+    colors: COLORS,
     extend: {
       fontFamily: {
         lato: ['Lato'],

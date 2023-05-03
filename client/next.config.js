@@ -13,6 +13,6 @@ module.exports = withPWA({
     return config;
   },
   images: {
-    domains: ['localhost', '127.0.0.1'],
+    domains: ['localhost', '127.0.0.1', 'grocerin.test'],
   },
 });
