@@ -29,13 +29,19 @@ export const LoginForm = ({ className }: LoginFormProps) => {
             <InputField
               type="email"
               label="Email Address"
-              autocomplete="email"
+              inputProps={{
+                placeholder: 'example@test.com',
+                autoComplete: 'email',
+              }}
               error={formState.errors['email']}
               registration={register('email')}
             />
             <PasswordField
               label="Password"
-              autocomplete="current-password"
+              inputProps={{
+                placeholder: '●●●●●●●●●●●●●',
+                autoComplete: 'current-password',
+              }}
               error={formState.errors['password']}
               registration={register('password')}
             />

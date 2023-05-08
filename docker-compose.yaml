@@ -37,7 +37,7 @@ services:
     tty: true
     container_name: client
     build: ./client
-    command: npm run dev # TODO: change to pnpm run start in production
+    command: pnpm run dev # TODO: change to pnpm run start in production
     expose:
       - 3000
     volumes:

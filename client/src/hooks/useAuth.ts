@@ -30,7 +30,7 @@ export const useAuth = ({
     async () => {
       try {
         const client = await clientPromise;
-        return client.api_v1_auth_user_retrieve();
+        return client.auth_user_retrieve();
       } catch (error) {
         if (error.response.status !== 409) throw error;
         router.push(NEXT_ROUTES.LOGIN);
@@ -63,7 +63,7 @@ export const useAuth = ({
   const logout = async () => {
     if (!error) {
       const client = await clientPromise;
-      await client.api_v1_auth_logout_create();
+      await client.auth_logout_create();
       mutate();
     }
 

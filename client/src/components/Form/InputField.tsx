@@ -6,7 +6,6 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 export type InputFieldProps = FieldWrapperPassThroughProps & {
   type?: 'text' | 'email' | 'password';
   label?: string;
-  autocomplete?: string;
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
@@ -16,7 +15,6 @@ export const InputField = (props: InputFieldProps) => {
   const {
     type = 'text',
     label,
-    autocomplete = 'off',
     className,
     registration,
     error,
@@ -29,8 +27,6 @@ export const InputField = (props: InputFieldProps) => {
         <input
           id={registration.name}
           type={type}
-          placeholder={label}
-          autoComplete={autocomplete}
           className={clsx(
             'peer block min-h-[auto] appearance-none rounded-lg border-none bg-transparent px-4 py-3 text-lg outline outline-1 transition-all duration-200 ease-linear motion-reduce:transition-none',
             error

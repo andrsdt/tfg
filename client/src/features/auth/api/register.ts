@@ -12,11 +12,9 @@ export type SignupCredentialsDTO = {
 
 export const signupWithEmailAndPassword = async (
   data: SignupCredentialsDTO
-): Promise<
-  OperationResponse<Paths.ApiV1AuthRegistrationCreate.Responses.$201>
-> => {
+): Promise<OperationResponse<Paths.AuthRegistrationCreate.Responses.$201>> => {
   const client = await api.getClient<Client>();
-  return client.api_v1_auth_registration_create(null, {
+  return client.auth_registration_create(null, {
     email: data.email,
     password1: data.password,
     password2: data.password,

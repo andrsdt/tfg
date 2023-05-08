@@ -37,7 +37,10 @@ export const SignupForm = ({ className }: SignupFormProps) => {
             <InputField
               type="email"
               label="Correo electrónico"
-              autocomplete="email"
+              inputProps={{
+                placeholder: 'example@test.com',
+                autoComplete: 'email',
+              }}
               error={formState.errors['email']}
               registration={register('email')}
             />
@@ -45,7 +48,10 @@ export const SignupForm = ({ className }: SignupFormProps) => {
               <InputField
                 type="text"
                 label="Nombre"
-                autocomplete="given-name"
+                inputProps={{
+                  placeholder: 'Chiquito',
+                  autoComplete: 'given-name',
+                }}
                 error={formState.errors['firstName']}
                 registration={register('firstName')}
                 className="w-1/2 pr-4"
@@ -53,7 +59,10 @@ export const SignupForm = ({ className }: SignupFormProps) => {
               <InputField
                 type="text"
                 label="Apellidos"
-                autocomplete="family-name"
+                inputProps={{
+                  placeholder: 'De la Calzada',
+                  autoComplete: 'family-name',
+                }}
                 error={formState.errors['lastName']}
                 registration={register('lastName')}
                 className="w-1/2"
@@ -61,7 +70,10 @@ export const SignupForm = ({ className }: SignupFormProps) => {
             </div>
             <PasswordField
               label="Contraseña"
-              autocomplete="new-password"
+              inputProps={{
+                placeholder: '●●●●●●●●●●●●●',
+                autoComplete: 'new-password',
+              }}
               error={formState.errors['password']}
               registration={register('password')}
             />

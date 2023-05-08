@@ -1,7 +1,11 @@
 import clsx from 'clsx';
 import * as React from 'react';
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  type?: 'button' | 'submit' | 'reset';
+  className?: string;
+  disabled?: boolean;
+};
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ type = 'button', className = '', ...props }, ref) => {

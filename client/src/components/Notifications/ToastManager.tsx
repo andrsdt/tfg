@@ -22,7 +22,7 @@ export const ToastManager = () => {
         onAutoClose: () => dismissNotification(notification.id),
       });
     });
-  }, [notifications]);
+  }, [notifications, dismissNotification]);
 
   return <Toaster richColors position="top-center" />;
 };

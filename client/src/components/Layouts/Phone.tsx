@@ -1,4 +1,8 @@
-export const PhoneLayout = ({ children }) => {
+type PhoneLayoutProps = {
+  children: React.ReactNode;
+};
+
+export const PhoneLayout = ({ children }: PhoneLayoutProps) => {
   return (
     <div className="h-screen mobile-view-parent bg-light-gray justify-center items-center md:px-2">
       <div className="mobile-view outline-black relative outline outline-1 h-[930px] justify-start">
