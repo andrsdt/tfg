@@ -18,9 +18,9 @@ export const PasswordField = (props: PasswordFieldProps) => {
         onClick={() => setShowPassword((prev) => !prev)}
       >
         {showPassword ? (
-          <Eye className="w-8 h-8 text-light-gray group-focus-within:text-black group-invalid:text-light-red bg-white" />
+          <Eye className="h-8 w-8 bg-white text-light-gray group-invalid:text-light-red group-focus-within:text-black" />
         ) : (
-          <EyeSlash className="w-8 h-8 text-light-gray group-focus-within:text-black group-invalid:text-light-red bg-white" />
+          <EyeSlash className="h-8 w-8 bg-white text-light-gray group-invalid:text-light-red group-focus-within:text-black" />
         )}
       </button>
     </div>

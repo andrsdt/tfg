@@ -41,8 +41,8 @@ export const InputField = (props: InputFieldProps) => {
           className={clsx(
             error
               ? 'text-light-red peer-focus:text-light-red'
-              : 'peer-focus:text-green text-light-gray',
-            'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate bg-transparent px-1.5 pt-3 transition-all duration-200 ease-out motion-reduce:transition-none -translate-y-5 scale-75 bg-white'
+              : 'text-light-gray peer-focus:text-green',
+            'pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] -translate-y-5 scale-75 truncate bg-transparent bg-white px-1.5 pt-3 transition-all duration-200 ease-out motion-reduce:transition-none'
           )}
         >
           {label}

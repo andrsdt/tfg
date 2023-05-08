@@ -14,8 +14,8 @@ const Signup = () => {
       <span className="flex w-full justify-center overflow-x-hidden">
         <Farm className="origin-bottom" />
       </span>
-      <div className="-mt-4 rounded-t-3xl bg-light-gray text-center z-10 absolute bottom-0 w-full">
-        <p className="pt-4 pb-8 text-3xl text-gray">Crear cuenta nueva</p>
+      <div className="absolute bottom-0 z-10 -mt-4 w-full rounded-t-3xl bg-light-gray text-center">
+        <p className="pb-8 pt-4 text-3xl text-gray">Crear cuenta nueva</p>
         <div className="-mt-4 rounded-t-3xl bg-white p-5">
           <ExternalAuth />
           <SignupForm className="py-4" />

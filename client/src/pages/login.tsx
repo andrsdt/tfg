@@ -19,8 +19,8 @@ const Login = () => {
           className="origin-top scale-150"
         />
       </span>
-      <div className="-mt-4 rounded-t-3xl bg-light-gray text-center z-10">
-        <p className="pt-4 pb-8 text-3xl text-gray">Iniciar sesión</p>
+      <div className="z-10 -mt-4 rounded-t-3xl bg-light-gray text-center">
+        <p className="pb-8 pt-4 text-3xl text-gray">Iniciar sesión</p>
         <div className="-mt-4 rounded-t-3xl bg-white p-5">
           <ExternalAuth />
           <LoginForm className="py-4" />
