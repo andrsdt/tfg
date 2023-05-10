@@ -17,7 +17,7 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
           content="width=device-width,viewport-fit=cover,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
         <meta name="theme-color" content={COLORS.green} />
-        <meta name="msapplication-TileColor" content={ COLORS.green } />
+        <meta name="msapplication-TileColor" content={COLORS.green} />
         <meta name="description" content="Del campo a tu casa" />
         <meta name="keywords" content="marketplace" />
         <title>Grocerin</title>
@@ -65,4 +65,3 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
 };
 
 export default MyApp;
-
