@@ -5,8 +5,8 @@ import clsx from 'clsx';
 import * as z from 'zod';
 
 const schema = z.object({
-  email: z.string().min(1, 'Required'),
-  password: z.string().min(1, 'Required'),
+  email: z.string().email('La dirección de correo electrónico no es válida'),
+  password: z.string().min(1, 'Introduce tu contraseña'),
 });
 
 type LoginValues = {
@@ -48,7 +48,7 @@ export const LoginForm = ({ className }: LoginFormProps) => {
             <Button
               disabled={formState.isSubmitting}
               type="submit"
-              className="w-full"
+              className="w-full px-8"
             >
               INICIAR SESIÓN
             </Button>

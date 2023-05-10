@@ -2,18 +2,16 @@ import { Button } from '@/components/Elements/Button';
 import { Form, InputField, PasswordField } from '@/components/Form';
 import { useAuth } from '@/hooks/useAuth';
 import clsx from 'clsx';
-import { useEffect } from 'react';
-import { useFormState } from 'react-hook-form';
 import * as z from 'zod';
 
-const lettersOnly = /^[A-zÀ-ÖØ-öø-ÿ]+( ?[\\w]+)?$/;
+const lettersOnly = /^[A-zÀ-ÖØ-öø-ÿ]+( ?[A-zÀ-ÖØ-öø-ÿ]+)?$/;
 
 const schema = z.object({
   email: z.string().email('La dirección de correo electrónico no es válida'),
   password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
   // FirstName can't have numbers
-  firstName: z.string().regex(lettersOnly, ' '),
-  lastName: z.string().regex(lettersOnly, ' '),
+  firstName: z.string().min(2, ' ').regex(lettersOnly, ' '),
+  lastName: z.string().min(2, ' ').regex(lettersOnly, ' '),
 });
 
 type SignupValues = {
@@ -77,7 +75,7 @@ export const SignupForm = ({ className }: SignupFormProps) => {
               error={formState.errors['password']}
               registration={register('password')}
             />
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full px-8">
               REGISTRARSE
             </Button>
           </div>

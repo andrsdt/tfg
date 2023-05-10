@@ -27,6 +27,10 @@ INSTALLED_APPS = [
     "authentication",
     "grocerin",
     "users",
+    "producers",
+    "consumers",
+    "products",
+    "orders",
     # Third-party packages
     "drf_spectacular",
     "drf_standardized_errors",
@@ -114,6 +118,11 @@ REST_FRAMEWORK = {
     # Activate drf_standardized_errors
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
 }
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    "REGISTER_SERIALIZER": "authentication.serializers.CustomRegisterSerializer",
+}
+
 
 # drf_spectacular config
 SPECTACULAR_SETTINGS = {

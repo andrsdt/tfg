@@ -11,6 +11,7 @@ from rest_framework.viewsets import GenericViewSet
 
 class CsrfTokenViewSet(GenericViewSet):
     permission_classes = [AllowAny]
+    serializer_class = None
 
     @action(detail=True, methods=["get"])
     @ensure_csrf_cookie  # NOTE: if does not work, use @method_decorator(ensure...) or change the order

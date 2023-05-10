@@ -6,5 +6,9 @@ type BaseLayoutProps = {
 };
 
 export const BaseLayout = ({ children, className = '' }: BaseLayoutProps) => {
-  return <div className={clsx('relative w-full', className)}>{children}</div>;
+  return (
+    <div className={clsx('w-full overflow-y-visible bg-white', className)}>
+      {children}
+    </div>
+  );
 };

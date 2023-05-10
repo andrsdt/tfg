@@ -1,5 +1,5 @@
 import { API_URL } from '@/config';
-import { APIError } from '@/types/errrors';
+import { APIError } from '@/types/errors';
 import { emitError, emitSuccess } from '@/utils/errors';
 import OpenAPIClientAxios, {
   AxiosError,
@@ -11,16 +11,13 @@ export const api = new OpenAPIClientAxios({
 });
 
 const responseInterceptor = (response: AxiosResponse) => {
-  console.log('USING INTERCEPTOR - SUCCESS');
   const title = `${response?.status} ${response?.statusText}`;
   const message = response?.data?.message;
-  console.table({ title, message });
   if (message) emitSuccess({ title, message });
   return Promise.resolve(response.data);
 };
 
 const errorInterceptor = (error: AxiosError) => {
-  console.log('USING INTERCEPTOR - ERROR IN RESPONSE');
   const response = error.response.data as APIError;
   response.errors.forEach((err) => {
     const title = `${err.code} ${err.attr}`;

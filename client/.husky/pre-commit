@@ -4,3 +4,7 @@
 cd client
 npm run lint-fix
 npm run format
+
+# python hooks
+cd ../server
+pre-commit run

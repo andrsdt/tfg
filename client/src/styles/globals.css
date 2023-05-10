@@ -47,10 +47,6 @@ body {
   }
 }
 
-svg {
-  fill: currentColor;
-}
-
 img,
 svg,
 button {

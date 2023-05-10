@@ -8,7 +8,7 @@ import {
   loginWithEmailAndPassword,
 } from '@/features/auth/api/login';
 import { api } from '@/lib/api';
-import type { Client } from '@/types/openapi';
+import type { Client, Components } from '@/types/openapi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useSWR from 'swr';
@@ -30,7 +30,7 @@ export const useAuth = ({
     async () => {
       try {
         const client = await clientPromise;
-        return client.auth_user_retrieve();
+        return client.api_v1_auth_user_retrieve();
       } catch (error) {
         if (error.response.status !== 409) throw error;
         router.push(NEXT_ROUTES.LOGIN);
@@ -63,13 +63,15 @@ export const useAuth = ({
   const logout = async () => {
     if (!error) {
       const client = await clientPromise;
-      await client.auth_logout_create();
+      await client.api_v1_auth_logout_create();
       mutate();
     }
 
-    window.location.pathname = NEXT_ROUTES.HOME;
+    // TODO: change to NEXT_ROUTES.HOME once we have a home page for guests
+    window.location.pathname = NEXT_ROUTES.LOGIN;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const userHasRole = (rol = roles) => {
     // TODO: implement by returning a "roles" array from the API
     // if (user && rol) {
@@ -99,10 +101,11 @@ export const useAuth = ({
     // if (middleware.includes('role') && user && user?.roles && !userHasRole()) {
     //   router.push(redirectIfAuthenticated);
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, error]);
 
   return {
-    user,
+    user: user as unknown as Components.Schemas.UserDetails | undefined,
     signup,
     login,
     logout,

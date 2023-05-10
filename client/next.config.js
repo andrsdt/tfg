@@ -39,7 +39,7 @@ module.exports = withPWA({
       'grocerin.test',
       'media.istockphoto.com',
       'cdn.pixabay.com',
-      'finedininglovers.com',
+      'www.finedininglovers.com',
     ],
   },
 });

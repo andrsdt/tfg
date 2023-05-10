@@ -1,4 +1,4 @@
-import { Allergen } from '@/types/allergens';
+import { Allergen } from '@/features/products/types/allergens';
 
 import celeryUrl from '/public/allergens/celery.svg?url';
 import crustaceansUrl from '/public/allergens/crustaceans.svg?url';
@@ -16,6 +16,7 @@ import soybeansUrl from '/public/allergens/soybeans.svg?url';
 import sulphitesUrl from '/public/allergens/sulphites.svg?url';
 
 import Image from 'next/image';
+import clsx from 'clsx';
 
 const allergensIcons = {
   celery: celeryUrl,
@@ -36,11 +37,15 @@ const allergensIcons = {
 
 type AllergensListProps = {
   allergens: Allergen[];
+  className?: string;
 };
 
-export const AllergensList = ({ allergens }: AllergensListProps) => {
+export const AllergensList = ({
+  allergens,
+  className = '',
+}: AllergensListProps) => {
   return (
-    <div className="flex flex-none space-x-2">
+    <div className={clsx(className, 'flex flex-none space-x-2')}>
       {allergens.map((allergen) => (
         <Image
           key={allergen}

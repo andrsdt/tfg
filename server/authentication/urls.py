@@ -1,3 +1,5 @@
+from authentication.serializers import CustomRegisterSerializer
+from dj_rest_auth.registration.views import RegisterView
 from django.conf.urls import include
 from django.urls import path
 
@@ -12,5 +14,10 @@ urlpatterns = [
     ),
     path("login/", LoginViewSet.as_view({"post": "login"}), name="login"),
     path("account/", include("allauth.urls")),
-    path("registration/", include("dj_rest_auth.registration.urls")),
+    # Custom serializer for registration
+    path(
+        "registration/",
+        RegisterView.as_view(serializer_class=CustomRegisterSerializer),
+        name="custom_register",
+    ),
 ]

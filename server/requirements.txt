@@ -19,4 +19,6 @@ spinners==0.0.24
 termcolor==2.3.0
 
 # Custom
+python-dotenv==1.0.0
 drf-standardized-errors==0.12.5
+Pillow==9.5.0
