@@ -128,6 +128,8 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "grocerin Project API",
     "VERSION": "1.0.0",
+    "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
+    "SCHEMA_PATH_PREFIX_TRIM": True,
 }
 
 

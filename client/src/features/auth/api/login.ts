@@ -10,9 +10,9 @@ export type LoginCredentialsDTO = {
 
 export const loginWithEmailAndPassword = async (
   data: LoginCredentialsDTO
-): Promise<OperationResponse<Paths.ApiV1AuthLoginCreate.Responses.$200>> => {
+): Promise<OperationResponse<Paths.AuthLoginCreate.Responses.$200>> => {
   const client = await api.getClient<Client>();
-  return client.api_v1_auth_login_create(null, {
+  return client.auth_login_create(null, {
     email: data.email,
     password: data.password,
   });
