@@ -1,12 +1,9 @@
 import { api } from '@/lib/api';
 
-import { Client, Paths } from '@/types/openapi';
+import { Client, Components, Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 
-export type LoginCredentialsDTO = {
-  email: string;
-  password: string;
-};
+export type LoginCredentialsDTO = Components.Schemas.CustomLoginRequest;
 
 export const loginWithEmailAndPassword = async (
   data: LoginCredentialsDTO

@@ -1,3 +1,4 @@
+import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import {
   SignupCredentialsDTO,
@@ -14,7 +15,6 @@ import { useEffect } from 'react';
 import useSWR from 'swr';
 
 export const useAuth = ({
-  middleware = [],
   redirectIfAuthenticated = NEXT_ROUTES.HOME,
   roles = [],
 } = {}) => {
@@ -27,10 +27,11 @@ export const useAuth = ({
     mutate,
   } = useSWR(
     '/api/v1/auth/user',
+
     async () => {
       try {
         const client = await clientPromise;
-        return client.auth_user_retrieve();
+        return await client.auth_user_retrieve();
       } catch (error) {
         if (error.response.status !== 409) throw error;
         router.push(NEXT_ROUTES.LOGIN);
@@ -42,20 +43,12 @@ export const useAuth = ({
     }
   );
 
-  const csrf = async () => {
-    // TODO: is this necessary?
-    // const client = await clientPromise;
-    // client.api_v1_auth_set_csrf_retrieve();
-  };
-
   const signup = async (data: SignupCredentialsDTO) => {
-    await csrf();
     await signupWithEmailAndPassword(data);
     mutate();
   };
 
   const login = async (data: LoginCredentialsDTO) => {
-    await csrf();
     await loginWithEmailAndPassword(data);
     mutate();
   };
@@ -67,49 +60,44 @@ export const useAuth = ({
       mutate();
     }
 
-    // TODO: change to NEXT_ROUTES.HOME once we have a home page for guests
     window.location.pathname = NEXT_ROUTES.LOGIN;
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const userHasRole = (rol = roles) => {
-    // TODO: implement by returning a "roles" array from the API
-    // if (user && rol) {
-    //   const hasRole = rol.some((r) => user?.roles?.includes(r));
-    //   return hasRole;
-    // }
-    return false;
+  const userIsProducer = () => {
+    // NOTE: sometimes this is an axios response, some others, it's the user object
+    // I have to look into it, but for the moment we will just check both as it's only
+    // relevant here (it's casted to User when exposed to other components, in the hook's return)
+
+    // NOTE: also allowing !user for the moment, there are sometimes in which user is still undefined.
+    // To be handled in the future
+    return (
+      user === undefined ||
+      user?.data?.is_producer ||
+      (user as any)?.is_producer
+    );
   };
 
   useEffect(() => {
-    if (middleware.includes('auth') && error) {
+    if (roles.includes(ROLES.AUTHENTICATED) && error) {
       logout();
     }
-    if (middleware.includes('guest') && redirectIfAuthenticated && user) {
+    if (roles.includes(ROLES.GUEST) && redirectIfAuthenticated && user) {
       router.replace(redirectIfAuthenticated);
     }
-    // if (middleware.includes('verified') && user && !user?.email_verified_at) {
-    //   router.push('/verify-email')
-    // }
-    // if (
-    //   window.location.pathname === '/verify-email' &&
-    //   user?.email_verified_at
-    // ) {
-    //   router.push(redirectIfAuthenticated);
-    // }
-    // TODO: implement by returning a "roles" array from the API
-    // if (middleware.includes('role') && user && user?.roles && !userHasRole()) {
-    //   router.push(redirectIfAuthenticated);
-    // }
+    if (roles.includes(ROLES.PRODUCER) && !userIsProducer()) {
+      router.replace(NEXT_ROUTES.BECOME_PRODUCER);
+    }
+    if (roles.includes(ROLES.NOT_PRODUCER) && userIsProducer()) {
+      router.back();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, error]);
 
   return {
-    user: user as unknown as Components.Schemas.UserDetails | undefined,
+    user: user as unknown as Components.Schemas.CustomUserDetails | undefined,
     signup,
     login,
     logout,
     mutateUser: mutate,
-    userHasRole,
   };
 };

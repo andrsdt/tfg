@@ -21,20 +21,20 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
         <meta name="description" content="Del campo a tu casa" />
         <meta name="keywords" content="marketplace" />
         <title>Grocerin</title>
-        <link rel="manifest" href={`${API_URL}/manifest.json`} />
+        <link rel="manifest" href="/manifest.json" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`${API_URL}/metadata/apple-touch-icon.png`}
+          href="/metadata/apple-touch-icon.png"
         />
         <link
-          href={`${API_URL}/metadata/favicon-16x16.png`}
+          href="/metadata/favicon-16x16.png"
           rel="icon"
           type="image/png"
           sizes="16x16"
         />
         <link
-          href={`${API_URL}/metadata/favicon-32x32.png`}
+          href="/metadata/favicon-32x32.png"
           rel="icon"
           type="image/png"
           sizes="32x32"
@@ -51,7 +51,7 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
           content="Compra y vende alimentos del campo de forma fácil y segura."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={API_URL} />
+        <meta property="og:url" content="/" />
         <meta property="og:image" content={`${API_URL}/api/og`} />
         <meta property="og:site_name" content="Grocerin" />
         <meta property="og:locale" content="es_ES" />

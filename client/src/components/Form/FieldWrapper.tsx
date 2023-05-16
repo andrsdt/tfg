@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FieldError } from 'react-hook-form';
 import clsx from 'clsx';
+import { Error } from './Error';
 
 type FieldWrapperProps = {
   className?: string;
@@ -19,15 +20,7 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
   return (
     <div className={clsx('relative pb-3.5', className)}>
       <div>{children}</div>
-      {error?.message && (
-        <div
-          role="alert"
-          aria-label={error.message}
-          className="absolute -bottom-2 w-full truncate text-start text-sm text-light-red"
-        >
-          {error.message}
-        </div>
-      )}
+      {error?.message && <Error error={error} className="absolute -bottom-2" />}
     </div>
   );
 };

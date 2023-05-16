@@ -29,12 +29,15 @@ INSTALLED_APPS = [
     "users",
     "producers",
     "consumers",
-    "products",
+    "listings",
     "orders",
     # Third-party packages
     "drf_spectacular",
     "drf_standardized_errors",
     "rest_framework",
+    "django_phonenumbers",
+    "phonenumber_field",
+    "django_cleanup.apps.CleanupConfig",
     # Auth modules
     "rest_framework.authtoken",
     "dj_rest_auth",
@@ -113,20 +116,21 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    # Activate drf_spectacular
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    # Activate drf_standardized_errors
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
-}
-
-REST_AUTH_REGISTER_SERIALIZERS = {
+    "USER_DETAILS_SERIALIZER": "authentication.serializers.CustomUserDetailsSerializer",
+    "LOGIN_SERIALIZER": "authentication.serializers.CustomLoginSerializer",
     "REGISTER_SERIALIZER": "authentication.serializers.CustomRegisterSerializer",
 }
 
+REST_AUTH = {
+    "LOGIN_SERIALIZER": REST_FRAMEWORK["LOGIN_SERIALIZER"],
+    "REGISTER_SERIALIZER": REST_FRAMEWORK["REGISTER_SERIALIZER"],
+    "USER_DETAILS_SERIALIZER": REST_FRAMEWORK["USER_DETAILS_SERIALIZER"],
+}
 
-# drf_spectacular config
 SPECTACULAR_SETTINGS = {
-    "TITLE": "grocerin Project API",
+    "TITLE": "Grocerin API",
     "VERSION": "1.0.0",
     "SCHEMA_PATH_PREFIX": r"/api/v[0-9]",
     "SCHEMA_PATH_PREFIX_TRIM": True,
@@ -137,6 +141,7 @@ SPECTACULAR_SETTINGS = {
             "description": "Local development server",
         },
     ],
+    "COMPONENT_SPLIT_REQUEST": True,  # allow file upload
 }
 
 
@@ -154,7 +159,10 @@ JWT_AUTH_COOKIE = "auth"
 # NOTE: If we don't add this, we get a 403 error when sending petitions
 # once we are logged in. I don't know why this happens, given that we are
 # sending them from the same domain bc we are using nginx
-CSRF_TRUSTED_ORIGINS = ["http://*.localhost", "http://grocerin.test"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://*.localhost",
+    "http://grocerin.test",
+]
 
 
 ALLOWED_HOSTS = ["*"]
@@ -170,6 +178,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-# TODO: should be just "/static/"? we are telling nginx to only redirect
-# /api/... requests to django so I think this is the way
-STATIC_URL = "/api/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "files")
+STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
+MEDIA_URL = "/media/"
+STATIC_URL = "/static/"
+
+# https://ubuntu.com/blog/django-behind-a-proxy-fixing-absolute-urls
+# Setup support for proxy headers
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

@@ -19,7 +19,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 import NEXT_ROUTES from '@/constants/routes';
-import { useAuth } from '@/hooks/useAuth';
 
 type LayoutWithNavbarProps = {
   children: React.ReactNode;
@@ -32,64 +31,62 @@ export const LayoutWithNavbar = ({
 }: LayoutWithNavbarProps) => {
   return (
     <>
-      <BaseLayout className={clsx(className, 'h-full overflow-auto')}>
-        {children}
+      <BaseLayout className={'overflow-auto pb-20'}>
+        <div className={clsx('h-full overflow-y-scroll', className)}>
+          {children}
+        </div>
+        <BottomNavbar />
       </BaseLayout>
-      <BottomNavbar />
     </>
   );
 };
 
-const BottomNavbar = () => {
-  const { user } = useAuth();
-
-  return (
-    <div className="sticky bottom-0 left-0 h-20 w-full bg-white shadow-t-md">
-      <div className="container mx-auto flex h-full items-center justify-around">
-        <NavbarItem
-          icons={{
-            solid: <HomeIconSolid />,
-            outline: <HomeIconOutline />,
-          }}
-          text="Inicio"
-          href={NEXT_ROUTES.HOME}
-        />
-        <NavbarItem
-          icons={{
-            solid: <ChatIconSolid />,
-            outline: <ChatIconOutline />,
-          }}
-          text="Chats"
-          href={NEXT_ROUTES.CHATS}
-        />
-        <NavbarItem
-          icons={{
-            solid: <PlusCircleIconSolid />,
-            outline: <PlusCircleIconOutline />,
-          }}
-          text="Subir"
-          href={NEXT_ROUTES.UPLOAD}
-        />
-        <NavbarItem
-          icons={{
-            solid: <HeartIconSolid />,
-            outline: <HeartIconOutline />,
-          }}
-          text="Favoritos"
-          href={NEXT_ROUTES.FAVORITES}
-        />
-        <NavbarItem
-          icons={{
-            solid: <UserIconSolid />,
-            outline: <UserIconOutline />,
-          }}
-          text="Tú"
-          href={user?.pk ? NEXT_ROUTES.PROFILE(user?.pk) : NEXT_ROUTES.LOGIN}
-        />
-      </div>
+const BottomNavbar = () => (
+  <div className="absolute bottom-0 left-0 h-20 w-full bg-white shadow-t-md">
+    <div className="container mx-auto flex h-full items-center justify-around">
+      <NavbarItem
+        icons={{
+          solid: <HomeIconSolid />,
+          outline: <HomeIconOutline />,
+        }}
+        text="Inicio"
+        href={NEXT_ROUTES.HOME}
+      />
+      <NavbarItem
+        icons={{
+          solid: <ChatIconSolid />,
+          outline: <ChatIconOutline />,
+        }}
+        text="Chats"
+        href={NEXT_ROUTES.CHATS}
+      />
+      <NavbarItem
+        icons={{
+          solid: <PlusCircleIconSolid />,
+          outline: <PlusCircleIconOutline />,
+        }}
+        text="Subir"
+        href={NEXT_ROUTES.UPLOAD}
+      />
+      <NavbarItem
+        icons={{
+          solid: <HeartIconSolid />,
+          outline: <HeartIconOutline />,
+        }}
+        text="Favoritos"
+        href={NEXT_ROUTES.FAVORITES}
+      />
+      <NavbarItem
+        icons={{
+          solid: <UserIconSolid />,
+          outline: <UserIconOutline />,
+        }}
+        text="Tú"
+        href={NEXT_ROUTES.MY_PROFILE}
+      />
     </div>
-  );
-};
+  </div>
+);
 
 type NavbarItemProps = {
   icons: {

@@ -2,12 +2,15 @@ const NEXT_ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   SIGN_UP: '/signup',
-  CHATS: '/chats',
   UPLOAD: '/upload',
+  CHATS: '/chats',
   FAVORITES: '/favorites',
-  PROFILE: (id) => urlWithParams('/users/[id]', { id }),
-  PRODUCT_DETAILS: (id) => urlWithParams('/products/[id]', { id }),
-  REPORT_LISTING: (id) => urlWithParams('/products/[id]/report', { id }),
+  MY_PROFILE: '/my-profile',
+  BECOME_PRODUCER: '/become-producer',
+  PRODUCER_PROFILE: (id) => urlWithParams('/producers/[id]', { id }),
+  DETAILS_LISTING: (id) => urlWithParams('/listings/[id]', { id }),
+  EDIT_LISTING: (id) => urlWithParams('/listings/[id]/edit', { id }),
+  REPORT_LISTING: (id) => urlWithParams('/listings/[id]/report', { id }),
 };
 
 const urlWithParams = (route, params) => {

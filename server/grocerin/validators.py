@@ -1,16 +1,27 @@
 from django.core.validators import ValidationError
 
 
-class OnlyAlphaValidator:
-    message = "This field must contain only letters."
-    code = "invalid"
-
-    def __init__(self, message=None, code=None):
-        if message is not None:
-            self.message = message
-        if code is not None:
-            self.code = code
+class OnlyAlphaAndSpacesValidator:
+    def __init__(self, value):
+        self.value = value
+        self.__call__(value)
 
     def __call__(self, value):
-        if not value.isalpha():
-            raise ValidationError(self.message, code=self.code)
+        if not value.replace(" ", "").isalpha():
+            message = "Este campo sólo puede contener letras y espacios"
+            code = "only_alpha_and_spaces"
+            raise ValidationError(message, code=code)
+
+
+class InadequateLanguageValidator:
+    CURSE_WORDS = ["mierda", "puta", "caca", "culo", "polla", "coño", "joder"]
+
+    def __init__(self, value):
+        self.value = value
+        self.__call__(value)
+
+    def __call__(self, value):
+        if value.lower() in self.CURSE_WORDS:
+            message = "Este campo contiene lenguaje inapropiado"
+            code = "inadequate_language"
+            raise ValidationError(message, code=code)

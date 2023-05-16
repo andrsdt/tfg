@@ -7,7 +7,12 @@ type BaseLayoutProps = {
 
 export const BaseLayout = ({ children, className = '' }: BaseLayoutProps) => {
   return (
-    <div className={clsx('w-full overflow-y-visible bg-white', className)}>
+    <div
+      className={clsx(
+        'h-full w-full overflow-x-hidden overflow-y-visible bg-white',
+        className
+      )}
+    >
       {children}
     </div>
   );

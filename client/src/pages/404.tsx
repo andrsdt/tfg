@@ -2,7 +2,7 @@ import { BaseLayout } from '@/components/Layouts';
 import Link from 'next/link';
 
 const FourOhFour = () => (
-  <BaseLayout className="grid h-full grid-rows-2 place-items-center p-4 px-8">
+  <BaseLayout className="grid grid-rows-2 place-items-center p-4 px-8">
     <span>
       <h1 className="text-8xl font-bold md:text-9xl">404</h1>
       <p className="font-pt-serif text-2xl">

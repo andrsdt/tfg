@@ -1,6 +1,14 @@
-import { nanoid } from 'nanoid';
 import { create } from 'zustand';
-import Notification from '@/types/notifications';
+import { devtools } from 'zustand/middleware';
+
+export type NotificationType = 'info' | 'warning' | 'success' | 'error';
+
+type Notification = {
+  id: string;
+  type: NotificationType;
+  title: string;
+  message?: string;
+};
 
 type NotificationsStore = {
   notifications: Notification[];
@@ -8,19 +16,24 @@ type NotificationsStore = {
   dismissNotification: (id: string) => void;
 };
 
-export const useNotificationStore = create<NotificationsStore>((set) => ({
+const notificationsStore = (set) => ({
   notifications: [],
   addNotification: (notification) =>
     set((state) => ({
       notifications: [
         ...state.notifications,
-        { id: nanoid(), ...notification },
+        { id: Date.now(), ...notification },
       ],
     })),
-  dismissNotification: (id) =>
+
+  dismissNotification: (message) =>
     set((state) => ({
       notifications: state.notifications.filter(
-        (notification) => notification.id !== id
+        (notification) => notification.message !== message
       ),
     })),
-}));
+});
+
+export const useNotificationStore = create(
+  devtools<NotificationsStore>(notificationsStore)
+);

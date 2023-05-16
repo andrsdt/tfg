@@ -6,12 +6,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import twoFarmers from '/public/illustrations/two-farmers.png';
 import { BaseLayout } from '@/components/Layouts';
+import { ROLES } from '@/constants/roles';
 
 const Login = () => {
-  useAuth({ middleware: ['guest'] });
+  useAuth({ roles: [ROLES.GUEST] });
 
   return (
-    <BaseLayout className="flex h-full flex-col justify-end overflow-y-hidden">
+    <BaseLayout className="flex flex-col justify-end overflow-y-hidden">
       <span className="flex w-full justify-center overflow-x-clip">
         <Image
           src={twoFarmers}

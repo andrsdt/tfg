@@ -7,8 +7,8 @@ export const NotificationsButton = () => {
 
   return (
     <Link className="relative" href={NEXT_ROUTES.HOME}>
-      {numNotifications && (
-        <span className="absolute right-0 top-0 inline-flex aspect-square h-6 w-6 -translate-y-2 translate-x-1 transform items-center justify-center rounded-full rounded-full bg-light-red text-sm font-bold leading-none text-white">
+      {!!numNotifications && (
+        <span className="absolute right-0 top-0 inline-flex aspect-square h-6 w-6 -translate-y-2 translate-x-1 transform items-center justify-center rounded-full bg-light-red text-sm font-bold leading-none text-white">
           {numNotifications}
         </span>
       )}

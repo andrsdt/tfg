@@ -16,6 +16,7 @@ type FormProps<TFormValues, Schema> = {
   options?: UseFormProps<TFormValues>;
   id?: string;
   schema?: Schema;
+  defaults?: TFormValues;
 };
 
 export const Form = <
@@ -32,11 +33,20 @@ export const Form = <
   options,
   id,
   schema,
+  defaults,
 }: FormProps<TFormValues, Schema>) => {
   const methods = useForm<TFormValues>({
     ...options,
     resolver: schema && zodResolver(schema),
   });
+
+  // For setting default values after the form has been initialized (e.g. editing a listing)
+  React.useEffect(() => {
+    if (defaults) {
+      methods.reset(defaults);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaults]);
 
   return (
     <form

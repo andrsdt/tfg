@@ -19,6 +19,11 @@
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off"
   },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
   "settings": {
     "react": {
       "createClass": "createReactClass", // Regex for Component Factory to use,

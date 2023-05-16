@@ -1,6 +1,7 @@
 import { Button } from '@/components/Elements/Button';
 import { Form, InputField, PasswordField } from '@/components/Form';
 import { useAuth } from '@/hooks/useAuth';
+import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import clsx from 'clsx';
 import * as z from 'zod';
 
@@ -27,8 +28,10 @@ type SignupFormProps = {
 
 export const SignupForm = ({ className }: SignupFormProps) => {
   const { signup } = useAuth();
+  const [handleSignup, isSubmitting] = useSubmissionHandler(signup);
+
   return (
-    <Form<SignupValues, typeof schema> onSubmit={signup} schema={schema}>
+    <Form<SignupValues, typeof schema> onSubmit={handleSignup} schema={schema}>
       {({ register, formState }) => {
         return (
           <div className={clsx('space-y-8', className)}>
@@ -75,7 +78,11 @@ export const SignupForm = ({ className }: SignupFormProps) => {
               error={formState.errors['password']}
               registration={register('password')}
             />
-            <Button type="submit" className="w-full px-8">
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              className="w-full px-8"
+            >
               REGISTRARSE
             </Button>
           </div>

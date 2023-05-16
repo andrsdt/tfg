@@ -5,12 +5,13 @@ import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import Farm from '/public/illustrations/farm.svg';
 import { BaseLayout } from '@/components/Layouts';
+import { ROLES } from '@/constants/roles';
 
 const Signup = () => {
-  useAuth({ middleware: ['guest'] });
+  useAuth({ roles: [ROLES.GUEST] });
 
   return (
-    <BaseLayout className="flex h-full flex-col justify-start">
+    <BaseLayout className="flex flex-col justify-start">
       <span className="flex w-full justify-center overflow-x-hidden">
         <Farm className="origin-bottom" />
       </span>

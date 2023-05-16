@@ -13,6 +13,9 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     email = models.EmailField(_("email address"), blank=True, unique=True)
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    photo = models.ImageField(_("photo"), upload_to="users/", blank=True, null=True)
+    # TODO: add location with PostGIS or something like that
+    # https://raphael-leger.medium.com/django-handle-latitude-and-longitude-54a4bb2f6e3b
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -27,9 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
         ),
     )
 
-    # TODO: implement permissions ()
-    is_producer = models.BooleanField(default=False)
-    is_consumer = models.BooleanField(default=True)
+    # TODO: implement permissions
 
     objects = UserManager()
 
@@ -43,6 +44,14 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     def get_short_name(self):
         """Return the short name for the user."""
         return self.first_name
+
+    @property
+    def is_producer(self) -> bool:
+        return hasattr(self, "producer")
+
+    @property
+    def is_consumer(self) -> bool:
+        return hasattr(self, "consumer")
 
     def __str__(self):
         return self.email

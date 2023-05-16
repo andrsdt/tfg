@@ -1,6 +1,7 @@
 import { Button } from '@/components/Elements/Button';
 import { Form, InputField, PasswordField } from '@/components/Form';
 import { useAuth } from '@/hooks/useAuth';
+import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import clsx from 'clsx';
 import * as z from 'zod';
 
@@ -20,9 +21,10 @@ type LoginFormProps = {
 
 export const LoginForm = ({ className }: LoginFormProps) => {
   const { login } = useAuth();
+  const [handleLogin, isSubmitting] = useSubmissionHandler(login);
 
   return (
-    <Form<LoginValues, typeof schema> onSubmit={login} schema={schema}>
+    <Form<LoginValues, typeof schema> onSubmit={handleLogin} schema={schema}>
       {({ register, formState }) => {
         return (
           <div className={clsx('space-y-8', className)}>
@@ -46,7 +48,7 @@ export const LoginForm = ({ className }: LoginFormProps) => {
               registration={register('password')}
             />
             <Button
-              disabled={formState.isSubmitting}
+              disabled={isSubmitting}
               type="submit"
               className="w-full px-8"
             >
