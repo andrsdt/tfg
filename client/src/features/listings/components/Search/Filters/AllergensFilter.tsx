@@ -9,7 +9,7 @@ import { FilterPill } from '../FilterPill';
 export const AllergensFilter = () => {
   return (
     <FilterPill
-      name="Alérgenos"
+      name="allergens"
       queries={['allergens']}
       Drawer={<AllergensDrawer />}
     />
@@ -26,13 +26,15 @@ const AllergensDrawer = () => {
   const toggleAllergen = (allergen: string) => {
     // If the allergen was selected, remove it from the list. After that,
     // push the new query to the URL without reloading the page (shallow)
+    const updatedAllergens = selectedAllergens.includes(allergen)
+      ? selectedAllergens.filter((a) => a !== allergen).join(',') // if removing an existing one
+      : [...selectedAllergens, allergen].join(','); // if adding a new one
+
     router.push(
       {
         query: {
           ...router.query,
-          allergens: selectedAllergens.includes(allergen)
-            ? selectedAllergens.filter((a) => a !== allergen).join(',')
-            : [...selectedAllergens, allergen].join(','),
+          allergens: updatedAllergens,
         },
       },
       undefined,
@@ -61,7 +63,7 @@ const AllergensDrawer = () => {
               alt="Ilustración del alérgeno"
               width={35}
               // TODO: add p-1 below once the images are fixed (perfect circles)
-              className="m-0.5 aspect-square rounded-full border-2 border-white bg-white object-cover"
+              className="m-0.5 mr-1.5 aspect-square rounded-full border-2 border-white bg-white object-cover"
             />
             {capitalize(allergen.translation)}
           </Pill>

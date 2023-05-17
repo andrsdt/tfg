@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 export type NotificationType = 'info' | 'warning' | 'success' | 'error';
 
@@ -34,6 +33,5 @@ const notificationsStore = (set) => ({
     })),
 });
 
-export const useNotificationStore = create(
-  devtools<NotificationsStore>(notificationsStore)
-);
+export const useNotificationStore =
+  create<NotificationsStore>(notificationsStore);

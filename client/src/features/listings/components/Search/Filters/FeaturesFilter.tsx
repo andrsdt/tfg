@@ -9,7 +9,7 @@ import { FilterPill } from '../FilterPill';
 export const FeaturesFilter = () => {
   return (
     <FilterPill
-      name="Características"
+      name="features"
       queries={['features']}
       Drawer={<FeaturesDrawer />}
     />
@@ -45,7 +45,7 @@ const FeaturesDrawer = () => {
     <div className="text-start">
       <h1 className="text-3xl font-bold tracking-tight">Características</h1>
       <p className="mb-8 text-xl font-light text-gray">
-        Que quieras en tus productos
+        Del producto que buscas
       </p>
       <span className="flex flex-wrap">
         {Object.values(FEATURES).map((feature) => (
@@ -59,7 +59,7 @@ const FeaturesDrawer = () => {
               src={feature.icon as any}
               alt="Ilustración de la característica"
               width={35}
-              className="m-0.5 rounded-full border-2 border-white bg-white p-1"
+              className="m-0.5 mr-1 rounded-full border-2 border-white bg-white p-1"
             />
             {capitalize(feature.translation)}
           </Pill>
