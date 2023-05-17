@@ -1,4 +1,4 @@
-import { BackButton } from '@/components/Elements';
+import { BubbleBackButton } from '@/components/Elements';
 import { LayoutWithNavbar } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
@@ -10,7 +10,7 @@ import {
 import { ListingForm } from '@/features/listings/components/Form/ListingForm';
 import { Listing } from '@/features/listings/types/listings';
 import { useAuth } from '@/hooks/useAuth';
-import { useRetrieveHandler } from '@/hooks/useRetreiveHandler';
+import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import { urltoFile } from '@/utils/base64';
 import { emitSuccess } from '@/utils/notifications';
@@ -56,7 +56,7 @@ const EditListing = ({ pageProps }: EditListingProps) => {
   if (!existingListing) return <>Loading...</>;
   return (
     <LayoutWithNavbar className="px-4">
-      <BackButton />
+      <BubbleBackButton />
       <ListingForm
         defaults={existingListing}
         onSubmit={(data) => handleUpdateListing({ id: pageProps.id }, data)}

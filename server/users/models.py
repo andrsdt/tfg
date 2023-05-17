@@ -1,6 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 from grocerin.mixins import TimestampsMixin
 from users.managers import UserManager
@@ -14,8 +14,9 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     photo = models.ImageField(_("photo"), upload_to="users/", blank=True, null=True)
-    # TODO: add location with PostGIS or something like that
-    # https://raphael-leger.medium.com/django-handle-latitude-and-longitude-54a4bb2f6e3b
+    location = models.PointField(_("location"), geography=True, null=True)
+    phone = models.CharField(_("phone"), max_length=20, blank=True, null=True)
+
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -29,8 +30,6 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
-
-    # TODO: implement permissions
 
     objects = UserManager()
 
@@ -52,6 +51,12 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     @property
     def is_consumer(self) -> bool:
         return hasattr(self, "consumer")
+
+    # A user will have completed the onboarding when they have set their location and phone number
+    @property
+    def has_completed_onboarding(self) -> bool:
+        required_fields = [self.location, self.phone]
+        return all(required_fields)
 
     def __str__(self):
         return self.email

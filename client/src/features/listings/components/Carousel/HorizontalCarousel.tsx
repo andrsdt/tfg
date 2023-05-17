@@ -19,6 +19,8 @@ export const ListingHorizontalCarousel = ({
   const [emblaRef] = useEmblaCarousel(options);
 
   if (!listings) return <>Loading...</>;
+  // TODO: remove this console.log once we know why some listings don't have .map()
+  // if listings doesn't have map in its prototype, console.log something
   return (
     <div className={clsx(styles.embla, '-mx-6')}>
       <div className={clsx(styles.embla__viewport, 'px-6')} ref={emblaRef}>

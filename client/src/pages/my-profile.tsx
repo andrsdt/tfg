@@ -7,15 +7,16 @@ import {
   ProfileButton,
 } from '@/features/users/components/Button/ProfileBox';
 import { useAuth } from '@/hooks/useAuth';
+import { formatPhoneNumber } from '@/utils/formatters';
 import {
   ArrowLeftOnRectangleIcon,
-  CakeIcon,
   EnvelopeIcon,
   LockClosedIcon,
   PhoneIcon,
   QuestionMarkCircleIcon,
   WalletIcon,
 } from '@heroicons/react/24/outline';
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import React from 'react';
 
@@ -43,6 +44,19 @@ const Profile = () => {
         </Link>
       )}
       <div className="mt-8 flex w-full flex-col space-y-4">
+        {!user.has_completed_onboarding && (
+          <div className="flex w-full flex-col space-y-3 rounded-2xl bg-yellow p-3">
+            <Link
+              className="flex w-full justify-between rounded-2xl bg-light-yellow px-6 py-4 text-black"
+              href={NEXT_ROUTES.COMPLETE_ONBOARDING}
+            >
+              <span className="flex items-center text-lg">
+                <ExclamationCircleIcon className="mr-2 w-8" />
+                Termina de completar tu perfil
+              </span>
+            </Link>
+          </div>
+        )}
         <ProfileBox>
           <ProfileButton
             title="Mis movimientos"
@@ -52,12 +66,18 @@ const Profile = () => {
         </ProfileBox>
         <ProfileBox>
           <ProfileButton title={user.email} Icon={<EnvelopeIcon />} href="" />
-          <ProfileButton title="+34 601 928 332" Icon={<PhoneIcon />} href="" />
-          <ProfileButton
+          {user.phone && (
+            <ProfileButton
+              title={formatPhoneNumber(user.phone)}
+              Icon={<PhoneIcon />}
+              href=""
+            />
+          )}
+          {/* <ProfileButton
             title="12 de enero de 1961"
             Icon={<CakeIcon />}
             href=""
-          />
+          /> */}
           <ProfileButton
             title="Cambiar contraseña..."
             Icon={<LockClosedIcon />}

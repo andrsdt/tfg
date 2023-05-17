@@ -8,15 +8,17 @@ const noopTransform = async (data) => await data;
 type useRetrieveHandlerProps<O, T> = {
   transform?: (data: O) => Promise<T>;
   onError?: (error: any) => void;
+  fetchOnChange?: any[];
 };
 
 export const useRetrieveHandler = <O, T>(
   retrieveFn: (...args: any[]) => Promise<OperationResponse<O>>,
-  { transform, onError }: useRetrieveHandlerProps<O, T> = {
+  { transform, onError, fetchOnChange }: useRetrieveHandlerProps<O, T> = {
     transform: noopTransform,
     onError: () => {
       return;
     },
+    fetchOnChange: [],
   }
 ) => {
   const [data, setData] = useState<T>(null);
@@ -29,16 +31,17 @@ export const useRetrieveHandler = <O, T>(
       try {
         const response = await retrieveFn(...args);
 
-        // TODO: this is supposed to be an <OperationResponse<O>>
-        // but it's actually <O>, thus the workaround. I have to
-        // look into this, it could be a bug in openapi-client-axios.
-        const transformedResponse = await transform(response as O);
+        // TODO: sometimes response is an <OperationResponse<O>>
+        // but some other it's already <O>, thus the workaround. I have
+        // to look into this, it could be a bug in openapi-client-axios.
+        const sanitizedResponse = (response?.data ?? response) as O;
+        const transformedResponse = await transform(sanitizedResponse);
         setData(transformedResponse);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
         setIsError(true);
-        onError(error);
+        onError?.(error);
         throw error;
       }
     },
@@ -48,7 +51,8 @@ export const useRetrieveHandler = <O, T>(
   useEffect(() => {
     if (data || isError) return;
     handleRetrieve();
-  }, [handleRetrieve, data, isError]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isError, ...(fetchOnChange || [])]);
 
   return [data, isLoading, isError] as const;
 };

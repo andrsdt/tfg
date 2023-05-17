@@ -34,7 +34,7 @@ export const ProfileButton = ({
   return (
     <button onClick={onClick}>
       <Link
-        className="flex w-full justify-between rounded-2xl bg-white p-4 text-black"
+        className="flex w-full justify-between rounded-2xl bg-white p-4"
         href={href}
       >
         <span className="flex items-center text-lg">

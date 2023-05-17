@@ -29,11 +29,9 @@ declare namespace Components {
         export type AllergenEnum = "LACTOSE" | "WHEAT" | "NUTS" | "CELERY" | "CRUSTACEANS" | "EGG" | "FISH" | "GLUTEN" | "LUPINS" | "MILK" | "MOLLUSKS" | "MUSTARD" | "PEANUTS" | "SESAME" | "SOYBEANS" | "SULPHITES";
         export interface BecomeProducer {
             document: string;
-            phone: string;
         }
         export interface BecomeProducerRequest {
             document: string;
-            phone: string;
         }
         export interface CustomLoginRequest {
             email: string; // email
@@ -61,7 +59,24 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             is_producer: boolean;
+            has_completed_onboarding: boolean;
             photo?: string | null; // uri
+            phone?: string | null;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
             created_at: string; // date-time
         }
         /**
@@ -71,6 +86,22 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             photo?: string | null; // binary
+            phone?: string | null;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
         }
         /**
          * * `ALLOWS_DELIVERY` - allows_delivery
@@ -95,7 +126,6 @@ declare namespace Components {
                 };
                 biography?: string | null;
                 document: string;
-                phone: string;
             };
             created_at: string; // date-time
             updated_at: string; // date-time
@@ -107,7 +137,7 @@ declare namespace Components {
              */
             UnitEnum;
             price_per_unit: number;
-            g_per_unit: number;
+            g_per_unit?: null | number;
             available_quantity: number;
         }
         export interface ListingCreate {
@@ -175,6 +205,22 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             photo?: string | null; // binary
+            phone?: string | null;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
         }
         export interface PatchedListingCreateRequest {
             title?: string;
@@ -201,7 +247,6 @@ declare namespace Components {
             };
             biography?: string | null;
             document: string;
-            phone: string;
         }
         export interface ProductAllergen {
             allergen: /**
@@ -366,6 +411,30 @@ declare namespace Paths {
         }
     }
     namespace ListingsList {
+        namespace Parameters {
+            export type Allergens = string;
+            export type AvailableQuantityMax = number;
+            export type AvailableQuantityMin = number;
+            export type Features = string;
+            export type OrderBy = ("-available_quantity" | "-created_at" | "-price" | "-updated_at" | "available_quantity" | "created_at" | "price" | "updated_at")[];
+            export type PriceMax = number;
+            export type PriceMin = number;
+            export type Producer = string;
+            export type Title = string;
+            export type Unit = string;
+        }
+        export interface QueryParameters {
+            allergens?: Parameters.Allergens;
+            available_quantity_max?: Parameters.AvailableQuantityMax;
+            available_quantity_min?: Parameters.AvailableQuantityMin;
+            features?: Parameters.Features;
+            order_by?: Parameters.OrderBy;
+            price_max?: Parameters.PriceMax;
+            price_min?: Parameters.PriceMin;
+            producer?: Parameters.Producer;
+            title?: Parameters.Title;
+            unit?: Parameters.Unit;
+        }
         namespace Responses {
             export type $200 = Components.Schemas.Listing[];
         }
@@ -409,17 +478,6 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.BecomeProducerRequest;
         namespace Responses {
             export type $201 = Components.Schemas.BecomeProducer;
-        }
-    }
-    namespace ProducersListingsList {
-        namespace Parameters {
-            export type Id = number;
-        }
-        export interface PathParameters {
-            id: Parameters.Id;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.Listing[];
         }
     }
     namespace ProducersRetrieve {
@@ -561,7 +619,7 @@ export interface OperationMethods {
    * listings_list
    */
   'listings_list'(
-    parameters?: Parameters<UnknownParamsObject> | null,
+    parameters?: Parameters<Paths.ListingsList.QueryParameters> | null,
     data?: any,
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ListingsList.Responses.$200>
@@ -621,14 +679,6 @@ export interface OperationMethods {
     data?: any,
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
-  /**
-   * producers_listings_list
-   */
-  'producers_listings_list'(
-    parameters?: Parameters<Paths.ProducersListingsList.PathParameters> | null,
-    data?: any,
-    config?: AxiosRequestConfig  
-  ): OperationResponse<Paths.ProducersListingsList.Responses.$200>
 }
 
 export interface PathsDictionary {
@@ -774,7 +824,7 @@ export interface PathsDictionary {
      * listings_list
      */
     'get'(
-      parameters?: Parameters<UnknownParamsObject> | null,
+      parameters?: Parameters<Paths.ListingsList.QueryParameters> | null,
       data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ListingsList.Responses.$200>
@@ -840,16 +890,6 @@ export interface PathsDictionary {
       data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
-  }
-  ['/producers/{id}/listings']: {
-    /**
-     * producers_listings_list
-     */
-    'get'(
-      parameters?: Parameters<Paths.ProducersListingsList.PathParameters> | null,
-      data?: any,
-      config?: AxiosRequestConfig  
-    ): OperationResponse<Paths.ProducersListingsList.Responses.$200>
   }
 }
 

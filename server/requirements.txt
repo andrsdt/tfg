@@ -27,3 +27,4 @@ django-phonenumber-field==7.1.0
 djangorestframework-composed-permissions==4.2
 rest_condition==4.2
 drf-extra-fields==3.4.1
+djangorestframework-gis==1.0

@@ -7,5 +7,7 @@ export const listRecentListings = async (): Promise<
   OperationResponse<Paths.ListingsList.Responses.$200>
 > => {
   const client = await api.getClient<Client>();
-  return await client.listings_list();
+  return await client.listings_list({
+    order_by: '-created_at' as any,
+  });
 };

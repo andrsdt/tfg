@@ -1,7 +1,6 @@
 import os
 
 from decouple import config
-from dj_database_url import parse as db_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     # Developer Apps
     "authentication",
     "grocerin",
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "drf_spectacular",
     "drf_standardized_errors",
     "rest_framework",
+    "rest_framework_gis",
     "django_phonenumbers",
     "phonenumber_field",
     "django_cleanup.apps.CleanupConfig",
@@ -84,11 +85,14 @@ WSGI_APPLICATION = "grocerin.wsgi.application"
 
 
 DATABASES = {
-    "default": config(
-        "DATABASE_URL",
-        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3"),
-        cast=db_url,
-    )
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
+    }
 }
 
 
@@ -117,6 +121,7 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     "USER_DETAILS_SERIALIZER": "authentication.serializers.CustomUserDetailsSerializer",
     "LOGIN_SERIALIZER": "authentication.serializers.CustomLoginSerializer",
@@ -187,3 +192,7 @@ STATIC_URL = "/static/"
 # Setup support for proxy headers
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# PostGIS
+GDAL_LIBRARY_PATH = config("GDAL_LIBRARY_PATH")
+GEOS_LIBRARY_PATH = config("GEOS_LIBRARY_PATH")

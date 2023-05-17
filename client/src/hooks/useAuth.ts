@@ -31,7 +31,9 @@ export const useAuth = ({
     async () => {
       try {
         const client = await clientPromise;
-        return await client.auth_user_retrieve();
+        const response = await client.auth_user_retrieve();
+        return (response.data ??
+          response) as Components.Schemas.CustomUserDetails;
       } catch (error) {
         if (error.response.status !== 409) throw error;
         router.push(NEXT_ROUTES.LOGIN);
@@ -63,18 +65,14 @@ export const useAuth = ({
     window.location.pathname = NEXT_ROUTES.LOGIN;
   };
 
-  const userIsProducer = () => {
-    // NOTE: sometimes this is an axios response, some others, it's the user object
-    // I have to look into it, but for the moment we will just check both as it's only
-    // relevant here (it's casted to User when exposed to other components, in the hook's return)
+  const userIsProducer = async () => {
+    const currentUser = user || (await mutate());
+    return currentUser?.is_producer;
+  };
 
-    // NOTE: also allowing !user for the moment, there are sometimes in which user is still undefined.
-    // To be handled in the future
-    return (
-      user === undefined ||
-      user?.data?.is_producer ||
-      (user as any)?.is_producer
-    );
+  const userHasCompletedOnboarding = async () => {
+    const currentUser = user || (await mutate());
+    return currentUser?.has_completed_onboarding;
   };
 
   useEffect(() => {
@@ -90,11 +88,17 @@ export const useAuth = ({
     if (roles.includes(ROLES.NOT_PRODUCER) && userIsProducer()) {
       router.back();
     }
+    if (
+      roles.includes(ROLES.HAS_NOT_COMPLETED_ONBOARDING) &&
+      userHasCompletedOnboarding()
+    ) {
+      router.back();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, error]);
 
   return {
-    user: user as unknown as Components.Schemas.CustomUserDetails | undefined,
+    user,
     signup,
     login,
     logout,

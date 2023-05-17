@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
 type WithUnitFieldProps = FieldWrapperPassThroughProps & {
-  unit: string;
+  unit: React.ReactNode;
   className?: string;
   children: React.ReactNode;
 };
@@ -28,7 +28,7 @@ export const WithUnitField = ({
         {children}
         <span
           className={clsx(
-            'rounded-r-md bg-white px-4 py-2 text-xl font-semibold outline outline-1',
+            'flex h-full items-center rounded-r-md bg-white px-4 text-xl font-semibold outline outline-1',
             ' group-focus-within:text-white ',
             error
               ? 'text-light-red outline-light-red group-focus-within:bg-light-red group-focus-within:outline-light-red'

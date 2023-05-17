@@ -7,10 +7,12 @@ const NEXT_ROUTES = {
   FAVORITES: '/favorites',
   MY_PROFILE: '/my-profile',
   BECOME_PRODUCER: '/become-producer',
+  COMPLETE_ONBOARDING: '/complete-onboarding',
   PRODUCER_PROFILE: (id) => urlWithParams('/producers/[id]', { id }),
   DETAILS_LISTING: (id) => urlWithParams('/listings/[id]', { id }),
   EDIT_LISTING: (id) => urlWithParams('/listings/[id]/edit', { id }),
   REPORT_LISTING: (id) => urlWithParams('/listings/[id]/report', { id }),
+  SEARCH_LISTINGS: '/search',
 };
 
 const urlWithParams = (route, params) => {

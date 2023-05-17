@@ -1,5 +1,5 @@
 import { ImageResponse } from '@vercel/og';
-import Logo from '/public/icons/grocerin.svg';
+import Logo from '/public/logos/grocerin.svg';
 import { COLORS } from '@/constants';
 
 export const config = {

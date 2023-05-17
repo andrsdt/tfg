@@ -1,5 +1,5 @@
 import { Separator } from '@/components/Elements';
-import { BackButton } from '@/components/Elements/Button';
+import { BubbleBackButton } from '@/components/Elements/Button';
 import { BaseLayout } from '@/components/Layouts';
 import { retrieveListing } from '@/features/listings/api/retrieve';
 import { MutableCarousel } from '@/features/listings/components/Carousel';
@@ -7,7 +7,7 @@ import { ListingDetailsDrawer } from '@/features/listings/components/Drawer';
 import { ListingOptionsDropdown } from '@/features/listings/components/Dropdown/OptionsDropdown';
 import { AllergenList } from '@/features/listings/components/Lists';
 import { FeatureList } from '@/features/listings/components/Lists/Features';
-import { useRetrieveHandler } from '@/hooks/useRetreiveHandler';
+import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import dayjs from '@/lib/dayjs';
 
 export const getServerSideProps = async (context) => {
@@ -27,15 +27,19 @@ type ListingProps = {
 
 const Listing = ({ pageProps }: ListingProps) => {
   const { id } = pageProps;
-  const [listing, isLoading, isError] = useRetrieveHandler(() =>
-    retrieveListing(id)
+  const [listing, isLoading, isError] = useRetrieveHandler(
+    () => retrieveListing(id),
+    {
+      // TODO: look into this so we can omit it
+      transform: async (res) => res,
+    }
   );
 
   if (!listing || isLoading || isError) return <></>;
 
   return (
     <BaseLayout className="flex flex-col justify-between">
-      <BackButton />
+      <BubbleBackButton />
       <div className="bg-white">
         <div className="relative">
           <ListingOptionsDropdown listing={listing} />

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Avatar from '../Avatar/Avatar';
-import { User } from '../types/users';
+import { User } from '../../types/users';
 
 type UserCardProps = {
   user: User;

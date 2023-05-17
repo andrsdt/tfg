@@ -7,5 +7,8 @@ export const listRecentListingsByProducer = async (
   id: string
 ): Promise<OperationResponse<Paths.ListingsList.Responses.$200>> => {
   const client = await api.getClient<Client>();
-  return await client.producers_listings_list(id);
+  return await client.listings_list({
+    order_by: '-updated_at' as any,
+    producer: id,
+  });
 };

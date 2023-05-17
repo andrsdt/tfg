@@ -1,8 +1,10 @@
 import { Button } from '@/components/Elements/Button';
 import { Form, InputField, PasswordField } from '@/components/Form';
+import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 import * as z from 'zod';
 
 const lettersOnly = /^[A-zÀ-ÖØ-öø-ÿ]+( ?[A-zÀ-ÖØ-öø-ÿ]+)?$/;
@@ -28,7 +30,10 @@ type SignupFormProps = {
 
 export const SignupForm = ({ className }: SignupFormProps) => {
   const { signup } = useAuth();
-  const [handleSignup, isSubmitting] = useSubmissionHandler(signup);
+  const router = useRouter();
+  const [handleSignup, isSubmitting] = useSubmissionHandler(signup, {
+    onSuccess: () => router.push(NEXT_ROUTES.COMPLETE_ONBOARDING),
+  });
 
   return (
     <Form<SignupValues, typeof schema> onSubmit={handleSignup} schema={schema}>

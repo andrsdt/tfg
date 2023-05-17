@@ -16,7 +16,7 @@ import { FieldError } from 'react-hook-form';
 import { CreateListingDTO } from '../../api/create';
 import { UpdateListingDTO } from '../../api/update';
 import { createSchema } from '../../schemas/create';
-import { Unit } from '../../types/units';
+import { UNITS, Unit } from '../../types/units';
 import { MutableAllergensList } from '../Lists';
 import { MutableFeaturesList } from '../Lists/MutableFeaturesList';
 import { ImageCarouselInput } from './ImageCarouselInput';
@@ -49,6 +49,10 @@ export const ListingForm = ({
         const hasChosenListingUnit = !!watch('unit'); // kg or unit
         const hasEnteredQuantity = !!watch('available_quantity');
         const hasEnteredPricePerUnit = !!watch('price_per_unit');
+        const hasOneQuantity = watch('available_quantity') === 1;
+
+        const unit = UNITS[watch('unit') || 'KG'];
+
         return (
           <div className="flex h-full flex-col justify-between">
             <div className="flex flex-col space-y-2">
@@ -96,8 +100,12 @@ export const ListingForm = ({
                 showIf={hasChosenListingUnit}
               >
                 <WithUnitField
-                  unit={watch('unit') === 'UNIT' ? 'uds' : 'kg'}
-                  className="w-min"
+                  unit={
+                    hasOneQuantity
+                      ? unit.translationShort
+                      : unit.translationShortPlural
+                  }
+                  className="h-12 w-min"
                   error={formState.errors['available_quantity']}
                 >
                   <input
@@ -110,14 +118,12 @@ export const ListingForm = ({
                 </WithUnitField>
               </ConditionalInputField>
               <ConditionalInputField
-                title={`El precio por ${
-                  watch('unit') === 'KG' ? 'kg' : 'unidad'
-                } es de...`}
+                title={`El precio por ${unit.translation} es de...`}
                 showIf={hasChosenListingUnit && hasEnteredQuantity}
               >
                 <WithUnitField
                   unit="€"
-                  className={'w-min'}
+                  className="h-12 w-min"
                   error={formState.errors['price_per_unit']}
                 >
                   <CurrencyInput
@@ -128,11 +134,11 @@ export const ListingForm = ({
               </ConditionalInputField>
               <ConditionalInputField
                 title="Cada unidad pesa... (opcional)"
-                showIf={watch('unit') === 'UNIT' && hasEnteredPricePerUnit}
+                showIf={unit === UNITS.UNIT && hasEnteredPricePerUnit}
               >
                 <WithUnitField
                   unit="g"
-                  className="w-min"
+                  className="h-12 w-min"
                   error={formState.errors['g_per_unit']}
                 >
                   <input

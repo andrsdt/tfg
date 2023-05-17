@@ -1,4 +1,3 @@
-from phonenumber_field.serializerfields import PhoneNumberField
 from producers.models import Producer
 from producers.validators import IsValidDocument
 from rest_framework import serializers
@@ -20,16 +19,14 @@ class BecomeProducerSerializer(serializers.ModelSerializer):
     document = serializers.CharField(
         max_length=20, required=True, validators=[IsValidDocument]
     )
-    phone = PhoneNumberField(region="ES", required=True)
 
     class Meta:
         model = Producer
-        fields = ("user", "document", "phone")
+        fields = ("user", "document")
 
     def create(self, validated_data):
         producer = become_producer(
             user=validated_data["user"],
             document=validated_data["document"],
-            phone=validated_data["phone"],
         )
         return producer

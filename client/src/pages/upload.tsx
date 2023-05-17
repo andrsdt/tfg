@@ -1,4 +1,4 @@
-import { BackButton } from '@/components/Elements';
+import { BubbleBackButton } from '@/components/Elements';
 import { LayoutWithNavbar } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
@@ -27,7 +27,7 @@ const Upload = () => {
 
   return (
     <LayoutWithNavbar className="px-4">
-      <BackButton />
+      <BubbleBackButton />
       <ListingForm onSubmit={handleCreateListing} isSubmitting={isSubmitting} />
     </LayoutWithNavbar>
   );

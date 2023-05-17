@@ -7,7 +7,7 @@ import { Listing } from '@/features/listings/types/listings';
 import { retrieveProducer } from '@/features/producers/api/retrieve';
 import { Producer } from '@/features/producers/types/producers';
 import Avatar from '@/features/users/components/Avatar/Avatar';
-import { useRetrieveHandler } from '@/hooks/useRetreiveHandler';
+import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useToggle } from '@/hooks/useToggle';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
@@ -30,11 +30,18 @@ type ProfileProps = {
 const Profile = ({ pageProps }: ProfileProps) => {
   const { id } = pageProps;
   const router = useRouter();
-  const [producer, isLoading, isError] = useRetrieveHandler(() =>
-    retrieveProducer(id)
+  const [producer, isLoading, isError] = useRetrieveHandler(
+    () => retrieveProducer(id),
+    {
+      // TODO: look into this so we can omit it
+      transform: async (res) => res,
+    }
   );
   const [recentListings, isLoadingRecentListings, isErrorRecentListings] =
-    useRetrieveHandler(() => listRecentListingsByProducer(id));
+    useRetrieveHandler(() => listRecentListingsByProducer(id), {
+      // TODO: look into this so we can omit it
+      transform: async (res) => res,
+    });
 
   if (isError) router.push(NEXT_ROUTES.HOME);
   if (isLoading || isError || isLoadingRecentListings || isErrorRecentListings)

@@ -45,7 +45,10 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "first_name",
             "last_name",
             "is_producer",
+            "has_completed_onboarding",
             "photo",
+            "phone",
+            "location",
             "created_at",
         ]
         read_only_fields = ["pk", "email", "is_producer"]

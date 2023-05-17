@@ -6,9 +6,5 @@ router = routers.SimpleRouter()
 router.register(r"", ListingViewSet)
 
 urlpatterns = [
-    path(
-        "producers/<int:pk>/listings",
-        ListingViewSet.as_view({"get": "list_recents_by_producer"}),
-    ),
     path("listings/", include(router.urls)),
 ]
