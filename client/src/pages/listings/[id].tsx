@@ -9,6 +9,7 @@ import { AllergenList } from '@/features/listings/components/Lists';
 import { FeatureList } from '@/features/listings/components/Lists/Features';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import dayjs from '@/lib/dayjs';
+import { capitalize } from '@/utils/formatters';
 
 export const getServerSideProps = async (context) => {
   const { id } = context.params;
@@ -50,7 +51,7 @@ const Listing = ({ pageProps }: ListingProps) => {
           <AllergenList allergens={listing.allergens.map((a) => a.allergen)} />
           <p>{listing.description}</p>
           <span className="mt-5 flex w-full justify-between text-lg">
-            <p>{dayjs(listing.updated_at).format('DD/MM/YYYY')}</p>
+            <p>{capitalize(dayjs(listing.updated_at).fromNow())}</p>
           </span>
           <Separator />
           <FeatureList

@@ -75,7 +75,7 @@ const ChooseAllergensDialog = (
       {Object.values(ALLERGENS).map((allergen) => (
         <button
           className={clsx(
-            'flex flex-col items-center -space-y-5',
+            'flex flex-col items-center p-2',
             selectedAllergens.includes(allergen.name)
               ? 'rounded-md outline outline-2 outline-light-gray'
               : 'grayscale'
@@ -86,7 +86,7 @@ const ChooseAllergensDialog = (
           }
         >
           <Image
-            className="w-2/3"
+            className="w-2/3 pb-2"
             src={allergen.icon as any}
             alt={allergen.translation}
           />

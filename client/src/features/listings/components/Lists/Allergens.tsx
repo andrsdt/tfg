@@ -15,7 +15,10 @@ export const AllergenList = ({
   props,
 }: AllergenListProps) => {
   return (
-    <div className={clsx(className, 'flex flex-wrap space-x-1')} {...props}>
+    <div
+      className={clsx(className, 'flex flex-wrap space-x-1.5 py-1')}
+      {...props}
+    >
       {allergens.map((allergen: string) => {
         const key = Object.keys(ALLERGENS).find(
           (k) => k === allergen.toUpperCase()
@@ -29,6 +32,7 @@ export const AllergenList = ({
             width={40}
             height={40}
             alt={allergen}
+            className="my-1"
           />
         );
       })}
