@@ -1,7 +1,7 @@
 import { LayoutWithNavbar } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
-import Avatar from '@/features/users/components/Avatar/Avatar';
+import { EditableAvatar } from '@/features/users/components/Avatar/EditableAvatar';
 import {
   ProfileBox,
   ProfileButton,
@@ -18,7 +18,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
-import React from 'react';
 
 const Profile = () => {
   const { user, logout } = useAuth({ roles: [ROLES.AUTHENTICATED] });
@@ -28,8 +27,7 @@ const Profile = () => {
 
   return (
     <LayoutWithNavbar className="flex flex-col items-center px-4 pb-4 pt-6">
-      {/* TODO: editable avatar component, that has the camera button and the logic behind */}
-      <Avatar src={user.photo} alt={user.first_name} className="w-32" />
+      <EditableAvatar user={user} />
       <h1 className="mt-2 text-2xl font-bold">
         {user.first_name} {user.last_name}
       </h1>

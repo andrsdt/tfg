@@ -5,13 +5,14 @@ type AvatarProps = {
   src: string;
   alt?: string;
   className?: string;
+  props?: any;
 };
 
 export default function Avatar({
   src = '',
   alt = 'Profile picture',
   className = '',
-  ...props
+  props,
 }: AvatarProps) {
   return (
     <Image

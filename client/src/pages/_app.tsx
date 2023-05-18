@@ -1,6 +1,6 @@
+import { ToastManager } from '@/components/Elements/Toast';
 import { PhoneLayout } from '@/components/Layouts';
-import { ToastManager } from '@/components/Notifications';
-import { API_URL } from '@/config';
+import { API_URL, GOOGLE_MAPS_API_KEY } from '@/config';
 import { COLORS } from '@/constants';
 import '@/styles/globals.css';
 import { AppProps } from 'next/app';
@@ -39,6 +39,11 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
           type="image/png"
           sizes="32x32"
         />
+        {/* TODO: take the api key somewhere so it doesn't */}
+        <script
+          src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`}
+        />
+
         {/* Avoid black notch in iOS devices */}
         <meta name="apple-mobile-web-app-capable" content="yes"></meta>
         <meta

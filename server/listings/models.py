@@ -18,13 +18,10 @@ class Listing(TimestampsMixin):
     # TODO: force between 1 and 10 images on create/update
     # images = models.ManyToManyField("ListingImage")
     unit = models.CharField(max_length=10, choices=PRODUCT_UNIT_CHOICES)  # kg, unitary
-    # 1 if unit == kg, input by user if unit == unitary
     price_per_unit = models.PositiveIntegerField()
     g_per_unit = models.PositiveIntegerField(null=True)
     # TODO: check if this ensures that at least there is 1 unit/kg available
     available_quantity = models.PositiveIntegerField()  # 10kg, 10units
-    # allergens = models.ManyToManyField("ProductAllergen")
-    # features = models.ManyToManyField("ProductFeature")
     producer = models.ForeignKey("producers.Producer", on_delete=models.CASCADE)
     # location. TODO: set on product or on user?
     # category = models.CharField(choices=CATEGORY_CHOICES)
@@ -33,6 +30,9 @@ class Listing(TimestampsMixin):
 
     def __str__(self):
         return self.title
+
+    def is_favorite(self, user) -> bool:
+        return user.favorites.filter(id=self.id).exists()
 
 
 class ListingImage(models.Model):

@@ -1,9 +1,11 @@
+from listings.business_logic import dislike_listing, like_listing
 from listings.filters import ListingFilterSet
 from listings.models import Listing
 from listings.permissions import IsListingOwner
 from listings.serializers import ListingCreateSerializer, ListingSerializer
 from producers.permissions import IsProducer
 from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
@@ -48,3 +50,15 @@ class ListingViewSet(viewsets.ModelViewSet):
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
+
+    @action(detail=True, methods=["post"])
+    def like(self, request, pk=None):
+        listing = self.get_object()
+        like_listing(listing, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=["post"])
+    def dislike(self, request, pk=None):
+        listing = self.get_object()
+        dislike_listing(listing, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)

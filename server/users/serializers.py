@@ -30,4 +30,12 @@ class UpdateCustomUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "first_name", "last_name", "photo", "created_at")
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "photo",
+            "phone",
+            "location",
+            "created_at",
+        )

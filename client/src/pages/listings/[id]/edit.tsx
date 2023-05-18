@@ -13,7 +13,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import { urltoFile } from '@/utils/base64';
-import { emitSuccess } from '@/utils/notifications';
+import { emitSuccess } from '@/utils/toasts';
 import router from 'next/router';
 
 const redirectAndNotify = async (listing: Listing) => {

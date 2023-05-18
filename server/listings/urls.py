@@ -7,4 +7,6 @@ router.register(r"", ListingViewSet)
 
 urlpatterns = [
     path("listings/", include(router.urls)),
+    path("listings/<int:pk>/like/", ListingViewSet.as_view({"post": "like"})),
+    path("listings/<int:pk>/dislike/", ListingViewSet.as_view({"post": "dislike"})),
 ]

@@ -26,8 +26,8 @@ export const createListing = async (
     images: await Promise.all(
       data.images.map(async (i: File) => {
         const compressedImage = await compressImage(i);
-        const base64image = await fileToBase64(compressedImage);
-        return { image: base64image };
+        const compressedBase64image = await fileToBase64(compressedImage);
+        return { image: compressedBase64image };
       })
     ),
     unit: data.unit,

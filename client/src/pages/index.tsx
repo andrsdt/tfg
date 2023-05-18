@@ -1,4 +1,4 @@
-import { NotificationsButton } from '@/components/Elements';
+import { NotificationsButton } from '@/features/notifications/components';
 import { LayoutWithNavbar } from '@/components/Layouts';
 import { listNearbyListings } from '@/features/listings/api/listNearby';
 import { listRecentListings } from '@/features/listings/api/listRecent';
@@ -7,17 +7,15 @@ import { ListingHorizontalCarousel } from '@/features/listings/components/Carous
 import { ListingSearchBar } from '@/features/listings/components/Search/SearchBar';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { uuid } from '@/utils/uuid';
-
-// TODO: make this optional in such a way it does not mess with types in response
-const transform = async (res) => await res;
+import { Listing } from '@/features/listings/types/listings';
 
 const Home = () => {
-  const [recentListings] = useRetrieveHandler(() => listRecentListings(), {
-    transform,
-  });
-  const [nearbyListings] = useRetrieveHandler(() => listNearbyListings(), {
-    transform,
-  });
+  const [recentListings] = useRetrieveHandler<Listing[], Listing[]>(
+    listRecentListings
+  );
+  const [nearbyListings] = useRetrieveHandler<Listing[], Listing[]>(
+    listNearbyListings
+  );
 
   return (
     <LayoutWithNavbar className="p-6">

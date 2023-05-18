@@ -2,7 +2,7 @@ import { API_URL } from '@/config';
 import { APIError } from '@/types/errors';
 import { Client } from '@/types/openapi';
 import { getCookie } from '@/utils/cookies';
-import { emitError, emitSuccess } from '@/utils/notifications';
+import { emitError, emitSuccess } from '@/utils/toasts';
 import OpenAPIClientAxios, {
   AxiosError,
   AxiosResponse,
@@ -35,13 +35,14 @@ const responseInterceptor = (response: AxiosResponse) => {
 
 const errorInterceptor = (error: AxiosError) => {
   const IGNORED_ERRORS = ['not_authenticated'];
-
   const response = error.response?.data as APIError;
+
   response.errors?.forEach((err) => {
     const title = `${err.code}`;
     const message = err.attr ? `${err.attr}: ${err.detail}` : err.detail;
-    if (!IGNORED_ERRORS.includes(err.code) && message)
-      emitError({ title, message });
+    if (IGNORED_ERRORS.includes(err.code)) {
+      return Promise.reject(error);
+    } else if (message) emitError({ title, message });
   });
   return Promise.reject(error);
 };

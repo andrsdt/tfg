@@ -27,11 +27,8 @@ declare namespace Components {
          * * `SULPHITES` - sulphites
          */
         export type AllergenEnum = "LACTOSE" | "WHEAT" | "NUTS" | "CELERY" | "CRUSTACEANS" | "EGG" | "FISH" | "GLUTEN" | "LUPINS" | "MILK" | "MOLLUSKS" | "MUSTARD" | "PEANUTS" | "SESAME" | "SOYBEANS" | "SULPHITES";
-        export interface BecomeProducer {
-            document: string;
-        }
-        export interface BecomeProducerRequest {
-            document: string;
+        export interface Count {
+            count: number;
         }
         export interface CustomLoginRequest {
             email: string; // email
@@ -60,7 +57,7 @@ declare namespace Components {
             last_name?: string;
             is_producer: boolean;
             has_completed_onboarding: boolean;
-            photo?: string | null; // uri
+            photo: string; // uri
             phone?: string | null;
             location?: {
                 type?: "Point";
@@ -85,7 +82,7 @@ declare namespace Components {
         export interface CustomUserDetailsRequest {
             first_name?: string;
             last_name?: string;
-            photo?: string | null; // binary
+            photo: string; // binary
             phone?: string | null;
             location?: {
                 type?: "Point";
@@ -122,11 +119,27 @@ declare namespace Components {
                     first_name?: string;
                     last_name?: string;
                     photo?: string | null; // uri
+                    phone?: string | null;
+                    location?: {
+                        type?: "Point";
+                        /**
+                         * example:
+                         * [
+                         *   12.9721,
+                         *   77.5933
+                         * ]
+                         */
+                        coordinates?: [
+                            number,
+                            number,
+                            number?
+                        ];
+                    } | null;
                     created_at: string; // date-time
                 };
                 biography?: string | null;
-                document: string;
             };
+            is_favorite: boolean;
             created_at: string; // date-time
             updated_at: string; // date-time
             title: string;
@@ -179,6 +192,48 @@ declare namespace Components {
         export interface ListingImageRequest {
             image: string; // binary
         }
+        export interface ListingRequest {
+            title: string;
+            description?: string | null;
+            unit: /**
+             * * `KG` - kilogram
+             * * `UNIT` - unitary
+             */
+            UnitEnum;
+            price_per_unit: number;
+            g_per_unit?: null | number;
+            available_quantity: number;
+        }
+        export interface Notification {
+            id: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            notification_type: /**
+             * * `CHAT_MESSAGE` - CHAT_MESSAGE
+             * * `NEW_LISTING` - NEW_LISTING
+             * * `NEW_REVIEW` - NEW_REVIEW
+             * * `NEW_LIKE` - NEW_LIKE
+             * * `REMINDER_REVIEW` - REMINDER_REVIEW
+             * * `REMINDER_COMPLETE_PROFILE` - REMINDER_COMPLETE_PROFILE
+             * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
+             */
+            NotificationTypeEnum;
+            data: {
+                [name: string]: any;
+            };
+            is_read?: boolean;
+            receiver: number;
+        }
+        /**
+         * * `CHAT_MESSAGE` - CHAT_MESSAGE
+         * * `NEW_LISTING` - NEW_LISTING
+         * * `NEW_REVIEW` - NEW_REVIEW
+         * * `NEW_LIKE` - NEW_LIKE
+         * * `REMINDER_REVIEW` - REMINDER_REVIEW
+         * * `REMINDER_COMPLETE_PROFILE` - REMINDER_COMPLETE_PROFILE
+         * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
+         */
+        export type NotificationTypeEnum = "CHAT_MESSAGE" | "NEW_LISTING" | "NEW_REVIEW" | "NEW_LIKE" | "REMINDER_REVIEW" | "REMINDER_COMPLETE_PROFILE" | "REPORT_CONFIRMATION";
         export interface PasswordChangeRequest {
             new_password1: string;
             new_password2: string;
@@ -204,7 +259,7 @@ declare namespace Components {
         export interface PatchedCustomUserDetailsRequest {
             first_name?: string;
             last_name?: string;
-            photo?: string | null; // binary
+            photo?: string; // binary
             phone?: string | null;
             location?: {
                 type?: "Point";
@@ -243,10 +298,28 @@ declare namespace Components {
                 first_name?: string;
                 last_name?: string;
                 photo?: string | null; // uri
+                phone?: string | null;
+                location?: {
+                    type?: "Point";
+                    /**
+                     * example:
+                     * [
+                     *   12.9721,
+                     *   77.5933
+                     * ]
+                     */
+                    coordinates?: [
+                        number,
+                        number,
+                        number?
+                    ];
+                } | null;
                 created_at: string; // date-time
             };
             biography?: string | null;
-            document: string;
+        }
+        export interface ProducerRequest {
+            biography?: string | null;
         }
         export interface ProductAllergen {
             allergen: /**
@@ -329,7 +402,44 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             photo?: string | null; // uri
+            phone?: string | null;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
             created_at: string; // date-time
+        }
+        export interface UserRequest {
+            first_name?: string;
+            last_name?: string;
+            photo?: string | null; // binary
+            phone?: string | null;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
         }
     }
 }
@@ -410,13 +520,40 @@ declare namespace Paths {
             }
         }
     }
+    namespace ListingsDislikeCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.ListingRequest;
+        namespace Responses {
+            export type $200 = Components.Schemas.Listing;
+        }
+    }
+    namespace ListingsLikeCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export type RequestBody = Components.Schemas.ListingRequest;
+        namespace Responses {
+            export type $200 = Components.Schemas.Listing;
+        }
+    }
     namespace ListingsList {
         namespace Parameters {
             export type Allergens = string;
             export type AvailableQuantityMax = number;
             export type AvailableQuantityMin = number;
+            export type Distance = string;
+            export type DistanceOrder = string;
+            export type Favorite = boolean;
             export type Features = string;
-            export type OrderBy = ("-available_quantity" | "-created_at" | "-price" | "-updated_at" | "available_quantity" | "created_at" | "price" | "updated_at")[];
+            export type OrderBy = ("-created_at" | "-price" | "-quantity" | "-updated_at" | "created_at" | "price" | "quantity" | "updated_at")[];
             export type PriceMax = number;
             export type PriceMin = number;
             export type Producer = string;
@@ -427,6 +564,9 @@ declare namespace Paths {
             allergens?: Parameters.Allergens;
             available_quantity_max?: Parameters.AvailableQuantityMax;
             available_quantity_min?: Parameters.AvailableQuantityMin;
+            distance?: Parameters.Distance;
+            distance_order?: Parameters.DistanceOrder;
+            favorite?: Parameters.Favorite;
             features?: Parameters.Features;
             order_by?: Parameters.OrderBy;
             price_max?: Parameters.PriceMax;
@@ -474,10 +614,20 @@ declare namespace Paths {
             export type $200 = Components.Schemas.ListingCreate;
         }
     }
-    namespace ProducersCreate {
-        export type RequestBody = Components.Schemas.BecomeProducerRequest;
+    namespace NotificationsCountRetrieve {
         namespace Responses {
-            export type $201 = Components.Schemas.BecomeProducer;
+            export type $200 = Components.Schemas.Count;
+        }
+    }
+    namespace NotificationsList {
+        namespace Responses {
+            export type $200 = Components.Schemas.Notification[];
+        }
+    }
+    namespace ProducersCreate {
+        namespace Responses {
+            export interface $201 {
+            }
         }
     }
     namespace ProducersRetrieve {
@@ -664,11 +814,43 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ListingsDestroy.Responses.$204>
   /**
+   * listings_dislike_create
+   */
+  'listings_dislike_create'(
+    parameters?: Parameters<Paths.ListingsDislikeCreate.PathParameters> | null,
+    data?: Paths.ListingsDislikeCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$200>
+  /**
+   * listings_like_create
+   */
+  'listings_like_create'(
+    parameters?: Parameters<Paths.ListingsLikeCreate.PathParameters> | null,
+    data?: Paths.ListingsLikeCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ListingsLikeCreate.Responses.$200>
+  /**
+   * notifications_list
+   */
+  'notifications_list'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.NotificationsList.Responses.$200>
+  /**
+   * notifications_count_retrieve
+   */
+  'notifications_count_retrieve'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.NotificationsCountRetrieve.Responses.$200>
+  /**
    * producers_create
    */
   'producers_create'(
     parameters?: Parameters<UnknownParamsObject> | null,
-    data?: Paths.ProducersCreate.RequestBody,
+    data?: any,
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ProducersCreate.Responses.$201>
   /**
@@ -871,13 +1053,53 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ListingsDestroy.Responses.$204>
   }
+  ['/listings/{id}/dislike/']: {
+    /**
+     * listings_dislike_create
+     */
+    'post'(
+      parameters?: Parameters<Paths.ListingsDislikeCreate.PathParameters> | null,
+      data?: Paths.ListingsDislikeCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$200>
+  }
+  ['/listings/{id}/like/']: {
+    /**
+     * listings_like_create
+     */
+    'post'(
+      parameters?: Parameters<Paths.ListingsLikeCreate.PathParameters> | null,
+      data?: Paths.ListingsLikeCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ListingsLikeCreate.Responses.$200>
+  }
+  ['/notifications/']: {
+    /**
+     * notifications_list
+     */
+    'get'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.NotificationsList.Responses.$200>
+  }
+  ['/notifications/count/']: {
+    /**
+     * notifications_count_retrieve
+     */
+    'get'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.NotificationsCountRetrieve.Responses.$200>
+  }
   ['/producers/']: {
     /**
      * producers_create
      */
     'post'(
       parameters?: Parameters<UnknownParamsObject> | null,
-      data?: Paths.ProducersCreate.RequestBody,
+      data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ProducersCreate.Responses.$201>
   }

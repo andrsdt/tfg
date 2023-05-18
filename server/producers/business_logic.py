@@ -3,6 +3,6 @@ from producers.models import Producer
 
 
 @transaction.atomic
-def become_producer(user, document, phone):
+def become_producer(user):
     """As a user, become a producer with all the consequences"""
-    return Producer.objects.get_or_create(user=user, document=document, phone=phone)
+    return Producer.objects.get_or_create(user=user)

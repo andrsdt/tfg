@@ -17,7 +17,7 @@ export const Pill = ({
     <button
       onClick={onClick}
       className={clsx(
-        'border',
+        'flex flex-nowrap items-center border',
         isSelected
           ? 'border-green bg-green text-white'
           : 'border-gray bg-white text-black',

@@ -29,8 +29,8 @@ export const AllergenList = ({
           <Image
             key={allergen}
             src={ALLERGENS[key].icon}
-            width={40}
-            height={40}
+            width={35}
+            height={35}
             alt={allergen}
             className="my-1"
           />

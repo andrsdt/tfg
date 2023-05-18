@@ -1,5 +1,7 @@
 from django.db import transaction
 from listings.models import Listing, ListingImage, ProductAllergen, ProductFeature
+from notifications.business_logic import send_new_like_notification
+from users.models import User
 
 
 @transaction.atomic
@@ -25,6 +27,17 @@ def delete_listing(instance):
     # NOTE: are images, features and allergens deleted automatically? check this
     # (I think they have on_delete=models.CASCADE, so they should be deleted)
     instance.delete()
+
+
+def like_listing(instance: Listing, user: User):
+    # Using add() on a relation that already exists won’t duplicate the relation, but it will still trigger signals.
+    # https://docs.djangoproject.com/en/4.2/ref/models/relations/#django.db.models.fields.related.RelatedManager.add
+    user.favorites.add(instance)
+    send_new_like_notification(instance)
+
+
+def dislike_listing(instance: Listing, user: User):
+    user.favorites.remove(instance)
 
 
 def _create_listing_instance(validated_data):

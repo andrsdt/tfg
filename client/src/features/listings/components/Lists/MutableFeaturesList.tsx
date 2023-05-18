@@ -6,6 +6,7 @@ import { FeatureList } from '.';
 import { FEATURES } from '../../types/features';
 import { UseFormWatch, UseFormSetValue } from 'react-hook-form';
 import { ListingDTO } from '../Form/ListingForm';
+import { useToggle } from '@/hooks/useToggle';
 
 const toggleFeature = (
   feature: string,
@@ -35,8 +36,7 @@ export const MutableFeaturesList = ({
   const selectedFeatures = watch('features', []);
 
   return (
-    <div className="-mx-4 flex space-x-3 overflow-x-scroll py-1">
-      <div className="w-4 bg-transparent" />
+    <div className="-mx-4 flex space-x-3 overflow-x-scroll px-4 py-1">
       <div
         className="grid cursor-pointer grid-rows-2 place-items-center rounded-md px-3 outline outline-1 outline-light-gray"
         onClick={toggleModal}

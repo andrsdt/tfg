@@ -4,14 +4,14 @@ import { ROLES } from '@/constants/roles';
 import { becomeProducer } from '@/features/producers/api/create';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { emitSuccess } from '@/utils/notifications';
+import { emitSuccess } from '@/utils/toasts';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
 const notifyAndMutate = (mutateUser: () => void) => {
   emitSuccess({
     title: '¡Enhorabuena!',
-    message: 'Ya eres productor',
+    message: '¡Enhorabuena! Ya eres productor',
   });
   mutateUser();
 };

@@ -1,17 +1,19 @@
 import { Button } from '@/components/Elements/Button';
 import { Form } from '@/components/Form';
 import { WithUnitField } from '@/components/Form/WithUnitField';
-import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { emitSuccess } from '@/utils/notifications';
+import { emitSuccess } from '@/utils/toasts';
 import { MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import router from 'next/router';
 import { Controller } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
 import * as z from 'zod';
 import { updateProfile } from '../../api/update';
+import { LocationAutocompleteField } from '@/components/Form/LocationAutocompleteField';
+import Map from '@/components/Map/Map';
+import { formatWKTAsCoordinates } from '@/utils/formatters';
 
 const schema = z.object({
   phone: z.optional(z.string()),
@@ -38,7 +40,7 @@ const redirectAndNotify = async () => {
 };
 
 export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
-  const { user } = useAuth({ roles: [ROLES.HAS_NOT_COMPLETED_ONBOARDING] });
+  const { user } = useAuth();
   const [handleUpdateProfile, isSubmitting] = useSubmissionHandler(
     updateProfile,
     {
@@ -53,7 +55,7 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
       schema={schema}
       className={className}
     >
-      {({ register, formState, control }) => {
+      {({ control, watch }) => {
         return (
           <>
             <div>
@@ -63,18 +65,32 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
                     Añade tu ubicación
                   </h2>
                   <WithUnitField
-                    className="h-14"
+                    className="h-14 w-full"
                     unit={<MapPinIcon className="w-6" />}
                   >
-                    <input
-                      className="h-full min-w-full px-2 text-xl outline-none"
-                      {...register('location')}
+                    <Controller
+                      control={control}
+                      name="location"
+                      defaultValue=""
+                      render={({ field: { onChange } }) => (
+                        <LocationAutocompleteField
+                          className="w-full px-2 text-xl outline-none"
+                          inputProps={{
+                            className: 'text-xl outline-none',
+                          }}
+                          onChange={onChange}
+                        />
+                      )}
                     />
                   </WithUnitField>
+                  <Map
+                    center={formatWKTAsCoordinates(watch('location'))}
+                    className="my-2 h-48 w-full rounded-full"
+                  />
                   <p className="text-sm text-gray">
                     Sólo utilizaremos tu ubicación para mostrarte productos
                     cerca de tí y para ubicar tus productos en venta. No
-                    compartiremos tus datos con terceros.
+                    venderemos tus datos a terceros.
                   </p>
                 </div>
               )}
@@ -106,7 +122,7 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
                   </WithUnitField>
                   <p className="text-sm text-gray">
                     Sólo utilizaremos tu número para enviarte notificaciones
-                    importantes mediante SMS
+                    importantes mediante SMS si nos autorizas.
                   </p>
                 </div>
               )}

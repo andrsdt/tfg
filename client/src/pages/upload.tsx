@@ -7,7 +7,7 @@ import { ListingForm } from '@/features/listings/components/Form/ListingForm';
 import { Listing } from '@/features/listings/types/listings';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { emitSuccess } from '@/utils/notifications';
+import { emitSuccess } from '@/utils/toasts';
 import router from 'next/router';
 
 const redirectAndNotify = async (listing: Listing) => {

@@ -4,7 +4,7 @@
 
 import { create } from 'zustand';
 
-export type DrawerType = 'allergens' | 'features' | 'price';
+export type DrawerType = 'allergens' | 'features' | 'price' | 'distance';
 
 type OpenDrawerStore = {
   currentDrawer: DrawerType | null;

@@ -29,4 +29,5 @@ urlpatterns = [
     path("api/v1/", include("authentication.urls")),
     path("api/v1/", include("listings.urls")),
     path("api/v1/", include("producers.urls")),
+    path("api/v1/", include("notifications.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -52,7 +52,7 @@ type FeatureItemProps = {
 const FeatureItem = ({ feature, className }: FeatureItemProps) => (
   <div
     className={clsx(
-      'grid w-20 min-w-[6rem] grid-rows-2 place-items-center text-center',
+      'grid w-20 min-w-[5rem] grid-rows-2 place-items-center text-center leading-4',
       className
     )}
   >

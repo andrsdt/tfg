@@ -5,6 +5,7 @@ const NEXT_ROUTES = {
   UPLOAD: '/upload',
   CHATS: '/chats',
   FAVORITES: '/favorites',
+  NOTIFICATIONS: '/notifications',
   MY_PROFILE: '/my-profile',
   BECOME_PRODUCER: '/become-producer',
   COMPLETE_ONBOARDING: '/complete-onboarding',

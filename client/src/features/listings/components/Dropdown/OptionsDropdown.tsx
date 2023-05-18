@@ -2,7 +2,7 @@ import { Dropdown, Separator } from '@/components/Elements';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { emitSuccess } from '@/utils/notifications';
+import { emitSuccess } from '@/utils/toasts';
 import { Menu } from '@headlessui/react';
 import Link from 'next/link';
 import router from 'next/router';

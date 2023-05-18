@@ -25,21 +25,11 @@ class ProducerViewSet(
         return [p() for p in permissions.get(self.action, default_permission)]
 
     def get_serializer_class(self):
-        if self.action == "create":
-            return BecomeProducerSerializer
-        elif self.action == "retrieve":
-            return ProducerSerializer
+        serializers = {
+            "create": BecomeProducerSerializer,
+            "retrieve": ProducerSerializer,
+        }
 
-        return super().get_serializer()
+        default_serializer = ProducerSerializer
 
-    # become producer method
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(user=request.user)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(
-    #         {"message": "You are now a producer!"},
-    #         status=status.HTTP_201_CREATED,
-    #         headers=headers,
-    #     )
+        return serializers.get(self.action, default_serializer)

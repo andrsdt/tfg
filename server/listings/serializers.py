@@ -42,10 +42,17 @@ class ListingSerializer(serializers.ModelSerializer):
     features = ProductFeatureSerializer(many=True, read_only=True)
     images = ListingImageSerializer(many=True, read_only=True)
     producer = ProducerSerializer(read_only=True)
+    is_favorite = serializers.SerializerMethodField()
 
     class Meta:
         model = Listing
         fields = "__all__"
+
+    def get_is_favorite(self, obj: Listing) -> bool:
+        request = self.context.get("request")
+        if request and not request.user.is_anonymous:
+            return obj.is_favorite(request.user)
+        return False
 
 
 class ListingCreateSerializer(serializers.ModelSerializer):

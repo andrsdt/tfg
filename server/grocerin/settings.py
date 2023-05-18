@@ -28,9 +28,9 @@ INSTALLED_APPS = [
     "grocerin",
     "users",
     "producers",
-    "consumers",
     "listings",
     "orders",
+    "notifications",
     # Third-party packages
     "drf_spectacular",
     "drf_standardized_errors",

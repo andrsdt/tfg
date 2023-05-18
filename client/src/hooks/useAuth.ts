@@ -76,24 +76,27 @@ export const useAuth = ({
   };
 
   useEffect(() => {
-    if (roles.includes(ROLES.AUTHENTICATED) && error) {
-      logout();
-    }
-    if (roles.includes(ROLES.GUEST) && redirectIfAuthenticated && user) {
-      router.replace(redirectIfAuthenticated);
-    }
-    if (roles.includes(ROLES.PRODUCER) && !userIsProducer()) {
-      router.replace(NEXT_ROUTES.BECOME_PRODUCER);
-    }
-    if (roles.includes(ROLES.NOT_PRODUCER) && userIsProducer()) {
-      router.back();
-    }
-    if (
-      roles.includes(ROLES.HAS_NOT_COMPLETED_ONBOARDING) &&
-      userHasCompletedOnboarding()
-    ) {
-      router.back();
-    }
+    const checkRoles = async () => {
+      if (roles.includes(ROLES.AUTHENTICATED) && error) {
+        logout();
+      }
+      if (roles.includes(ROLES.GUEST) && redirectIfAuthenticated && user) {
+        router.replace(redirectIfAuthenticated);
+      }
+      if (roles.includes(ROLES.PRODUCER) && !(await userIsProducer())) {
+        router.replace(NEXT_ROUTES.BECOME_PRODUCER);
+      }
+      if (roles.includes(ROLES.NOT_PRODUCER) && (await userIsProducer())) {
+        router.back();
+      }
+      if (
+        roles.includes(ROLES.HAS_NOT_COMPLETED_ONBOARDING) &&
+        (await userHasCompletedOnboarding())
+      ) {
+        router.back();
+      }
+    };
+    checkRoles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, error]);
 

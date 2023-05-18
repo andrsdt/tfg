@@ -4,6 +4,7 @@ import { FunnelIcon } from '@heroicons/react/24/outline';
 import { AllergensFilter } from './Filters/AllergensFilter';
 import { FeaturesFilter } from './Filters/FeaturesFilter';
 import { ListingSearchBar } from './SearchBar';
+import { DistanceFilter } from './Filters/DistanceFilter';
 
 type SearchHeaderProps = {
   numberOfListings: number | undefined;
@@ -40,7 +41,7 @@ export const SearchHeader = ({ numberOfListings }: SearchHeaderProps) => {
 const SearchOptionsDropdown = () => {
   return (
     <Dropdown buttonClassName="relative h-10 w-10 -mr-2">
-      <div className="absolute -top-4 right-8 origin-top-right justify-between rounded-xl p-4 shadow-lg">
+      <div className="absolute -top-4 right-4 origin-top-right justify-between rounded-xl bg-white p-4 shadow-lg">
         <Menu.Item>
           <p>Opción A</p>
         </Menu.Item>
@@ -59,8 +60,11 @@ const SearchOptionsDropdown = () => {
 
 const FilterPicker = () => {
   return (
-    <div className="flex items-center justify-start space-x-2 pt-4">
-      <FunnelIcon className="h-8 w-8" />
+    // TODO: make carousel
+    <div className="-mx-4 flex items-center justify-start space-x-2 overflow-x-scroll px-4 pt-4">
+      <FunnelIcon className="h-8 w-8 flex-none" />
+      <hr className="h-9 w-px flex-none bg-light-gray text-light-gray" />
+      <DistanceFilter />
       <AllergensFilter />
       <FeaturesFilter />
     </div>

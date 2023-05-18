@@ -16,6 +16,7 @@ const FILTER_TRANSLATIONS = {
   allergens: 'alérgenos',
   features: 'características',
   price: 'precio',
+  distance: 'distancia',
 } as { [key in DrawerType]: string };
 
 export const FilterPill = ({ name, Drawer, queries }: FilterPillProps) => {

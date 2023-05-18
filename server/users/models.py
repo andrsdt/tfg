@@ -16,6 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     photo = models.ImageField(_("photo"), upload_to="users/", blank=True, null=True)
     location = models.PointField(_("location"), geography=True, null=True)
     phone = models.CharField(_("phone"), max_length=20, blank=True, null=True)
+    favorites = models.ManyToManyField("listings.Listing", related_name="users")
 
     is_staff = models.BooleanField(
         _("staff status"),
@@ -47,10 +48,6 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     @property
     def is_producer(self) -> bool:
         return hasattr(self, "producer")
-
-    @property
-    def is_consumer(self) -> bool:
-        return hasattr(self, "consumer")
 
     # A user will have completed the onboarding when they have set their location and phone number
     @property

@@ -1,5 +1,6 @@
 import { HollowButton, Separator } from '@/components/Elements';
 import { LayoutWithNavbar } from '@/components/Layouts';
+import Map from '@/components/Map/Map';
 import NEXT_ROUTES from '@/constants/routes';
 import { listRecentListingsByProducer } from '@/features/listings/api/listRecentByProducer';
 import { ListingCard } from '@/features/listings/components/Card/Card';
@@ -9,7 +10,9 @@ import { Producer } from '@/features/producers/types/producers';
 import Avatar from '@/features/users/components/Avatar/Avatar';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useToggle } from '@/hooks/useToggle';
+import { transformLocationToCoordinates } from '@/utils/formatters';
 import clsx from 'clsx';
+import { Point } from 'geojson';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps = async (context) => {
@@ -30,33 +33,35 @@ type ProfileProps = {
 const Profile = ({ pageProps }: ProfileProps) => {
   const { id } = pageProps;
   const router = useRouter();
-  const [producer, isLoading, isError] = useRetrieveHandler(
-    () => retrieveProducer(id),
-    {
-      // TODO: look into this so we can omit it
-      transform: async (res) => res,
-    }
+  const [producer, isLoading, isError] = useRetrieveHandler<Producer, Producer>(
+    () => retrieveProducer(id)
   );
   const [recentListings, isLoadingRecentListings, isErrorRecentListings] =
-    useRetrieveHandler(() => listRecentListingsByProducer(id), {
-      // TODO: look into this so we can omit it
-      transform: async (res) => res,
-    });
+    useRetrieveHandler<Listing[], Listing[]>(() =>
+      listRecentListingsByProducer(id)
+    );
 
   if (isError) router.push(NEXT_ROUTES.HOME);
   if (isLoading || isError || isLoadingRecentListings || isErrorRecentListings)
     return <></>;
-
   return (
     <LayoutWithNavbar className="p-4">
       <ProducerProfileHeader producer={producer} />
       <h1 className="mt-4 text-2xl font-bold">Sobre el productor</h1>
       <CollapsibleText
-        text={producer?.biography ?? 'No hay información sobre el productor'}
+        text={producer?.biography ?? '(No hay información)'}
         readMoreThreshold={190}
       />
+      {producer.user.location && (
+        <Map
+          className="mt-4 h-40 w-full"
+          center={transformLocationToCoordinates(
+            producer.user?.location as Point
+          )}
+        />
+      )}
       <Separator className="my-4" />
-      <h1 className="text-2xl font-bold">Últimas publicaciones</h1>
+      <h1 className="mb-2 text-2xl font-bold">Últimas publicaciones</h1>
       <div className="grid grid-cols-2 gap-x-3 gap-y-5">
         {recentListings?.map((listing: Listing) => (
           <ListingCard key={listing.id} listing={listing} />

@@ -1,8 +1,9 @@
 import re
 
-from django.core.exceptions import ValidationError
+from rest_framework.serializers import ValidationError
 
 
+# TODO: delete if unused
 class IsValidDocument:
     def __init__(self, value):
         self.value = value

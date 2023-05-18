@@ -1,3 +1,6 @@
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.measure import Distance as DistanceRadius
+from django.db.models import F
 from django_filters import rest_framework
 
 from .models import Listing
@@ -36,10 +39,15 @@ class ListingFilterSet(rest_framework.FilterSet):
         method="filter_by_features",
     )
 
+    distance = rest_framework.CharFilter(method="filter_by_distance")
+    distance_order = rest_framework.CharFilter(method="order_by_distance")
+
+    favorite = rest_framework.BooleanFilter(method="filter_by_favorite")
+
     order_by = rest_framework.OrderingFilter(
         fields=(
             ("price_per_unit", "price"),
-            ("available_quantity", "available_quantity"),
+            ("available_quantity", "quantity"),
             ("created_at", "created_at"),
             ("updated_at", "updated_at"),
         )
@@ -57,17 +65,50 @@ class ListingFilterSet(rest_framework.FilterSet):
             "producer",
             "allergens",
             "features",
+            "distance",
+            "favorite",
         ]
 
     def filter_out_allergens(self, queryset, _, value):
         allergens = value.split(",")  # GLUTEN, DAIRY, LACTOSE...
         for allergen in allergens:
             queryset = queryset.exclude(allergens__allergen__exact=allergen)
+
         return queryset
 
     def filter_by_features(self, queryset, _, value):
         features = value.split(",")  # ALLOWS_PICKUP, IS_VEGAN...
         for feature in features:
-            print("Filtering by ", feature)
             queryset = queryset.filter(features__feature__exact=feature)
+
         return queryset
+
+    def filter_by_favorite(self, queryset, _, value):
+        user = self.request.user
+        if not value or user.is_anonymous:
+            return queryset
+
+        return queryset.filter(pk__in=user.favorites.values_list("id", flat=True))
+
+    def filter_by_distance(self, queryset, _, value):
+        user = self.request.user
+        if not value or user.is_anonymous or user.location is None:
+            return queryset
+
+        # Filter by those in a radius of "value" meters
+        return queryset.filter(
+            producer__user__location__distance_lte=(
+                user.location,  # POINT(X Y)
+                DistanceRadius(m=int(value)),
+            )
+        )
+
+    def order_by_distance(self, queryset, _, value):
+        user = self.request.user
+        if value not in ["asc", "desc"] or user.is_anonymous or not user.location:
+            return queryset
+
+        queryset = queryset.annotate(
+            distance=Distance(F("producer__user__location"), user.location)
+        )
+        return queryset.order_by("distance" if value == "asc" else "-distance")
