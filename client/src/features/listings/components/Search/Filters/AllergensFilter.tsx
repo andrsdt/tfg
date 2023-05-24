@@ -7,9 +7,25 @@ import router from 'next/router';
 import { FilterPill } from '../FilterPill';
 
 export const AllergensFilter = () => {
+  const defaultText = 'Alérgenos';
+  const selectedAllergens =
+    useSearchParams()
+      .get('allergens')
+      ?.split(',')
+      ?.filter((e) => e !== '') || [];
+
+  const prettyTextAllergens = selectedAllergens.map((allergen) => {
+    return ALLERGENS[allergen].translation;
+  });
+
   return (
     <FilterPill
-      name="allergens"
+      text={
+        selectedAllergens.length
+          ? `Sin ${prettyTextAllergens.join(', ')}`
+          : defaultText
+      }
+      drawerName="allergens"
       queries={['allergens']}
       Drawer={<AllergensDrawer />}
     />
@@ -62,7 +78,6 @@ const AllergensDrawer = () => {
               src={allergen.icon as any}
               alt="Ilustración del alérgeno"
               width={35}
-              // TODO: add p-1 below once the images are fixed (perfect circles)
               className="m-0.5 mr-1.5 aspect-square rounded-full border-2 border-white bg-white object-cover"
             />
             {capitalize(allergen.translation)}

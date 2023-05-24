@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Components, Paths } from '@/types/openapi';
+import { Components, Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 
 export type UpdateProfileDTO =
@@ -8,12 +8,12 @@ export type UpdateProfileDTO =
 export const updateProfile = async (
   data: UpdateProfileDTO
 ): Promise<OperationResponse<Paths.AuthUserPartialUpdate.Responses.$200>> => {
-  const client = await api.getClient<Client>();
+  const client = await getApiClient();
   return await client.auth_user_partial_update(null, {
     first_name: data.first_name,
     last_name: data.last_name,
-    phone: data.phone,
     photo: data.photo,
-    location: data.location,
+    phone: data.phone?.length > 0 ? data.phone : undefined,
+    location: data.location ?? undefined,
   });
 };

@@ -1,8 +1,7 @@
-from django.db import transaction
 from producers.models import Producer
 
 
-@transaction.atomic
 def become_producer(user):
     """As a user, become a producer with all the consequences"""
-    return Producer.objects.get_or_create(user=user)
+    [producer, _] = Producer.objects.get_or_create(user=user)
+    return producer

@@ -13,6 +13,14 @@ class ProducerSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class BasicProducerSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Producer
+        fields = ("user",)
+
+
 class BecomeProducerSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 

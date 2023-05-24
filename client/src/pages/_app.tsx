@@ -39,7 +39,8 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
           type="image/png"
           sizes="32x32"
         />
-        {/* TODO: take the api key somewhere so it doesn't */}
+        {/* TODO: take the api key somewhere so it doesn't leak on the client */}
+        {/* TODO: check optimizations at https://nextjs.org/docs/pages/building-your-application/optimizing/scripts*/}
         <script
           src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`}
         />

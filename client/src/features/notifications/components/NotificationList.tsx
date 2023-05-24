@@ -1,10 +1,12 @@
-import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
-import { listNotifications } from '../api/list';
+import { useListNotifications } from '../api/list';
 import { Notification, NotificationCategory } from '../types/notifications';
 import {
-  ReminderCompleteProfileNotificationCard,
   NewProductLikeNotificationCard,
+  ReminderCompleteProfileNotificationCard,
 } from './Cards';
+import { NewChatMessageNotificationCard } from './Cards/NewChatMessageNotificationCard';
+import { NewReviewNotificationCard } from './Cards/NewReviewNotificationCard';
+import { ReviewOrderNotificationCard } from './Cards/ReviewOrderNotificationCard';
 
 type NotificationComponentsType = {
   [key in NotificationCategory]: (
@@ -13,9 +15,7 @@ type NotificationComponentsType = {
 };
 
 export const NotificationList = () => {
-  const [notifications] = useRetrieveHandler<Notification[], Notification[]>(
-    listNotifications
-  );
+  const { notifications } = useListNotifications();
 
   return (
     <div className="flex flex-col space-y-3">
@@ -35,9 +35,10 @@ export const NOTIFICATION_COMPONENTS: NotificationComponentsType = {
     />
   ),
   CHAT_MESSAGE: (notification) => (
-    <div key={notification.id}>
-      {notification.notification_type} not implemented yet
-    </div>
+    <NewChatMessageNotificationCard
+      key={notification.id}
+      notification={notification}
+    />
   ),
   NEW_LISTING: (notification) => (
     <div key={notification.id}>
@@ -45,9 +46,10 @@ export const NOTIFICATION_COMPONENTS: NotificationComponentsType = {
     </div>
   ),
   NEW_REVIEW: (notification) => (
-    <div key={notification.id}>
-      {notification.notification_type} not implemented yet
-    </div>
+    <NewReviewNotificationCard
+      key={notification.id}
+      notification={notification}
+    />
   ),
   NEW_LIKE: (notification) => (
     <NewProductLikeNotificationCard
@@ -55,10 +57,11 @@ export const NOTIFICATION_COMPONENTS: NotificationComponentsType = {
       notification={notification}
     />
   ),
-  REMINDER_REVIEW: (notification) => (
-    <div key={notification.id}>
-      {notification.notification_type} not implemented yet
-    </div>
+  REVIEW_ORDER: (notification) => (
+    <ReviewOrderNotificationCard
+      key={notification.id}
+      notification={notification}
+    />
   ),
   REPORT_CONFIRMATION: (notification) => (
     <div key={notification.id}>

@@ -3,17 +3,17 @@ import { LayoutWithNavbar } from '@/components/Layouts';
 import Map from '@/components/Map/Map';
 import NEXT_ROUTES from '@/constants/routes';
 import { listRecentListingsByProducer } from '@/features/listings/api/listRecentByProducer';
-import { ListingCard } from '@/features/listings/components/Card/Card';
+import { ListingTwoColumnsList } from '@/features/listings/components/Lists';
 import { Listing } from '@/features/listings/types/listings';
 import { retrieveProducer } from '@/features/producers/api/retrieve';
 import { Producer } from '@/features/producers/types/producers';
-import Avatar from '@/features/users/components/Avatar/Avatar';
+import { Avatar } from '@/features/users/components/Avatar';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useToggle } from '@/hooks/useToggle';
 import { transformLocationToCoordinates } from '@/utils/formatters';
 import clsx from 'clsx';
 import { Point } from 'geojson';
-import { useRouter } from 'next/router';
+import router, { useRouter } from 'next/router';
 
 export const getServerSideProps = async (context) => {
   const { id } = context.params;
@@ -30,7 +30,7 @@ type ProfileProps = {
   };
 };
 
-const Profile = ({ pageProps }: ProfileProps) => {
+const PublicProfile = ({ pageProps }: ProfileProps) => {
   const { id } = pageProps;
   const router = useRouter();
   const [producer, isLoading, isError] = useRetrieveHandler<Producer, Producer>(
@@ -40,6 +40,9 @@ const Profile = ({ pageProps }: ProfileProps) => {
     useRetrieveHandler<Listing[], Listing[]>(() =>
       listRecentListingsByProducer(id)
     );
+
+  // The public profile should only show active listings
+  const activeListings = recentListings?.filter((listing) => listing.is_active);
 
   if (isError) router.push(NEXT_ROUTES.HOME);
   if (isLoading || isError || isLoadingRecentListings || isErrorRecentListings)
@@ -62,40 +65,47 @@ const Profile = ({ pageProps }: ProfileProps) => {
       )}
       <Separator className="my-4" />
       <h1 className="mb-2 text-2xl font-bold">Últimas publicaciones</h1>
-      <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-        {recentListings?.map((listing: Listing) => (
-          <ListingCard key={listing.id} listing={listing} />
-        ))}
-      </div>
+      <ListingTwoColumnsList listings={activeListings} />
     </LayoutWithNavbar>
   );
 };
 
-export default Profile;
+export default PublicProfile;
 
-type CollapsibleTextProps = { text: string; readMoreThreshold: number };
-const CollapsibleText = ({
+type CollapsibleTextProps = {
+  text: string;
+  className?: string;
+  collapsedClassName?: string;
+  readMoreThreshold: number;
+};
+
+export const CollapsibleText = ({
   text = '',
+  className,
+  collapsedClassName = 'line-clamp-3',
   readMoreThreshold = 150,
 }: CollapsibleTextProps) => {
   const [isCollapsed, toggleCollapsed] = useToggle(true);
   const showIsCollapsed = text?.length > readMoreThreshold;
 
   return (
-    <div className="flex flex-col items-start text-start leading-5">
+    <div
+      className={clsx(
+        'flex flex-col items-start text-start leading-5',
+        className
+      )}
+    >
       <p
         className={clsx(
-          isCollapsed && 'line-clamp-3',
+          // TODO: break-all after line-clamp?
+          isCollapsed && collapsedClassName,
           'text-md peer overflow-hidden leading-5'
         )}
       >
         {text}
       </p>
       {showIsCollapsed && (
-        <button
-          className="text-green peer-[overflow]:underline"
-          onClick={toggleCollapsed}
-        >
+        <button className="text-green" onClick={toggleCollapsed}>
           {isCollapsed ? 'Leer más' : 'Leer menos'}
         </button>
       )}
@@ -117,9 +127,18 @@ const ProducerProfileHeader = ({ producer }: ProducerProfileHeaderProps) => {
         <h1 className="text-3xl font-bold leading-7">
           {user.first_name} {user.last_name}
         </h1>
-        <h2 className="text-lg">⭐ 4.8 &middot; 14 valoraciones</h2>
-        <HollowButton className="mt-3 font-semibold">
-          ENVIAR MENSAJE
+        <h2 className="text-lg">
+          {user.average_rating
+            ? `⭐ ${user.average_rating.toFixed(1)} · ${
+                user.number_ratings
+              } valoraciones`
+            : 'No hay valoraciones'}
+        </h2>
+        <HollowButton
+          className="mt-3 font-semibold"
+          onClick={() => router.push(NEXT_ROUTES.PRODUCER_REVIEWS(user.id))}
+        >
+          VER RESEÑAS
         </HollowButton>
       </div>
     </div>

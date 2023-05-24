@@ -1,13 +1,14 @@
-import { Listing } from '@/features/listings/types/listings';
+import { BasicListing } from '@/features/listings/types/listings';
 import dayjs from '@/lib/dayjs';
 import { capitalize } from '@/utils/formatters';
-import { Notification } from '../../types/notifications';
-import { GenericNotificationCard } from './GenericNotificationCard';
 import Image from 'next/image';
+import { Notification } from '../../types/notifications';
+import { UnreadIndicator } from '../UnreadIndicator';
+import { GenericNotificationCard } from './GenericNotificationCard';
 
 type GenericListingNotificationCardProps = {
   href?: string;
-  listing: Listing | undefined;
+  listing: BasicListing | undefined;
   notification: Notification;
   children: React.ReactNode;
 };
@@ -19,16 +20,19 @@ export const GenericListingNotificationCard = ({
   children,
 }: GenericListingNotificationCardProps) => {
   return (
-    <GenericNotificationCard className="flex space-x-5" href={href}>
+    <GenericNotificationCard className="flex" href={href}>
+      {!notification.is_read && <UnreadIndicator />}
       <Image
         src={listing?.images[0].image ?? '/placeholders/image.jpg'}
-        alt={listing?.title}
+        alt={listing?.title ?? 'Imagen del producto'}
         width={80}
         height={80}
-        className="h-20 w-20 rounded-xl object-cover"
+        className="mr-4 h-20 w-20 rounded-xl object-cover"
       />
       <div className="flex flex-col justify-between py-1">
+        {/* TODO: break-all after line-clamp? */}
         <p className="line-clamp-2 text-lg leading-5">{children}</p>
+        {/* TODO: use <date/> instead of <p/> */}
         <p className="text-sm text-gray">
           {capitalize(dayjs(notification.updated_at).fromNow())}
         </p>

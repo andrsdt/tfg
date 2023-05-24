@@ -15,14 +15,13 @@ def listing_images_directory_path(instance, filename):
 class Listing(TimestampsMixin):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, max_length=2000)
-    # TODO: force between 1 and 10 images on create/update
-    # images = models.ManyToManyField("ListingImage")
     unit = models.CharField(max_length=10, choices=PRODUCT_UNIT_CHOICES)  # kg, unitary
     price_per_unit = models.PositiveIntegerField()
     g_per_unit = models.PositiveIntegerField(null=True)
     # TODO: check if this ensures that at least there is 1 unit/kg available
     available_quantity = models.PositiveIntegerField()  # 10kg, 10units
     producer = models.ForeignKey("producers.Producer", on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
     # location. TODO: set on product or on user?
     # category = models.CharField(choices=CATEGORY_CHOICES)
 
@@ -33,6 +32,18 @@ class Listing(TimestampsMixin):
 
     def is_favorite(self, user) -> bool:
         return user.favorites.filter(id=self.id).exists()
+
+    def set_active(self):
+        self.is_active = True
+        self.save()
+
+    def set_inactive(self):
+        self.is_active = False
+        self.save()
+
+    def substract_stock(self, quantity: int):
+        self.available_quantity -= quantity
+        self.save()
 
 
 class ListingImage(models.Model):

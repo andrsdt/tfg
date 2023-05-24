@@ -1,11 +1,20 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Paths } from '@/types/openapi';
-import { OperationResponse } from 'openapi-client-axios';
+import useSWR from 'swr';
+import { Notification } from '../types/notifications';
 
-export const listNotifications = async (): Promise<
-  OperationResponse<Paths.NotificationsList.Responses.$200>
-> => {
-  const client = await api.getClient<Client>();
-  return await client.notifications_list();
+export const useListNotifications = () => {
+  // Use SWR to cache the response and refresh it periodically
+  const { data, isLoading, error } = useSWR(
+    'notifications_list',
+    async () => await (await getApiClient()).notifications_list()
+  );
+
+  const sanitizedResponse = (data?.data ?? data) as Notification[];
+
+  return {
+    notifications: sanitizedResponse,
+    isLoading,
+    isError: error,
+  };
 };

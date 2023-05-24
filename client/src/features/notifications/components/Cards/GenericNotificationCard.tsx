@@ -17,7 +17,7 @@ export const GenericNotificationCard = ({
       href={href}
       className={clsx(
         className,
-        'h-full rounded-xl border border-light-gray p-2'
+        'relative h-full rounded-xl border border-light-gray p-2'
       )}
     >
       {children}

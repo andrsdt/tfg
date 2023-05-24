@@ -11,7 +11,11 @@ import { emitSuccess } from '@/utils/toasts';
 import router from 'next/router';
 
 const redirectAndNotify = async (listing: Listing) => {
-  await router.push(NEXT_ROUTES.DETAILS_LISTING(listing.id));
+  if (listing) {
+    await router.push(NEXT_ROUTES.DETAILS_LISTING(listing.id));
+  } else {
+    await router.push(NEXT_ROUTES.HOME);
+  }
   emitSuccess({
     title: 'Producto publicado',
     message: 'El producto se ha publicado correctamente',

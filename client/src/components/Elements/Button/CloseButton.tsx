@@ -1,17 +1,10 @@
-import NEXT_ROUTES from '@/constants/routes';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import Link from 'next/link';
+import router from 'next/router';
 
-type CloseButtonProps = {
-  href?: string;
-};
-
-export const CloseButton = ({ href = NEXT_ROUTES.HOME }: CloseButtonProps) => {
+export const CloseButton = () => {
   return (
-    <button>
-      <Link href={href}>
-        <XMarkIcon className="w-9" />
-      </Link>
+    <button onClick={() => router.back()}>
+      <XMarkIcon className="w-9" />
     </button>
   );
 };

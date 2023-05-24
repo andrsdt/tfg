@@ -17,8 +17,7 @@ import { CreateListingDTO } from '../../api/create';
 import { UpdateListingDTO } from '../../api/update';
 import { createSchema } from '../../schemas/create';
 import { UNITS, Unit } from '../../types/units';
-import { MutableAllergensList } from '../Lists';
-import { MutableFeaturesList } from '../Lists/MutableFeaturesList';
+import { MutableAllergensList, MutableFeaturesList } from '../Lists';
 import { ImageCarouselInput } from './ImageCarouselInput';
 
 export type ListingDTO = CreateListingDTO | UpdateListingDTO;
@@ -40,7 +39,6 @@ export const ListingForm = ({
 
   return (
     <Form<ListingDTO, typeof createSchema>
-      className="h-full"
       onSubmit={onSubmit}
       schema={createSchema}
       defaults={defaults}
@@ -50,9 +48,7 @@ export const ListingForm = ({
         const hasEnteredQuantity = !!watch('available_quantity');
         const hasEnteredPricePerUnit = !!watch('price_per_unit');
         const hasOneQuantity = watch('available_quantity') === 1;
-
         const unit = UNITS[watch('unit') || 'KG'];
-
         return (
           <div className="flex h-full flex-col justify-between">
             <div className="flex flex-col space-y-2">
@@ -75,6 +71,7 @@ export const ListingForm = ({
                 inputProps={{
                   placeholder: 'Introduce una descripción',
                 }}
+                inputClassName="text-lg leading-5"
                 registration={register('description')}
                 error={formState.errors['description']}
               />
@@ -99,6 +96,7 @@ export const ListingForm = ({
                 title="Pongo en venta..."
                 showIf={hasChosenListingUnit}
               >
+                {/* TODO: use the new formatter formatQuantityWithUnit() */}
                 <WithUnitField
                   unit={
                     hasOneQuantity
@@ -128,7 +126,13 @@ export const ListingForm = ({
                 >
                   <CurrencyInput
                     className="w-24 text-center outline-none"
-                    {...register('price_per_unit', { valueAsNumber: true })}
+                    allowNegativeValue={false}
+                    // TODO: fix bug where the value disappears when
+                    // the user adds an allergen/features. We can't
+                    // use the workaround below because it causes
+                    // NaN errors and allows infinite decimals
+                    // value={watch('price_per_unit')}
+                    {...register('price_per_unit')}
                   />
                 </WithUnitField>
               </ConditionalInputField>
@@ -146,7 +150,7 @@ export const ListingForm = ({
                     min={0}
                     max={100000}
                     className="w-24 text-center outline-none"
-                    {...register('g_per_unit', { valueAsNumber: true })}
+                    {...register('g_per_unit')}
                   />
                 </WithUnitField>
               </ConditionalInputField>

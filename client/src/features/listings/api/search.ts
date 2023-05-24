@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Paths } from '@/types/openapi';
+import { Paths } from '@/types/openapi';
 import { useSearchParams } from 'next/navigation';
 import { OperationResponse } from 'openapi-client-axios';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ export const searchListings = async (
   // TODO: add types when the endpoint is done
   params
 ): Promise<OperationResponse<Paths.ListingsList.Responses.$200>> => {
-  const client = await api.getClient<Client>();
+  const client = await getApiClient();
   return await client.listings_list(params);
 };
 

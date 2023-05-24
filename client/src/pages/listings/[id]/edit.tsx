@@ -1,5 +1,5 @@
 import { BubbleBackButton } from '@/components/Elements';
-import { LayoutWithNavbar } from '@/components/Layouts';
+import { BaseLayout } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import { retrieveListing } from '@/features/listings/api/retrieve';
@@ -16,8 +16,8 @@ import { urltoFile } from '@/utils/base64';
 import { emitSuccess } from '@/utils/toasts';
 import router from 'next/router';
 
-const redirectAndNotify = async (listing: Listing) => {
-  await router.push(NEXT_ROUTES.DETAILS_LISTING(listing.id));
+const redirectAndNotify = async (listingId: number | string) => {
+  await router.push(NEXT_ROUTES.DETAILS_LISTING(listingId));
   emitSuccess({
     title: 'Producto modificado',
     message: 'El producto se ha modificado correctamente',
@@ -39,30 +39,35 @@ type EditListingProps = {
 };
 
 const EditListing = ({ pageProps }: EditListingProps) => {
+  const listingId = pageProps.id;
   useAuth({ roles: [ROLES.PRODUCER] });
   // TODO: auth check for producer who owns listing
   const [existingListing] = useRetrieveHandler(
-    () => retrieveListing(pageProps.id),
+    () => retrieveListing(listingId),
     {
-      onError: () => router.replace(NEXT_ROUTES.HOME),
+      onError: async () => await router.replace(NEXT_ROUTES.HOME),
       transform: async (res: Listing) => await listingToDTO(res),
     }
   );
-  const [handleUpdateListing, isSubmitting, _, updatedListing] =
-    useSubmissionHandler(updateListing, {
-      onSuccess: () => redirectAndNotify(updatedListing),
-    });
+  const [handleUpdateListing, isSubmitting] = useSubmissionHandler(
+    updateListing,
+    {
+      onSuccess: async () => await redirectAndNotify(listingId),
+    }
+  );
 
   if (!existingListing) return <>Loading...</>;
   return (
-    <LayoutWithNavbar className="px-4">
+    <BaseLayout className="flex flex-col px-4 pb-4">
       <BubbleBackButton />
       <ListingForm
         defaults={existingListing}
-        onSubmit={(data) => handleUpdateListing({ id: pageProps.id }, data)}
+        onSubmit={async (data) =>
+          await handleUpdateListing({ id: listingId }, data)
+        }
         isSubmitting={isSubmitting}
       />
-    </LayoutWithNavbar>
+    </BaseLayout>
   );
 };
 

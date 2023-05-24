@@ -1,7 +1,7 @@
 import { CloseButton } from '@/components/Elements';
 import { BaseLayout } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
-import { UpdateProfileForm } from '@/features/users/components/components/UpdateProfileForm';
+import { UpdateProfileForm } from '@/features/users/components/Forms/UpdateProfileForm';
 import { useAuth } from '@/hooks/useAuth';
 import 'react-phone-input-2/lib/bootstrap.css';
 

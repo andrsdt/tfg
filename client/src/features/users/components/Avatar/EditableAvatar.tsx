@@ -6,7 +6,7 @@ import { emitSuccess } from '@/utils/toasts';
 import { CameraIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { updateProfile } from '../../api/update';
-import Avatar from './Avatar';
+import { Avatar } from '.';
 import clsx from 'clsx';
 
 type EditableAvatarProps = {

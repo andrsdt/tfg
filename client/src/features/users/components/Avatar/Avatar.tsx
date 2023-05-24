@@ -8,20 +8,18 @@ type AvatarProps = {
   props?: any;
 };
 
-export default function Avatar({
+export const Avatar = ({
   src = '',
   alt = 'Profile picture',
   className = '',
   props,
-}: AvatarProps) {
-  return (
-    <Image
-      width={100}
-      height={100}
-      src={src?.length > 0 ? src : '/placeholders/avatar.png'}
-      alt={alt}
-      className={clsx('aspect-square rounded-full object-cover', className)}
-      {...props}
-    />
-  );
-}
+}: AvatarProps) => (
+  <Image
+    width={100}
+    height={100}
+    src={src?.length > 0 ? src : '/placeholders/avatar.png'}
+    alt={alt}
+    className={clsx('aspect-square rounded-full object-cover', className)}
+    {...props}
+  />
+);

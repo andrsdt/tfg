@@ -12,7 +12,7 @@ export const ListingSearchBar = () => {
   // I don't know since this is an inner component, not a next.js page itself. Maybe if we pass
   // the searchParams as a prop to this component?
   useEffect(() => {
-    setSearchWord(searchParams.get('title') || '');
+    setSearchWord(searchParams.get('q') || '');
   }, [searchParams]);
 
   return (
@@ -22,7 +22,7 @@ export const ListingSearchBar = () => {
         e.preventDefault();
         router.push({
           pathname: NEXT_ROUTES.SEARCH_LISTINGS,
-          query: { title: searchWord },
+          query: { q: searchWord },
         });
       }}
     >

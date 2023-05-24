@@ -3,7 +3,11 @@ from dj_rest_auth.serializers import LoginSerializer, UserDetailsSerializer
 from django.core.validators import MinLengthValidator
 from drf_extra_fields.fields import Base64ImageField
 from grocerin.validators import OnlyAlphaAndSpacesValidator
-from notifications.business_logic import send_reminder_complete_profile_notification
+from notifications.business_logic import (
+    delete_reminder_complete_profile_notification,
+    send_reminder_complete_profile_notification,
+)
+from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 from users.models import User
 
@@ -19,7 +23,15 @@ class CustomLoginSerializer(LoginSerializer):
 
 class CustomRegisterSerializer(RegisterSerializer):
     class Meta:
-        fields = ["email", "password1", "password2", "first_name", "last_name"]
+        fields = [
+            "email",
+            "password1",
+            "password2",
+            "first_name",
+            "last_name",
+            "phone",
+            "location",
+        ]
 
     username = serializers.HiddenField(default=None)
     first_name = serializers.CharField(
@@ -48,6 +60,8 @@ class CustomRegisterSerializer(RegisterSerializer):
 # NOTE: this serializer is used for GET, PUT and PATCH to /auth/user
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     photo = Base64ImageField()
+    phone = PhoneNumberField(region="ES", required=False)
+    location = serializers.CharField(required=False)
 
     class Meta:
         fields = [
@@ -61,6 +75,8 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "phone",
             "location",
             "created_at",  # read only
+            "average_rating",  # TODO: read only? it's @property
+            "number_ratings",  # # TODO: read only? it's @property
         ]
         read_only_fields = [
             "pk",
@@ -70,3 +86,11 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "has_completed_onboarding",
         ]
         model = User
+
+    def update(self, instance, validated_data):
+        updated_user = super().update(instance, validated_data)
+
+        if updated_user.has_completed_onboarding:
+            delete_reminder_complete_profile_notification(updated_user)
+
+        return updated_user

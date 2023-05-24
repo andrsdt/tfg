@@ -3,17 +3,17 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { Fragment } from 'react';
 
-type DropdownProps = {
+type ThreeDotsDropdownProps = {
   children: React.ReactNode;
   menuClassName?: string;
   buttonClassName?: string;
 };
 
-export const Dropdown = ({
+export const ThreeDotsDropdown = ({
   children,
   menuClassName,
   buttonClassName,
-}: DropdownProps) => {
+}: ThreeDotsDropdownProps) => {
   return (
     <Menu as="div" className={clsx(menuClassName)}>
       <div>

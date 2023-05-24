@@ -1,11 +1,11 @@
-import clsx from 'clsx';
-import Avatar from '../Avatar/Avatar';
-import { User } from '../../types/users';
-import Link from 'next/link';
 import NEXT_ROUTES from '@/constants/routes';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { BasicUser } from '../../types/users';
+import { Avatar } from '../Avatar';
 
 type UserCardProps = {
-  user: User;
+  user: BasicUser;
   className?: string;
 };
 
@@ -17,11 +17,15 @@ export const UserCard = ({ user, className = '' }: UserCardProps) => (
     >
       <Avatar src={user.photo} alt={user.first_name} className="w-14" />
       <div>
-        <h3 className="ml-0.5 text-lg font-semibold">
+        <h3 className="text-lg font-semibold">
           {user.first_name} {user.last_name}
         </h3>
         <p>
-          ⭐ {4.8} &middot; {14} valoraciones
+          {user.average_rating
+            ? `⭐ ${user.average_rating.toFixed(1)} · ${
+                user.number_ratings
+              } valoraciones`
+            : 'No hay valoraciones'}
         </p>
       </div>
     </Link>

@@ -9,8 +9,8 @@ const Notifications = () => {
 
   return (
     <BaseLayout className="p-4">
-      <span className="mb-4 flex h-min justify-between">
-        <h1 className="text-3xl font-bold">Tus notificaciones</h1>
+      <span className="mb-4 flex h-min items-center justify-between">
+        <h1 className="text-3xl font-bold">Mis notificaciones</h1>
         <CloseButton />
       </span>
       <NotificationList />

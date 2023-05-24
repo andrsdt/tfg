@@ -18,6 +18,7 @@ class ProducerViewSet(
     def get_permissions(self):
         permissions = {
             "create": [IsAuthenticated, Not(IsProducer)],
+            "retrieve": [AllowAny],
         }
 
         default_permission = [AllowAny]

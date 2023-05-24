@@ -16,6 +16,9 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 # Application definition
 INSTALLED_APPS = [
+    # Don't put "channels", only "daphne"
+    #
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -31,6 +34,9 @@ INSTALLED_APPS = [
     "listings",
     "orders",
     "notifications",
+    "chats",
+    "reviews",
+    "reports",
     # Third-party packages
     "drf_spectacular",
     "drf_standardized_errors",
@@ -126,6 +132,7 @@ REST_FRAMEWORK = {
     "USER_DETAILS_SERIALIZER": "authentication.serializers.CustomUserDetailsSerializer",
     "LOGIN_SERIALIZER": "authentication.serializers.CustomLoginSerializer",
     "REGISTER_SERIALIZER": "authentication.serializers.CustomRegisterSerializer",
+    # update serializer
 }
 
 REST_AUTH = {
@@ -196,3 +203,10 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # PostGIS
 GDAL_LIBRARY_PATH = config("GDAL_LIBRARY_PATH")
 GEOS_LIBRARY_PATH = config("GEOS_LIBRARY_PATH")
+
+# Channels
+
+ASGI_APPLICATION = "chats.routing.application"  # routing.py will handle the ASGI
+
+# TODO: Change this to redis in production
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}

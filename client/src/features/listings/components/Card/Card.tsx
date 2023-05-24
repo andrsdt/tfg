@@ -1,5 +1,5 @@
 import NEXT_ROUTES from '@/constants/routes';
-import { formatMoney } from '@/utils/formatters';
+import { formatPricePerUnit } from '@/utils/formatters';
 import { uuid } from '@/utils/uuid';
 import { TruckIcon } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
@@ -7,7 +7,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FEATURES } from '../../types/features';
 import { Listing } from '../../types/listings';
-import { UNITS } from '../../types/units';
 import { LikeButton } from '../Buttons/LikeButton';
 
 type ListingCardProps = {
@@ -22,7 +21,13 @@ export const ListingCard = ({
   className = '',
 }: ListingCardProps) => {
   return (
-    <div className={clsx('flex flex-col justify-between', className)}>
+    <div
+      className={clsx(
+        'flex flex-col justify-between',
+        !listing.is_active && 'opacity-80 grayscale-[80%]',
+        className
+      )}
+    >
       <Link key={uuid()} href={NEXT_ROUTES.DETAILS_LISTING(listing.id)}>
         <div className="relative">
           {listing?.features.some(
@@ -37,16 +42,22 @@ export const ListingCard = ({
             width={250}
             height={300}
           />
+          {!listing.is_active && (
+            <p className="absolute-center absolute rounded-full bg-light-red px-3 py-2 text-white opacity-80 outline outline-light-gray">
+              DESACTIVADO
+            </p>
+          )}
         </div>
         <h3 className={clsx('truncate text-lg font-semibold', !mini && 'mt-1')}>
           {listing.title}
         </h3>
-        {!mini && <p className="mb-1 line-clamp-3">{listing.description}</p>}
+        {!mini && (
+          <p className="mb-1 line-clamp-3 break-all">{listing.description}</p>
+        )}
       </Link>
       <span className="flex w-full justify-between">
         <span className="text-xl font-semibold">
-          {formatMoney(listing.price_per_unit)}/
-          {UNITS[listing.unit].translationShort}
+          {formatPricePerUnit(listing.price_per_unit, listing.unit)}
         </span>
         <LikeButton listing={listing} />
       </span>

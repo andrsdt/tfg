@@ -10,8 +10,8 @@ import Link from 'next/link';
 
 const notifyAndMutate = (mutateUser: () => void) => {
   emitSuccess({
-    title: '¡Enhorabuena!',
-    message: '¡Enhorabuena! Ya eres productor',
+    title: 'Ya eres productor',
+    message: '¡Genial! Ya eres productor',
   });
   mutateUser();
 };

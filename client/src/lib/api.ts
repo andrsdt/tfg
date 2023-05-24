@@ -18,7 +18,7 @@ const requestInterceptor = async (request: InternalAxiosRequestConfig) => {
   if (['post', 'put', 'patch', 'delete'].includes(request.method)) {
     const csrfToken = getCookie('csrftoken');
     if (!csrfToken) {
-      const client = await api.getClient<Client>();
+      const client = await getApiClient();
       await client.auth_set_csrf_retrieve();
     }
   }
@@ -47,13 +47,26 @@ const errorInterceptor = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-api.init().then((client) => {
-  client.interceptors.request.clear();
-  client.interceptors.request.use(requestInterceptor);
+const setInterceptorsIfMissing = (client) => {
+  const hasInterceptors =
+    client.interceptors.request.handlers.length > 0 &&
+    client.interceptors.response.handlers.length > 0;
+  if (hasInterceptors) return;
 
+  client.interceptors.request.clear();
   client.interceptors.response.clear();
+
+  client.interceptors.request.use(requestInterceptor);
   client.interceptors.response.use(responseInterceptor, errorInterceptor);
-});
+};
+
+api.init();
+
+export const getApiClient = async (): Promise<Client> => {
+  const client = await api.getClient<Client>();
+  setInterceptorsIfMissing(client);
+  return client;
+};
 
 api.axiosConfigDefaults.xsrfHeaderName = 'X-CSRFToken';
 api.axiosConfigDefaults.xsrfCookieName = 'csrftoken';

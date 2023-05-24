@@ -10,7 +10,6 @@ type LikeButtonProps = {
 };
 
 export const LikeButton = ({ listing }: LikeButtonProps) => {
-  // TODO: implement logic
   const [isLiked, toggleIsLiked] = useToggle(listing.is_favorite);
 
   const handleLike = () => {
@@ -19,6 +18,8 @@ export const LikeButton = ({ listing }: LikeButtonProps) => {
       : likeListing({ id: listing.id });
     toggleIsLiked(); // Optimistic update on the UI
   };
+
+  if (!listing.is_active) return <></>;
 
   return (
     <HeartIcon

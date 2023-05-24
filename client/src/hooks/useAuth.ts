@@ -8,8 +8,8 @@ import {
   LoginCredentialsDTO,
   loginWithEmailAndPassword,
 } from '@/features/auth/api/login';
-import { api } from '@/lib/api';
-import type { Client, Components } from '@/types/openapi';
+import { getApiClient } from '@/lib/api';
+import type { Components } from '@/types/openapi';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useSWR from 'swr';
@@ -19,7 +19,7 @@ export const useAuth = ({
   roles = [],
 } = {}) => {
   const router = useRouter();
-  const clientPromise = api.getClient<Client>();
+  const clientPromise = getApiClient();
 
   const {
     data: user,
@@ -27,7 +27,6 @@ export const useAuth = ({
     mutate,
   } = useSWR(
     '/api/v1/auth/user',
-
     async () => {
       try {
         const client = await clientPromise;

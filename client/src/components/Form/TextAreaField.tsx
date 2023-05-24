@@ -5,22 +5,24 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
 type TextAreaFieldProps = FieldWrapperPassThroughProps & {
   className?: string;
+  inputClassName?: string;
   registration: Partial<UseFormRegisterReturn>;
   inputProps?: React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 };
 
 export const TextAreaField = (props: TextAreaFieldProps) => {
-  const { className, registration, error, inputProps } = props;
-
+  const { className, inputClassName, registration, error, inputProps } = props;
+  const hasMinHeight = inputClassName?.includes('min-h-');
   return (
-    <FieldWrapper error={error}>
+    <FieldWrapper error={error} className={className}>
       <textarea
         className={clsx(
-          'peer block min-h-[10rem] w-full appearance-none rounded-lg border-none bg-transparent p-2 text-lg leading-5 outline outline-1',
-          className,
+          'peer block w-full resize-none appearance-none rounded-lg border-none bg-transparent p-2 outline outline-1',
+          !hasMinHeight && 'min-h-[10rem]',
           error
             ? 'text-light-red outline-light-red focus:outline-light-red'
-            : 'outline-light-gray focus:outline-green'
+            : 'outline-light-gray focus:outline-green',
+          inputClassName
         )}
         {...inputProps}
         {...registration}

@@ -1,4 +1,4 @@
-import { Dropdown, Separator } from '@/components/Elements';
+import { ThreeDotsDropdown, Separator } from '@/components/Elements';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
@@ -25,12 +25,12 @@ type ListingOptionsDropdownProps = {
 export const ListingOptionsDropdown = ({
   listing,
 }: ListingOptionsDropdownProps) => {
+  const { user } = useAuth();
   const [pageURL, setPageURL] = useState('');
   const [isNativeShare, setNativeShare] = useState(false);
   const [handleDeleteListing] = useSubmissionHandler(deleteListing, {
     onSuccess: redirectAndNotify,
   });
-  const { user } = useAuth();
 
   useEffect(() => {
     setPageURL(window.location.href);
@@ -49,7 +49,7 @@ export const ListingOptionsDropdown = ({
   const isListingOwner = user?.pk === listing.producer.user.id;
 
   return (
-    <Dropdown
+    <ThreeDotsDropdown
       menuClassName="absolute right-4 top-4 z-10"
       buttonClassName="h-12 w-12 rounded-full bg-white p-2 shadow-lg"
     >
@@ -94,6 +94,6 @@ export const ListingOptionsDropdown = ({
           </>
         )}
       </div>
-    </Dropdown>
+    </ThreeDotsDropdown>
   );
 };

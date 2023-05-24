@@ -17,7 +17,7 @@ export const FeatureList = ({
   itemClassName = '',
   handleDelete,
 }: FeatureListProps) => (
-  <div className={clsx('flex', className)}>
+  <div className={clsx('-mb-1 flex', className)}>
     {features.map((feature) => {
       const key = Object.keys(FEATURES).find(
         (k) => k === feature.toUpperCase()
@@ -52,7 +52,7 @@ type FeatureItemProps = {
 const FeatureItem = ({ feature, className }: FeatureItemProps) => (
   <div
     className={clsx(
-      'grid w-20 min-w-[5rem] grid-rows-2 place-items-center text-center leading-4',
+      ' grid w-min min-w-[5rem] grid-rows-2 place-items-center -space-y-2 text-center leading-4',
       className
     )}
   >

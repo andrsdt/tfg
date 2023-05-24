@@ -7,13 +7,25 @@ const NEXT_ROUTES = {
   FAVORITES: '/favorites',
   NOTIFICATIONS: '/notifications',
   MY_PROFILE: '/my-profile',
+  MY_LISTINGS: '/my-listings',
+  MY_PURCHASES: '/my-purchases',
+  MY_SALES: '/my-sales',
   BECOME_PRODUCER: '/become-producer',
   COMPLETE_ONBOARDING: '/complete-onboarding',
+  SEARCH_LISTINGS: '/search',
+  CHAT: (id) => urlWithParams('/chats/[id]', { id }),
   PRODUCER_PROFILE: (id) => urlWithParams('/producers/[id]', { id }),
+  PRODUCER_REVIEWS: (id) => urlWithParams('/producers/[id]/reviews', { id }),
   DETAILS_LISTING: (id) => urlWithParams('/listings/[id]', { id }),
   EDIT_LISTING: (id) => urlWithParams('/listings/[id]/edit', { id }),
   REPORT_LISTING: (id) => urlWithParams('/listings/[id]/report', { id }),
-  SEARCH_LISTINGS: '/search',
+  MARK_SOLD_LISTING: (id) => urlWithParams('/listings/[id]/sell', { id }),
+  MARK_SOLD_LISTING_VIA_CONVERSATION: (id, conversationId) =>
+    urlWithParams('/listings/[id]/sell/[conversationId]', {
+      id,
+      conversationId,
+    }),
+  RATE_ORDER: (id) => urlWithParams('/my-purchases/[id]/rate', { id }),
 };
 
 const urlWithParams = (route, params) => {

@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Components, Paths } from '@/types/openapi';
+import { Components, Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 import { Allergen } from '../types/allergens';
 import { Feature } from '../types/features';
@@ -19,7 +19,7 @@ export type CreateListingDTO = Omit<
 export const createListing = async (
   data: CreateListingDTO
 ): Promise<OperationResponse<Paths.ListingsCreate.Responses.$201>> => {
-  const client = await api.getClient<Client>();
+  const client = await getApiClient();
   return await client.listings_create(null, {
     title: data.title,
     description: data.description || null,

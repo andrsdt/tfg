@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Components, Paths } from '@/types/openapi';
+import { Components, Paths } from '@/types/openapi';
 import { fileToBase64 } from '@/utils/base64';
 import { compressImage } from '@/utils/compressor';
 import { OperationResponse } from 'openapi-client-axios';
@@ -20,7 +20,7 @@ export const updateListing = async (
   params: { id: number },
   data: UpdateListingDTO
 ): Promise<OperationResponse<Paths.ListingsPartialUpdate.Responses.$200>> => {
-  const client = await api.getClient<Client>();
+  const client = await getApiClient();
   return await client.listings_partial_update(
     { id: params.id },
     {

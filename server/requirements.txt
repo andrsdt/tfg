@@ -30,3 +30,5 @@ drf-extra-fields==3.4.1
 djangorestframework-gis==1.0
 django-cleanup==7.0.0
 django-filter==23.2
+channels==4.0.0
+daphne==4.0.0

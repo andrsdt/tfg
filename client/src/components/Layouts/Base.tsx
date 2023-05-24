@@ -6,10 +6,13 @@ type BaseLayoutProps = {
 };
 
 export const BaseLayout = ({ children, className = '' }: BaseLayoutProps) => {
+  const defaultBackground = className.includes('bg-') ? '' : 'bg-white';
+
   return (
     <div
       className={clsx(
-        'h-full w-full overflow-x-hidden overflow-y-visible bg-white text-black',
+        'h-full w-full overflow-x-hidden overflow-y-visible text-black',
+        defaultBackground,
         className
       )}
     >

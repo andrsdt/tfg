@@ -22,12 +22,18 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # TODO: remove in production
     path("api/v1/schema/", SpectacularAPIView.as_view(), name="schema"),
-    # Docs UI
+    # Docs UI TODO: remove in production
     path("api/v1/docs", SpectacularSwaggerView.as_view(url_name="schema"), name="docs"),
     # Endpoints
     path("api/v1/", include("authentication.urls")),
-    path("api/v1/", include("listings.urls")),
+    path("api/v1/", include("users.urls")),
     path("api/v1/", include("producers.urls")),
+    path("api/v1/", include("listings.urls")),
+    path("api/v1/", include("orders.urls")),
+    path("api/v1/", include("reviews.urls")),
+    path("api/v1/", include("chats.urls")),
     path("api/v1/", include("notifications.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# TODO: static files won't be served in production, so we need to configure our web server (or S3 ideally) to serve them

@@ -8,9 +8,11 @@ from rest_framework.viewsets import GenericViewSet
 
 class CsrfTokenViewSet(GenericViewSet):
     permission_classes = [AllowAny]
-    serializer_class = None
 
-    @action(detail=True, methods=["get"])
+    def get_serializer_class(self):
+        return None
+
+    @action(detail=False, methods=["get"])
     @method_decorator(ensure_csrf_cookie)
     def set_csrf_token(self, request):
         return Response()

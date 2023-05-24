@@ -5,21 +5,25 @@ import { useCallback, useEffect, useState } from 'react';
 // T = Transformed type (e.g., a ListingDTO object)
 const noopTransform = async (data) => await data;
 
+const noopCallback = () => {
+  return;
+};
+
 type useRetrieveHandlerProps<O, T> = {
   transform?: (data: O) => Promise<T>;
+  onSuccess?: (data: T) => void;
   onError?: (error: any) => void;
   fetchOnChange?: any[];
 };
 
 export const useRetrieveHandler = <O, T>(
   retrieveFn: (...args: any[]) => Promise<OperationResponse<O>>,
-  { transform, onError, fetchOnChange }: useRetrieveHandlerProps<O, T> = {
-    transform: noopTransform,
-    onError: () => {
-      return;
-    },
-    fetchOnChange: [],
-  }
+  {
+    transform = noopTransform,
+    onSuccess = noopCallback,
+    onError = noopCallback,
+    fetchOnChange = [],
+  }: useRetrieveHandlerProps<O, T> = {}
 ) => {
   const [data, setData] = useState<T>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +42,7 @@ export const useRetrieveHandler = <O, T>(
         const transformedResponse = await transform(sanitizedResponse);
         setData(transformedResponse);
         setIsLoading(false);
+        onSuccess?.(transformedResponse);
       } catch (error) {
         setIsLoading(false);
         setIsError(true);

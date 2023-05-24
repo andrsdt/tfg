@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const useSubmissionHandler = (
   submitFn: (...args: any[]) => Promise<any>,
-  { onSuccess }: { onSuccess?: (...args: any[]) => void } = {}
+  { onSuccess }: { onSuccess?: (...args: any[]) => Promise<void> } = {}
 ) => {
   const [response, setResponse] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,17 +21,12 @@ export const useSubmissionHandler = (
       setIsSuccessful(true);
       setIsSubmitting(false);
       setResponse(sanitizedResponse);
+      await onSuccess?.(sanitizedResponse);
     } catch (error) {
       setIsSubmitting(false);
       throw error;
     }
   };
-
-  useEffect(() => {
-    if (isSuccessful && onSuccess) {
-      onSuccess?.();
-    }
-  }, [isSuccessful, onSuccess, response]);
 
   return [handleSubmit, isSubmitting, isSuccessful, response] as const;
 };

@@ -18,16 +18,21 @@ export const createSchema = z.object({
   features: z.optional(z.array(z.string())),
   // TODO: validate as type enum
   unit: z.string().min(1, ' '),
-  // TODO: transform to cents if comes in EUR
-  price_per_unit: z
-    .number({ invalid_type_error: '' })
-    .min(0, 'El precio no puede ser negativo')
-    .max(100000, 'No puedes vender productos de más de 1000€'),
-  g_per_unit: z.any(),
-  // g_per_unit: z
-  // .number({ invalid_type_error: '' })
-  // .min(0, 'El peso de cada unidad no puede ser negativo')
-  // .max(100000, 'No puedes vender unidades de más de 100 kg'),
+  price_per_unit: z.preprocess(
+    // TODO: use the new parseMoneyString
+    (v) => Number(v) * 100, // backend handles money in cents
+    z
+      .number()
+      .min(0, 'El precio no puede ser negativo')
+      .max(100000, 'No puedes vender productos de más de 1000€')
+  ),
+  g_per_unit: z.preprocess(
+    (v: number) => (isNaN(v) ? undefined : Number(v)),
+    z
+      .number({ invalid_type_error: '' })
+      .min(0, 'El peso de cada unidad no puede ser negativo')
+      .max(100000, 'No puedes vender unidades de más de 100 kg')
+  ),
   available_quantity: z
     .number({
       invalid_type_error: '',

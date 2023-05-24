@@ -1,6 +1,6 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Paths } from '@/types/openapi';
+import { Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 
 export type SignupCredentialsDTO = {
@@ -13,7 +13,7 @@ export type SignupCredentialsDTO = {
 export const signupWithEmailAndPassword = async (
   data: SignupCredentialsDTO
 ): Promise<OperationResponse<Paths.AuthRegistrationCreate.Responses.$201>> => {
-  const client = await api.getClient<Client>();
+  const client = await getApiClient();
   return client.auth_registration_create(null, {
     email: data.email,
     password1: data.password,

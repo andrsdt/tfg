@@ -27,6 +27,109 @@ declare namespace Components {
          * * `SULPHITES` - sulphites
          */
         export type AllergenEnum = "LACTOSE" | "WHEAT" | "NUTS" | "CELERY" | "CRUSTACEANS" | "EGG" | "FISH" | "GLUTEN" | "LUPINS" | "MILK" | "MOLLUSKS" | "MUSTARD" | "PEANUTS" | "SESAME" | "SOYBEANS" | "SULPHITES";
+        export interface BasicListing {
+            id: number;
+            title: string;
+            images: ListingImage[];
+            unit: /**
+             * * `KG` - kilogram
+             * * `UNIT` - unitary
+             */
+            UnitEnum;
+            price_per_unit: number;
+            g_per_unit?: null | number;
+            is_active?: boolean;
+            producer: {
+                user: {
+                    id: number;
+                    first_name?: string;
+                    last_name?: string;
+                    photo?: string | null; // uri
+                    phone?: string | null;
+                    location?: {
+                        type?: "Point";
+                        /**
+                         * example:
+                         * [
+                         *   12.9721,
+                         *   77.5933
+                         * ]
+                         */
+                        coordinates?: [
+                            number,
+                            number,
+                            number?
+                        ];
+                    } | null;
+                    created_at: string; // date-time
+                    average_rating: number; // double
+                    number_ratings: number;
+                };
+            };
+        }
+        export interface BasicProducer {
+            user: {
+                id: number;
+                first_name?: string;
+                last_name?: string;
+                photo?: string | null; // uri
+                phone?: string | null;
+                location?: {
+                    type?: "Point";
+                    /**
+                     * example:
+                     * [
+                     *   12.9721,
+                     *   77.5933
+                     * ]
+                     */
+                    coordinates?: [
+                        number,
+                        number,
+                        number?
+                    ];
+                } | null;
+                created_at: string; // date-time
+                average_rating: number; // double
+                number_ratings: number;
+            };
+        }
+        export interface BasicUser {
+            id: number;
+            first_name?: string;
+            last_name?: string;
+            photo?: string | null; // uri
+            average_rating: number; // double
+            number_ratings: number;
+        }
+        export interface Conversation {
+            id: number;
+            consumer: BasicUser;
+            producer: BasicUser;
+            listing: BasicListing;
+            messages: Message[];
+            created_at: string; // date-time
+            updated_at: string; // date-time
+        }
+        export interface ConversationCreate {
+            id: number;
+            listing: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+        }
+        export interface ConversationCreateRequest {
+            listing: number;
+        }
+        export interface ConversationPreview {
+            id: number;
+            consumer: BasicUser;
+            producer: BasicUser;
+            listing: BasicListing;
+            last_message: Message;
+            unread_messages_count: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+        }
         export interface Count {
             count: number;
         }
@@ -58,23 +161,11 @@ declare namespace Components {
             is_producer: boolean;
             has_completed_onboarding: boolean;
             photo: string; // uri
-            phone?: string | null;
-            location?: {
-                type?: "Point";
-                /**
-                 * example:
-                 * [
-                 *   12.9721,
-                 *   77.5933
-                 * ]
-                 */
-                coordinates?: [
-                    number,
-                    number,
-                    number?
-                ];
-            } | null;
+            phone?: string;
+            location?: string;
             created_at: string; // date-time
+            average_rating: number; // double
+            number_ratings: number;
         }
         /**
          * User model w/o password
@@ -83,22 +174,8 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             photo: string; // binary
-            phone?: string | null;
-            location?: {
-                type?: "Point";
-                /**
-                 * example:
-                 * [
-                 *   12.9721,
-                 *   77.5933
-                 * ]
-                 */
-                coordinates?: [
-                    number,
-                    number,
-                    number?
-                ];
-            } | null;
+            phone?: string;
+            location?: string;
         }
         /**
          * * `ALLOWS_DELIVERY` - allows_delivery
@@ -136,8 +213,9 @@ declare namespace Components {
                         ];
                     } | null;
                     created_at: string; // date-time
+                    average_rating: number; // double
+                    number_ratings: number;
                 };
-                biography?: string | null;
             };
             is_favorite: boolean;
             created_at: string; // date-time
@@ -152,11 +230,12 @@ declare namespace Components {
             price_per_unit: number;
             g_per_unit?: null | number;
             available_quantity: number;
+            is_active?: boolean;
         }
         export interface ListingCreate {
             id: number;
             title: string;
-            description: string | null;
+            description?: string;
             images: ListingImage[];
             unit: /**
              * * `KG` - kilogram
@@ -170,10 +249,11 @@ declare namespace Components {
             features?: ProductFeature[];
             created_at: string; // date-time
             updated_at: string; // date-time
+            is_active?: boolean;
         }
         export interface ListingCreateRequest {
             title: string;
-            description: string | null;
+            description?: string;
             images: ListingImageRequest[];
             unit: /**
              * * `KG` - kilogram
@@ -185,6 +265,7 @@ declare namespace Components {
             available_quantity: number;
             allergens?: ProductAllergenRequest[];
             features?: ProductFeatureRequest[];
+            is_active?: boolean;
         }
         export interface ListingImage {
             image: string; // uri
@@ -192,18 +273,31 @@ declare namespace Components {
         export interface ListingImageRequest {
             image: string; // binary
         }
-        export interface ListingRequest {
-            title: string;
-            description?: string | null;
-            unit: /**
-             * * `KG` - kilogram
-             * * `UNIT` - unitary
+        export interface Message {
+            id: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            text: string;
+            message_type: /**
+             * * `TEXT_MESSAGE` - TEXT_MESSAGE
+             * * `LOCATION_MESSAGE` - LOCATION_MESSAGE
+             * * `REVIEW_ORDER` - REVIEW_ORDER
+             * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
              */
-            UnitEnum;
-            price_per_unit: number;
-            g_per_unit?: null | number;
-            available_quantity: number;
+            MessageTypeEnum;
+            read_by_recipient?: boolean;
+            data?: {
+                [name: string]: any;
+            } | null;
+            sender?: null | number;
         }
+        /**
+         * * `TEXT_MESSAGE` - TEXT_MESSAGE
+         * * `LOCATION_MESSAGE` - LOCATION_MESSAGE
+         * * `REVIEW_ORDER` - REVIEW_ORDER
+         * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
+         */
+        export type MessageTypeEnum = "TEXT_MESSAGE" | "LOCATION_MESSAGE" | "REVIEW_ORDER" | "REPORT_CONFIRMATION";
         export interface Notification {
             id: number;
             created_at: string; // date-time
@@ -213,7 +307,7 @@ declare namespace Components {
              * * `NEW_LISTING` - NEW_LISTING
              * * `NEW_REVIEW` - NEW_REVIEW
              * * `NEW_LIKE` - NEW_LIKE
-             * * `REMINDER_REVIEW` - REMINDER_REVIEW
+             * * `REVIEW_ORDER` - REVIEW_ORDER
              * * `REMINDER_COMPLETE_PROFILE` - REMINDER_COMPLETE_PROFILE
              * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
              */
@@ -229,11 +323,82 @@ declare namespace Components {
          * * `NEW_LISTING` - NEW_LISTING
          * * `NEW_REVIEW` - NEW_REVIEW
          * * `NEW_LIKE` - NEW_LIKE
-         * * `REMINDER_REVIEW` - REMINDER_REVIEW
+         * * `REVIEW_ORDER` - REVIEW_ORDER
          * * `REMINDER_COMPLETE_PROFILE` - REMINDER_COMPLETE_PROFILE
          * * `REPORT_CONFIRMATION` - REPORT_CONFIRMATION
          */
-        export type NotificationTypeEnum = "CHAT_MESSAGE" | "NEW_LISTING" | "NEW_REVIEW" | "NEW_LIKE" | "REMINDER_REVIEW" | "REMINDER_COMPLETE_PROFILE" | "REPORT_CONFIRMATION";
+        export type NotificationTypeEnum = "CHAT_MESSAGE" | "NEW_LISTING" | "NEW_REVIEW" | "NEW_LIKE" | "REVIEW_ORDER" | "REMINDER_COMPLETE_PROFILE" | "REPORT_CONFIRMATION";
+        export interface Order {
+            id: number;
+            listing: {
+                id: number;
+                title: string;
+                images: ListingImage[];
+                unit: /**
+                 * * `KG` - kilogram
+                 * * `UNIT` - unitary
+                 */
+                UnitEnum;
+                price_per_unit: number;
+                g_per_unit?: null | number;
+                is_active?: boolean;
+                producer: {
+                    user: {
+                        id: number;
+                        first_name?: string;
+                        last_name?: string;
+                        photo?: string | null; // uri
+                        phone?: string | null;
+                        location?: {
+                            type?: "Point";
+                            /**
+                             * example:
+                             * [
+                             *   12.9721,
+                             *   77.5933
+                             * ]
+                             */
+                            coordinates?: [
+                                number,
+                                number,
+                                number?
+                            ];
+                        } | null;
+                        created_at: string; // date-time
+                        average_rating: number; // double
+                        number_ratings: number;
+                    };
+                };
+            };
+            consumer: {
+                id: number;
+                first_name?: string;
+                last_name?: string;
+                photo?: string | null; // uri
+                average_rating: number; // double
+                number_ratings: number;
+            };
+            is_reviewed: boolean;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            quantity: number;
+            total_price: number;
+        }
+        export interface OrderCreate {
+            id: number;
+            quantity: number;
+            consumer: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            total_price: number;
+            listing: number;
+        }
+        export interface OrderCreateRequest {
+            quantity: number;
+            consumer: number;
+            total_price: number;
+            listing: number;
+        }
         export interface PasswordChangeRequest {
             new_password1: string;
             new_password2: string;
@@ -260,26 +425,12 @@ declare namespace Components {
             first_name?: string;
             last_name?: string;
             photo?: string; // binary
-            phone?: string | null;
-            location?: {
-                type?: "Point";
-                /**
-                 * example:
-                 * [
-                 *   12.9721,
-                 *   77.5933
-                 * ]
-                 */
-                coordinates?: [
-                    number,
-                    number,
-                    number?
-                ];
-            } | null;
+            phone?: string;
+            location?: string;
         }
         export interface PatchedListingCreateRequest {
             title?: string;
-            description?: string | null;
+            description?: string;
             images?: ListingImageRequest[];
             unit?: /**
              * * `KG` - kilogram
@@ -291,6 +442,7 @@ declare namespace Components {
             available_quantity?: number;
             allergens?: ProductAllergenRequest[];
             features?: ProductFeatureRequest[];
+            is_active?: boolean;
         }
         export interface Producer {
             user: {
@@ -315,11 +467,10 @@ declare namespace Components {
                     ];
                 } | null;
                 created_at: string; // date-time
+                average_rating: number; // double
+                number_ratings: number;
             };
-            biography?: string | null;
-        }
-        export interface ProducerRequest {
-            biography?: string | null;
+            biography?: string;
         }
         export interface ProductAllergen {
             allergen: /**
@@ -386,6 +537,82 @@ declare namespace Components {
         export interface RestAuthDetail {
             detail: string;
         }
+        export interface Review {
+            id: number;
+            order: {
+                id: number;
+                listing: {
+                    id: number;
+                    title: string;
+                    images: ListingImage[];
+                    unit: /**
+                     * * `KG` - kilogram
+                     * * `UNIT` - unitary
+                     */
+                    UnitEnum;
+                    price_per_unit: number;
+                    g_per_unit?: null | number;
+                    is_active?: boolean;
+                    producer: {
+                        user: {
+                            id: number;
+                            first_name?: string;
+                            last_name?: string;
+                            photo?: string | null; // uri
+                            phone?: string | null;
+                            location?: {
+                                type?: "Point";
+                                /**
+                                 * example:
+                                 * [
+                                 *   12.9721,
+                                 *   77.5933
+                                 * ]
+                                 */
+                                coordinates?: [
+                                    number,
+                                    number,
+                                    number?
+                                ];
+                            } | null;
+                            created_at: string; // date-time
+                            average_rating: number; // double
+                            number_ratings: number;
+                        };
+                    };
+                };
+                consumer: {
+                    id: number;
+                    first_name?: string;
+                    last_name?: string;
+                    photo?: string | null; // uri
+                    average_rating: number; // double
+                    number_ratings: number;
+                };
+                is_reviewed: boolean;
+                created_at: string; // date-time
+                updated_at: string; // date-time
+                quantity: number;
+                total_price: number;
+            };
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            rating: number;
+            comment?: string | null;
+        }
+        export interface ReviewCreate {
+            id: number;
+            rating: number;
+            comment?: string;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            order: number;
+        }
+        export interface ReviewCreateRequest {
+            rating: number;
+            comment?: string;
+            order: number;
+        }
         /**
          * Serializer for Token model.
          */
@@ -419,27 +646,8 @@ declare namespace Components {
                 ];
             } | null;
             created_at: string; // date-time
-        }
-        export interface UserRequest {
-            first_name?: string;
-            last_name?: string;
-            photo?: string | null; // binary
-            phone?: string | null;
-            location?: {
-                type?: "Point";
-                /**
-                 * example:
-                 * [
-                 *   12.9721,
-                 *   77.5933
-                 * ]
-                 */
-                coordinates?: [
-                    number,
-                    number,
-                    number?
-                ];
-            } | null;
+            average_rating: number; // double
+            number_ratings: number;
         }
     }
 }
@@ -502,10 +710,62 @@ declare namespace Paths {
             export type $200 = /* User model w/o password */ Components.Schemas.CustomUserDetails;
         }
     }
+    namespace ChatsCreate {
+        export type RequestBody = Components.Schemas.ConversationCreateRequest;
+        namespace Responses {
+            export type $201 = Components.Schemas.ConversationCreate;
+        }
+    }
+    namespace ChatsList {
+        namespace Parameters {
+            export type Listing = string;
+        }
+        export interface QueryParameters {
+            listing?: Parameters.Listing;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.ConversationPreview[];
+        }
+    }
+    namespace ChatsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Conversation;
+        }
+    }
+    namespace ListingsActivateCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
+            }
+        }
+    }
     namespace ListingsCreate {
         export type RequestBody = Components.Schemas.ListingCreateRequest;
         namespace Responses {
             export type $201 = Components.Schemas.ListingCreate;
+        }
+    }
+    namespace ListingsDeactivateCreate {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export interface $204 {
+            }
         }
     }
     namespace ListingsDestroy {
@@ -527,9 +787,9 @@ declare namespace Paths {
         export interface PathParameters {
             id: Parameters.Id;
         }
-        export type RequestBody = Components.Schemas.ListingRequest;
         namespace Responses {
-            export type $200 = Components.Schemas.Listing;
+            export interface $204 {
+            }
         }
     }
     namespace ListingsLikeCreate {
@@ -539,9 +799,9 @@ declare namespace Paths {
         export interface PathParameters {
             id: Parameters.Id;
         }
-        export type RequestBody = Components.Schemas.ListingRequest;
         namespace Responses {
-            export type $200 = Components.Schemas.Listing;
+            export interface $204 {
+            }
         }
     }
     namespace ListingsList {
@@ -549,15 +809,17 @@ declare namespace Paths {
             export type Allergens = string;
             export type AvailableQuantityMax = number;
             export type AvailableQuantityMin = number;
-            export type Distance = string;
+            export type Distance = "1000" | "10000" | "100000" | "5000" | "50000";
             export type DistanceOrder = string;
+            export type ExcludeMine = boolean;
             export type Favorite = boolean;
             export type Features = string;
+            export type IsActive = boolean;
             export type OrderBy = ("-created_at" | "-price" | "-quantity" | "-updated_at" | "created_at" | "price" | "quantity" | "updated_at")[];
             export type PriceMax = number;
             export type PriceMin = number;
             export type Producer = string;
-            export type Title = string;
+            export type Q = string;
             export type Unit = string;
         }
         export interface QueryParameters {
@@ -566,13 +828,15 @@ declare namespace Paths {
             available_quantity_min?: Parameters.AvailableQuantityMin;
             distance?: Parameters.Distance;
             distance_order?: Parameters.DistanceOrder;
+            exclude_mine?: Parameters.ExcludeMine;
             favorite?: Parameters.Favorite;
             features?: Parameters.Features;
+            is_active?: Parameters.IsActive;
             order_by?: Parameters.OrderBy;
             price_max?: Parameters.PriceMax;
             price_min?: Parameters.PriceMin;
             producer?: Parameters.Producer;
-            title?: Parameters.Title;
+            q?: Parameters.Q;
             unit?: Parameters.Unit;
         }
         namespace Responses {
@@ -624,6 +888,34 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Notification[];
         }
     }
+    namespace OrdersCreate {
+        export type RequestBody = Components.Schemas.OrderCreateRequest;
+        namespace Responses {
+            export type $201 = Components.Schemas.OrderCreate;
+        }
+    }
+    namespace OrdersList {
+        namespace Parameters {
+            export type Role = "CONSUMER" | "PRODUCER";
+        }
+        export interface QueryParameters {
+            role?: Parameters.Role;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Order[];
+        }
+    }
+    namespace OrdersRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Order;
+        }
+    }
     namespace ProducersCreate {
         namespace Responses {
             export interface $201 {
@@ -639,6 +931,45 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.Producer;
+        }
+    }
+    namespace ReviewsCreate {
+        export type RequestBody = Components.Schemas.ReviewCreateRequest;
+        namespace Responses {
+            export type $201 = Components.Schemas.ReviewCreate;
+        }
+    }
+    namespace ReviewsList {
+        namespace Parameters {
+            export type Producer = string;
+        }
+        export interface QueryParameters {
+            producer?: Parameters.Producer;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Review[];
+        }
+    }
+    namespace ReviewsRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Review;
+        }
+    }
+    namespace UsersRetrieve {
+        namespace Parameters {
+            export type Id = number;
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.BasicUser;
         }
     }
 }
@@ -766,6 +1097,30 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.AuthUserPartialUpdate.Responses.$200>
   /**
+   * chats_list
+   */
+  'chats_list'(
+    parameters?: Parameters<Paths.ChatsList.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ChatsList.Responses.$200>
+  /**
+   * chats_create
+   */
+  'chats_create'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.ChatsCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ChatsCreate.Responses.$201>
+  /**
+   * chats_retrieve
+   */
+  'chats_retrieve'(
+    parameters?: Parameters<Paths.ChatsRetrieve.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ChatsRetrieve.Responses.$200>
+  /**
    * listings_list
    */
   'listings_list'(
@@ -814,21 +1169,37 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ListingsDestroy.Responses.$204>
   /**
+   * listings_activate_create
+   */
+  'listings_activate_create'(
+    parameters?: Parameters<Paths.ListingsActivateCreate.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ListingsActivateCreate.Responses.$204>
+  /**
+   * listings_deactivate_create
+   */
+  'listings_deactivate_create'(
+    parameters?: Parameters<Paths.ListingsDeactivateCreate.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ListingsDeactivateCreate.Responses.$204>
+  /**
    * listings_dislike_create
    */
   'listings_dislike_create'(
     parameters?: Parameters<Paths.ListingsDislikeCreate.PathParameters> | null,
-    data?: Paths.ListingsDislikeCreate.RequestBody,
+    data?: any,
     config?: AxiosRequestConfig  
-  ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$200>
+  ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$204>
   /**
    * listings_like_create
    */
   'listings_like_create'(
     parameters?: Parameters<Paths.ListingsLikeCreate.PathParameters> | null,
-    data?: Paths.ListingsLikeCreate.RequestBody,
+    data?: any,
     config?: AxiosRequestConfig  
-  ): OperationResponse<Paths.ListingsLikeCreate.Responses.$200>
+  ): OperationResponse<Paths.ListingsLikeCreate.Responses.$204>
   /**
    * notifications_list
    */
@@ -846,6 +1217,30 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.NotificationsCountRetrieve.Responses.$200>
   /**
+   * orders_list
+   */
+  'orders_list'(
+    parameters?: Parameters<Paths.OrdersList.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.OrdersList.Responses.$200>
+  /**
+   * orders_create
+   */
+  'orders_create'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.OrdersCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.OrdersCreate.Responses.$201>
+  /**
+   * orders_retrieve
+   */
+  'orders_retrieve'(
+    parameters?: Parameters<Paths.OrdersRetrieve.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.OrdersRetrieve.Responses.$200>
+  /**
    * producers_create
    */
   'producers_create'(
@@ -861,6 +1256,38 @@ export interface OperationMethods {
     data?: any,
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
+  /**
+   * reviews_list
+   */
+  'reviews_list'(
+    parameters?: Parameters<Paths.ReviewsList.QueryParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ReviewsList.Responses.$200>
+  /**
+   * reviews_create
+   */
+  'reviews_create'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.ReviewsCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ReviewsCreate.Responses.$201>
+  /**
+   * reviews_retrieve
+   */
+  'reviews_retrieve'(
+    parameters?: Parameters<Paths.ReviewsRetrieve.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ReviewsRetrieve.Responses.$200>
+  /**
+   * users_retrieve
+   */
+  'users_retrieve'(
+    parameters?: Parameters<Paths.UsersRetrieve.PathParameters> | null,
+    data?: any,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.UsersRetrieve.Responses.$200>
 }
 
 export interface PathsDictionary {
@@ -1001,6 +1428,34 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.AuthUserPartialUpdate.Responses.$200>
   }
+  ['/chats/']: {
+    /**
+     * chats_list
+     */
+    'get'(
+      parameters?: Parameters<Paths.ChatsList.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ChatsList.Responses.$200>
+    /**
+     * chats_create
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.ChatsCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ChatsCreate.Responses.$201>
+  }
+  ['/chats/{id}/']: {
+    /**
+     * chats_retrieve
+     */
+    'get'(
+      parameters?: Parameters<Paths.ChatsRetrieve.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ChatsRetrieve.Responses.$200>
+  }
   ['/listings/']: {
     /**
      * listings_list
@@ -1053,15 +1508,35 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ListingsDestroy.Responses.$204>
   }
+  ['/listings/{id}/activate/']: {
+    /**
+     * listings_activate_create
+     */
+    'post'(
+      parameters?: Parameters<Paths.ListingsActivateCreate.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ListingsActivateCreate.Responses.$204>
+  }
+  ['/listings/{id}/deactivate/']: {
+    /**
+     * listings_deactivate_create
+     */
+    'post'(
+      parameters?: Parameters<Paths.ListingsDeactivateCreate.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ListingsDeactivateCreate.Responses.$204>
+  }
   ['/listings/{id}/dislike/']: {
     /**
      * listings_dislike_create
      */
     'post'(
       parameters?: Parameters<Paths.ListingsDislikeCreate.PathParameters> | null,
-      data?: Paths.ListingsDislikeCreate.RequestBody,
+      data?: any,
       config?: AxiosRequestConfig  
-    ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$200>
+    ): OperationResponse<Paths.ListingsDislikeCreate.Responses.$204>
   }
   ['/listings/{id}/like/']: {
     /**
@@ -1069,9 +1544,9 @@ export interface PathsDictionary {
      */
     'post'(
       parameters?: Parameters<Paths.ListingsLikeCreate.PathParameters> | null,
-      data?: Paths.ListingsLikeCreate.RequestBody,
+      data?: any,
       config?: AxiosRequestConfig  
-    ): OperationResponse<Paths.ListingsLikeCreate.Responses.$200>
+    ): OperationResponse<Paths.ListingsLikeCreate.Responses.$204>
   }
   ['/notifications/']: {
     /**
@@ -1093,6 +1568,34 @@ export interface PathsDictionary {
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.NotificationsCountRetrieve.Responses.$200>
   }
+  ['/orders/']: {
+    /**
+     * orders_list
+     */
+    'get'(
+      parameters?: Parameters<Paths.OrdersList.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.OrdersList.Responses.$200>
+    /**
+     * orders_create
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.OrdersCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.OrdersCreate.Responses.$201>
+  }
+  ['/orders/{id}/']: {
+    /**
+     * orders_retrieve
+     */
+    'get'(
+      parameters?: Parameters<Paths.OrdersRetrieve.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.OrdersRetrieve.Responses.$200>
+  }
   ['/producers/']: {
     /**
      * producers_create
@@ -1112,6 +1615,44 @@ export interface PathsDictionary {
       data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
+  }
+  ['/reviews/']: {
+    /**
+     * reviews_list
+     */
+    'get'(
+      parameters?: Parameters<Paths.ReviewsList.QueryParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ReviewsList.Responses.$200>
+    /**
+     * reviews_create
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.ReviewsCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ReviewsCreate.Responses.$201>
+  }
+  ['/reviews/{id}/']: {
+    /**
+     * reviews_retrieve
+     */
+    'get'(
+      parameters?: Parameters<Paths.ReviewsRetrieve.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ReviewsRetrieve.Responses.$200>
+  }
+  ['/users/{id}/']: {
+    /**
+     * users_retrieve
+     */
+    'get'(
+      parameters?: Parameters<Paths.UsersRetrieve.PathParameters> | null,
+      data?: any,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.UsersRetrieve.Responses.$200>
   }
 }
 

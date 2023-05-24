@@ -8,7 +8,7 @@ DATA_STRUCTURE = {
     "NEW_LISTING": {"listing": "int"},
     "NEW_REVIEW": {"review": "int"},
     "NEW_LIKE": {"listing": "int"},
-    "REMINDER_REVIEW": {"listing": "int"},
+    "REVIEW_ORDER": {"order": "int"},
     "REMINDER_COMPLETE_PROFILE": {},
     "REPORT_CONFIRMATION": {"report": "int"},
 }

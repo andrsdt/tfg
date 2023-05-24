@@ -7,9 +7,23 @@ import router from 'next/router';
 import { FilterPill } from '../FilterPill';
 
 export const FeaturesFilter = () => {
+  const defaultText = 'Características';
+  const selectedFeatures =
+    useSearchParams()
+      .get('features')
+      ?.split(',')
+      ?.filter((e) => e !== '') || [];
+
+  const prettyTextFeatures = selectedFeatures.map((feature) => {
+    return FEATURES[feature].translation;
+  });
+
   return (
     <FilterPill
-      name="features"
+      text={
+        selectedFeatures.length ? prettyTextFeatures.join(', ') : defaultText
+      }
+      drawerName="features"
       queries={['features']}
       Drawer={<FeaturesDrawer />}
     />

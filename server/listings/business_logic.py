@@ -6,6 +6,7 @@ from users.models import User
 
 @transaction.atomic
 def create_listing(validated_data):
+    # TODO: use individual params instead of validated_data (**validated_data in serializers)
     listing = _create_listing_instance(validated_data)
     _set_listing_images(validated_data.get("images", []), listing)
     _set_listing_allergens(validated_data.get("allergens", []), listing)
@@ -15,6 +16,7 @@ def create_listing(validated_data):
 
 @transaction.atomic
 def update_listing(validated_data, instance):
+    # TODO: use individual params instead of validated_data (**validated_data in serializers)
     _update_listing_instance(validated_data, instance)
     _set_listing_images(validated_data.get("images", []), instance)
     _set_listing_allergens(validated_data.get("allergens", []), instance)
@@ -33,7 +35,11 @@ def like_listing(instance: Listing, user: User):
     # Using add() on a relation that already exists won’t duplicate the relation, but it will still trigger signals.
     # https://docs.djangoproject.com/en/4.2/ref/models/relations/#django.db.models.fields.related.RelatedManager.add
     user.favorites.add(instance)
-    send_new_like_notification(instance)
+
+    # Only send a notification to the producer
+    # if he hasn't liked his own listing
+    if user != instance.producer.user:
+        send_new_like_notification(instance)
 
 
 def dislike_listing(instance: Listing, user: User):

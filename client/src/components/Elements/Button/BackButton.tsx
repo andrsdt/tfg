@@ -4,13 +4,18 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 type BackButtonProps = {
+  href?: string;
   className?: string;
   iconClassName?: string;
 };
 
-export const BackButton = ({ className, iconClassName }: BackButtonProps) => {
+export const BackButton = ({
+  href = NEXT_ROUTES.HOME,
+  className,
+  iconClassName = 'w-8 h-8',
+}: BackButtonProps) => {
   return (
-    <Link href={NEXT_ROUTES.HOME} className={clsx(className)}>
+    <Link href={href} className={clsx(className)}>
       <ArrowLeftIcon className={clsx(iconClassName)} />
     </Link>
   );

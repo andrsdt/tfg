@@ -12,20 +12,20 @@ class NotificationViewSet(mixins.ListModelMixin, GenericViewSet):
 
     # https://www.django-rest-framework.org/api-guide/viewsets/#introspecting-viewset-actions
     def get_permissions(self):
+        default_permission = [IsAuthenticated]
         permissions = {
             "list": [IsAuthenticated],
             "count_unread": [IsAuthenticated],
             "mark_all_as_read": [IsAuthenticated],
         }
-        default_permission = [IsAuthenticated]
         return [p() for p in permissions.get(self.action, default_permission)]
 
     def get_serializer_class(self):
+        default_serializer = NotificationSerializer
         serializers = {
             "list": NotificationSerializer,
             "count_unread": CountSerializer,
         }
-        default_serializer = NotificationSerializer
         return serializers.get(self.action, default_serializer)
 
     def get_queryset(self):

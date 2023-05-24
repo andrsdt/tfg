@@ -26,3 +26,11 @@ PRODUCT_FEATURE_CHOICES = (
     ("IS_VEGAN", "is_vegan"),
     ("IS_SUGAR_FREE", "is_sugar_free"),
 )
+
+DISTANCE_CHOICES = (
+    ("1000", "<1 km"),
+    ("5000", "<5 km"),
+    ("10000", "<10 km"),
+    ("50000", "<50 km"),
+    ("100000", "<100 km"),
+)

@@ -3,6 +3,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 from grocerin.mixins import TimestampsMixin
+from reviews.models import Review
 from users.managers import UserManager
 
 
@@ -16,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     photo = models.ImageField(_("photo"), upload_to="users/", blank=True, null=True)
     location = models.PointField(_("location"), geography=True, null=True)
     phone = models.CharField(_("phone"), max_length=20, blank=True, null=True)
-    favorites = models.ManyToManyField("listings.Listing", related_name="users")
+    favorites = models.ManyToManyField("listings.Listing", related_name="liked_by")
 
     is_staff = models.BooleanField(
         _("staff status"),
@@ -57,3 +58,13 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
 
     def __str__(self):
         return self.email
+
+    @property
+    def average_rating(self) -> float or None:
+        user_reviews = Review.objects.from_user(self)
+        return user_reviews.aggregate(models.Avg("rating"))["rating__avg"]
+
+    @property
+    def number_ratings(self) -> int:
+        user_reviews = Review.objects.from_user(self)
+        return user_reviews.count()

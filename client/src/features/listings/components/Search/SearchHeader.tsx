@@ -1,4 +1,8 @@
-import { BackButton, Dropdown, Separator } from '@/components/Elements';
+import {
+  BackButton,
+  ThreeDotsDropdown,
+  Separator,
+} from '@/components/Elements';
 import { Menu } from '@headlessui/react';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { AllergensFilter } from './Filters/AllergensFilter';
@@ -25,7 +29,7 @@ export const SearchHeader = ({ numberOfListings }: SearchHeaderProps) => {
   };
 
   return (
-    <header className="rounded-b-3xl bg-white p-4 text-gray">
+    <header className="mb-2 rounded-b-3xl bg-white p-4 text-gray drop-shadow-lg">
       <span className="flex w-full items-center justify-between space-x-2">
         <BackButton className="mr-2 w-10" />
         <ListingSearchBar />
@@ -40,8 +44,9 @@ export const SearchHeader = ({ numberOfListings }: SearchHeaderProps) => {
 
 const SearchOptionsDropdown = () => {
   return (
-    <Dropdown buttonClassName="relative h-10 w-10 -mr-2">
+    <ThreeDotsDropdown buttonClassName="relative h-10 w-10 -mr-2">
       <div className="absolute -top-4 right-4 origin-top-right justify-between rounded-xl bg-white p-4 shadow-lg">
+        {/* TODO: add meaningful options */}
         <Menu.Item>
           <p>Opción A</p>
         </Menu.Item>
@@ -54,7 +59,7 @@ const SearchOptionsDropdown = () => {
           <p>Opción C</p>
         </Menu.Item>
       </div>
-    </Dropdown>
+    </ThreeDotsDropdown>
   );
 };
 
@@ -67,6 +72,7 @@ const FilterPicker = () => {
       <DistanceFilter />
       <AllergensFilter />
       <FeaturesFilter />
+      {/* TODO: add the rest of filters (look at the backend's available queryParams for the filter) */}
     </div>
   );
 };

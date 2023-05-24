@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from listings.business_logic import dislike_listing, like_listing
 from listings.filters import ListingFilterSet
 from listings.models import Listing
@@ -6,16 +7,17 @@ from listings.serializers import ListingCreateSerializer, ListingSerializer
 from producers.permissions import IsProducer
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 
 class ListingViewSet(viewsets.ModelViewSet):
-    queryset = Listing.objects.all()
+    queryset = Listing.objects.active()
     filterset_class = ListingFilterSet
 
     # https://www.django-rest-framework.org/api-guide/viewsets/#introspecting-viewset-actions
     def get_permissions(self):
+        default_permission = [IsListingOwner]
         permissions = {
             "list": [AllowAny],
             "retrieve": [AllowAny],
@@ -23,42 +25,66 @@ class ListingViewSet(viewsets.ModelViewSet):
             "update": [IsListingOwner],
             "partial_update": [IsListingOwner],
             "destroy": [IsListingOwner],
+            "like": [IsAuthenticated],
+            "dislike": [IsAuthenticated],
+            "activate": [IsListingOwner],
+            "deactivate": [IsListingOwner],
         }
-
-        default_permission = [AllowAny]
-
         return [p() for p in permissions.get(self.action, default_permission)]
 
     def get_serializer_class(self):
+        default_serializer = ListingSerializer
         serializers = {
             "create": ListingCreateSerializer,
             "update": ListingCreateSerializer,
             "partial_update": ListingCreateSerializer,
         }
-
-        default_serializer = ListingSerializer
-
         return serializers.get(self.action, default_serializer)
 
-    # Inherited from ModelViewSet
+    def get_queryset(self):
+        active_listings = Listing.objects.active()
+        my_listings = Listing.objects.from_producer(self.request.user.id)
+        default_queryset = active_listings
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(
-            serializer.data, status=status.HTTP_201_CREATED, headers=headers
-        )
+        querysets = {
+            # A user can list/retrieve a listing if it's active
+            # or also if it's inactive but only if he is the owner
+            "list": active_listings | my_listings,
+            "retrieve": active_listings | my_listings,
+            "partial_update": my_listings,
+            "update": my_listings,
+            "destroy": my_listings,
+            "activate": my_listings,
+            "deactivate": my_listings,
+            "like": active_listings | my_listings,
+            "dislike": active_listings | my_listings,
+        }
+        return querysets.get(self.action, default_queryset)
 
+    @extend_schema(request=None, responses={204: None})
     @action(detail=True, methods=["post"])
     def like(self, request, pk=None):
         listing = self.get_object()
         like_listing(listing, request.user)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    @extend_schema(request=None, responses={204: None})
     @action(detail=True, methods=["post"])
     def dislike(self, request, pk=None):
         listing = self.get_object()
         dislike_listing(listing, request.user)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @extend_schema(request=None, responses={204: None})
+    @action(detail=True, methods=["post"])
+    def activate(self, _, pk=None):
+        listing = self.get_object()
+        listing.set_active()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @extend_schema(request=None, responses={204: None})
+    @action(detail=True, methods=["post"])
+    def deactivate(self, _, pk=None):
+        listing = self.get_object()
+        listing.set_inactive()
         return Response(status=status.HTTP_204_NO_CONTENT)

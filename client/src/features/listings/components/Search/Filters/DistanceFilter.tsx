@@ -10,12 +10,30 @@ import {
   transformLocationToCoordinates,
 } from '@/utils/formatters';
 
+const DISTANCE_OPTIONS = {
+  1000: '<1 km',
+  5000: '<5 km',
+  10000: '<10 km',
+  50000: '<50 km',
+  100000: '<100 km',
+};
+
 export const DistanceFilter = () => {
+  const { user } = useAuth();
+  const selectedDistance = useSearchParams().get('distance') || '';
+  const defaultText = 'Distancia';
+
   return (
     <FilterPill
-      name="distance"
+      text={
+        selectedDistance.length
+          ? DISTANCE_OPTIONS[selectedDistance]
+          : defaultText
+      }
+      drawerName="distance"
       queries={['distance']}
       Drawer={<DistanceDrawer />}
+      show={!!user?.location}
     />
   );
 };
@@ -25,13 +43,6 @@ const DistanceDrawer = () => {
   const selectedLocation = useSearchParams().get('location') || ''; // -36.606,-72.103
   const { user } = useAuth();
 
-  const options = {
-    1000: '<1 km',
-    10000: '<10 km',
-    50000: '<50 km',
-    100000: '<100 km',
-  };
-
   return (
     <div className="text-start">
       <h1 className="text-3xl font-bold tracking-tight">Distancia</h1>
@@ -39,16 +50,18 @@ const DistanceDrawer = () => {
         A la que quieras limitar los resultados
       </p>
       <span className="flex flex-wrap">
-        {Object.entries(options).map(([value, label]) => (
+        {Object.entries(DISTANCE_OPTIONS).map(([value, label]) => (
           <Pill
             key={value}
             isSelected={selectedDistance === value}
             onClick={() => {
+              // If the filter is already selected, remove it on click
+              const shouldRemoveFilters = selectedDistance === value;
               router.push(
                 {
                   query: {
                     ...router.query,
-                    distance: value,
+                    distance: shouldRemoveFilters ? undefined : value,
                   },
                 },
                 undefined,

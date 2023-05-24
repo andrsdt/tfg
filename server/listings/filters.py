@@ -1,14 +1,17 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.measure import Distance as DistanceRadius
-from django.db.models import F
+from django.db.models import F, Q
 from django_filters import rest_framework
+from listings.enums import DISTANCE_CHOICES
 
 from .models import Listing
 
 
 class ListingFilterSet(rest_framework.FilterSet):
     # Filter by title (contains)
-    title = rest_framework.CharFilter(field_name="title", lookup_expr="icontains")
+    # title = rest_framework.CharFilter(field_name="title", lookup_expr="icontains")
+    q = rest_framework.CharFilter(method="fuzzy_search")
+
     # Filter by price (gte, lte)
     price_min = rest_framework.NumberFilter(
         field_name="price_per_unit", lookup_expr="gte"
@@ -27,6 +30,12 @@ class ListingFilterSet(rest_framework.FilterSet):
     unit = rest_framework.CharFilter(field_name="unit", lookup_expr="exact")
     # Filter by producer (exact)
     producer = rest_framework.CharFilter(field_name="producer", lookup_expr="exact")
+    exclude_mine = rest_framework.BooleanFilter(method="filter_exclude_mine")
+
+    # Filter by active (exact)
+    is_active = rest_framework.BooleanFilter(
+        field_name="is_active", lookup_expr="exact"
+    )
 
     # Filter by those that don't contain any of the allergens
     allergens = rest_framework.CharFilter(
@@ -39,7 +48,10 @@ class ListingFilterSet(rest_framework.FilterSet):
         method="filter_by_features",
     )
 
-    distance = rest_framework.CharFilter(method="filter_by_distance")
+    distance = rest_framework.ChoiceFilter(
+        choices=DISTANCE_CHOICES, method="filter_by_distance"
+    )
+
     distance_order = rest_framework.CharFilter(method="order_by_distance")
 
     favorite = rest_framework.BooleanFilter(method="filter_by_favorite")
@@ -56,7 +68,8 @@ class ListingFilterSet(rest_framework.FilterSet):
     class Meta:
         model = Listing
         fields = [
-            "title",
+            "q",
+            # "title",
             "price_min",
             "price_max",
             "available_quantity_min",
@@ -68,6 +81,12 @@ class ListingFilterSet(rest_framework.FilterSet):
             "distance",
             "favorite",
         ]
+
+    def fuzzy_search(self, queryset, _, value):
+        # Return all listings that contain the value either in the title or in the description
+        return queryset.filter(
+            Q(title__icontains=value) | Q(description__icontains=value)
+        )
 
     def filter_out_allergens(self, queryset, _, value):
         allergens = value.split(",")  # GLUTEN, DAIRY, LACTOSE...
@@ -86,14 +105,14 @@ class ListingFilterSet(rest_framework.FilterSet):
     def filter_by_favorite(self, queryset, _, value):
         user = self.request.user
         if not value or user.is_anonymous:
-            return queryset
+            return queryset.none()
 
         return queryset.filter(pk__in=user.favorites.values_list("id", flat=True))
 
     def filter_by_distance(self, queryset, _, value):
         user = self.request.user
         if not value or user.is_anonymous or user.location is None:
-            return queryset
+            return queryset.none()
 
         # Filter by those in a radius of "value" meters
         return queryset.filter(
@@ -102,6 +121,13 @@ class ListingFilterSet(rest_framework.FilterSet):
                 DistanceRadius(m=int(value)),
             )
         )
+
+    def filter_exclude_mine(self, queryset, _, value):
+        user = self.request.user
+        if not value or user.is_anonymous or not user.is_producer:
+            return queryset
+
+        return queryset.exclude(producer__user=user)
 
     def order_by_distance(self, queryset, _, value):
         user = self.request.user

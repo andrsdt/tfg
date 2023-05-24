@@ -1,12 +1,20 @@
-import { api } from '@/lib/api';
+import { getApiClient } from '@/lib/api';
 
-import { Client, Paths } from '@/types/openapi';
-import { OperationResponse } from 'openapi-client-axios';
+import { Components } from '@/types/openapi';
+import useSWR from 'swr';
 
-export const countUnreadNotifications = async (): Promise<
-  OperationResponse<Paths.NotificationsCountRetrieve.Responses.$200>
-> => {
-  // TODO: use SWR to fetch periodically
-  const client = await api.getClient<Client>();
-  return await client.notifications_count_retrieve();
+export const useCountUnreadNotifications = () => {
+  // Use SWR to cache the response and refresh it periodically
+  const { data, isLoading, error } = useSWR(
+    'count_unread_notifications',
+    async () => await (await getApiClient()).notifications_count_retrieve()
+  );
+
+  const sanitizedResponse = (data?.data ?? data) as Components.Schemas.Count;
+
+  return {
+    numNotifications: sanitizedResponse?.count,
+    isLoading,
+    isError: error,
+  };
 };

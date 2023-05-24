@@ -18,7 +18,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
         className={clsx(
           className,
-          'rounded-3xl bg-green py-4 text-center text-xl tracking-wider text-white hover:opacity-90',
+          'rounded-3xl py-4 text-center text-xl tracking-wider text-white hover:opacity-90',
+          !className.includes('bg-') && 'bg-green',
           disabled && 'opacity-50 grayscale'
         )}
         {...props}

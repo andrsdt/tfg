@@ -7,14 +7,16 @@ import {
   ProfileButton,
 } from '@/features/users/components/Button/ProfileBox';
 import { useAuth } from '@/hooks/useAuth';
-import { formatPhoneNumber } from '@/utils/formatters';
+import { formatSpanishPhoneNumber } from '@/utils/formatters';
 import {
   ArrowLeftOnRectangleIcon,
+  BanknotesIcon,
+  ClipboardIcon,
   EnvelopeIcon,
   LockClosedIcon,
   PhoneIcon,
   QuestionMarkCircleIcon,
-  WalletIcon,
+  RectangleStackIcon,
 } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
@@ -31,7 +33,13 @@ const Profile = () => {
       <h1 className="mt-2 text-2xl font-bold">
         {user.first_name} {user.last_name}
       </h1>
-      <h2 className="text-xl">⭐ 4.8 &middot; 14 valoraciones</h2>
+      <h2 className="text-xl">
+        {user.average_rating
+          ? `⭐ ${user.average_rating.toFixed(1)} · ${
+              user.number_ratings
+            } valoraciones`
+          : 'No hay valoraciones'}
+      </h2>
       {/* NOTE: this is working because producer uses the user.id as its PK too */}
       {user.is_producer && (
         <Link
@@ -56,17 +64,32 @@ const Profile = () => {
           </div>
         )}
         <ProfileBox>
+          {user.is_producer && (
+            <>
+              <ProfileButton
+                title="Mis publicaciones"
+                Icon={<RectangleStackIcon />}
+                href={NEXT_ROUTES.MY_LISTINGS}
+              />
+              <ProfileButton
+                title="Mis ventas"
+                Icon={<BanknotesIcon />}
+                href={NEXT_ROUTES.MY_SALES}
+              />
+            </>
+          )}
           <ProfileButton
-            title="Mis movimientos"
-            Icon={<WalletIcon />}
-            href=""
+            title="Mis compras"
+            Icon={<ClipboardIcon />}
+            href={NEXT_ROUTES.MY_PURCHASES}
           />
         </ProfileBox>
         <ProfileBox>
+          {/* TODO: implement profile general editing */}
           <ProfileButton title={user.email} Icon={<EnvelopeIcon />} href="" />
           {user.phone && (
             <ProfileButton
-              title={formatPhoneNumber(user.phone)}
+              title={formatSpanishPhoneNumber(user.phone)}
               Icon={<PhoneIcon />}
               href=""
             />
