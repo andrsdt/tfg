@@ -42,14 +42,6 @@ const Chat = ({ pageProps }: ChatProps) => {
 
 export default Chat;
 
-const InformativeChatMessage = ({ message }: { message: Message }) => {
-  return (
-    <div className="flex w-full flex-col items-center">
-      <p className="text-xs text-gray">{message.text}</p>
-    </div>
-  );
-};
-
 type MessageInputProps = {
   sendTextMessage: (text: string) => void;
   connectionStatus: string;

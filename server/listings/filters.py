@@ -8,8 +8,7 @@ from .models import Listing
 
 
 class ListingFilterSet(rest_framework.FilterSet):
-    # Filter by title (contains)
-    # title = rest_framework.CharFilter(field_name="title", lookup_expr="icontains")
+    # Filter by matching title or description
     q = rest_framework.CharFilter(method="fuzzy_search")
 
     # Filter by price (gte, lte)
@@ -69,7 +68,6 @@ class ListingFilterSet(rest_framework.FilterSet):
         model = Listing
         fields = [
             "q",
-            # "title",
             "price_min",
             "price_max",
             "available_quantity_min",
@@ -83,7 +81,7 @@ class ListingFilterSet(rest_framework.FilterSet):
         ]
 
     def fuzzy_search(self, queryset, _, value):
-        # Return all listings that contain the value either in the title or in the description
+        """Return all listings that contain the value either in the title or in the description"""
         return queryset.filter(
             Q(title__icontains=value) | Q(description__icontains=value)
         )

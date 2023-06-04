@@ -33,7 +33,8 @@ type RateOrderProps = {
   };
 };
 
-export type ReportListingValues = {
+// TODO: move this to another file
+export type ReviewListingValues = {
   rating: number;
   comment: string;
   order: number;
@@ -107,7 +108,7 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
           </Link>
         </div>
       </div>
-      <Form<ReportListingValues, typeof schema>
+      <Form<ReviewListingValues, typeof schema>
         onSubmit={handleCreateReview}
         schema={schema}
         defaults={{ order: order.id, rating: 3, comment: '' }}
@@ -142,11 +143,7 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
               </div>
               <div className="w-full text-center">
                 <Link
-                  href={
-                    // TODO: handle report order
-                    // NEXT_ROUTES.REPORT_ORDER(id)
-                    NEXT_ROUTES.HOME
-                  }
+                  href={NEXT_ROUTES.REPORT_ORDER(id)}
                   className="text-sm text-red sm:text-lg"
                 >
                   ¿Has tenido algún problema? <b>Háznoslo saber</b>

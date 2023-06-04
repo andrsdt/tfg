@@ -11,7 +11,6 @@
     "lint": "eslint .",
     "lint-fix": "eslint . --fix --max-warnings=-1",
     "format": "npx prettier --write .",
-    "generate": "plop",
     "prepare": "cd .. && husky install client/.husky",
     "generate-types": "npx openapi-client-axios-typegen http://grocerin.test/api/v1/schema > src/types/openapi.d.ts"
   },
@@ -74,7 +73,6 @@
     "eslint-plugin-testing-library": "^5.10.3",
     "husky": "^8.0.0",
     "jest": "^29.5.0",
-    "plop": "^3.1.2",
     "postcss-preset-env": "^8.0.1",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.4",

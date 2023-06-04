@@ -26,6 +26,7 @@ const NEXT_ROUTES = {
       conversationId,
     }),
   RATE_ORDER: (id) => urlWithParams('/my-purchases/[id]/rate', { id }),
+  REPORT_ORDER: (id) => urlWithParams('/my-purchases/[id]/report', { id }),
 };
 
 const urlWithParams = (route, params) => {

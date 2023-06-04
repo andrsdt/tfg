@@ -7,12 +7,16 @@ from rest_framework.viewsets import GenericViewSet
 
 
 class CsrfTokenViewSet(GenericViewSet):
-    permission_classes = [AllowAny]
+    """
+    A viewset for retrieving the CSRF token and setting it as a cookie.
+    """
 
-    def get_serializer_class(self):
-        return None
+    permission_classes = [AllowAny]
 
     @action(detail=False, methods=["get"])
     @method_decorator(ensure_csrf_cookie)
-    def set_csrf_token(self, request):
+    def get_csrf_token(self, request):
+        """
+        Retrieves the CSRF token and sets it as a cookie.
+        """
         return Response()

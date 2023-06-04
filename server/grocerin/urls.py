@@ -35,5 +35,6 @@ urlpatterns = [
     path("api/v1/", include("reviews.urls")),
     path("api/v1/", include("chats.urls")),
     path("api/v1/", include("notifications.urls")),
+    path("api/v1/", include("reports.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # TODO: static files won't be served in production, so we need to configure our web server (or S3 ideally) to serve them

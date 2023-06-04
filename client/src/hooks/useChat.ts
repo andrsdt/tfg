@@ -16,10 +16,9 @@ export const useChat = (id: string) => {
 
   const { addMessages, setMessageAsRead, emptyMessages } = useChatStore();
 
-  const [historyConversation, isLoading, isError] = useRetrieveHandler<
-    Conversation,
-    Conversation
-  >(() => retrieveConversation(id));
+  const [historyConversation] = useRetrieveHandler<Conversation, Conversation>(
+    () => retrieveConversation(id)
+  );
 
   const { sendJsonMessage, readyState } = useWebSocket(
     `${WS_URL}/ws/chat/${id}/`,

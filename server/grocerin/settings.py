@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django_phonenumbers",
     "phonenumber_field",
     "django_cleanup.apps.CleanupConfig",
+    # "django_extensions", # TODO: delete this when we are done with graph exports
     # Auth modules
     "rest_framework.authtoken",
     "dj_rest_auth",
@@ -210,3 +211,23 @@ ASGI_APPLICATION = "chats.routing.application"  # routing.py will handle the ASG
 
 # TODO: Change this to redis in production
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
+# TODO: delete this when we are done with graph exports
+# GRAPH_MODELS = {
+#     "all_applications": True,
+#     "group_models": True,
+#     "include_models": [
+#         "User",
+#         "Producer",
+#         "Listing",
+#         "ListingImage",
+#         "ProductAllergen",
+#         "ProductFeature",
+#         "Order",
+#         "Notification",
+#         "Conversation",
+#         "Message",
+#         "Review",
+#         "Report",
+#     ],
+# }

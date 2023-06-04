@@ -1,14 +1,15 @@
+import { uuid } from '@/utils/uuid';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import clsx from 'clsx';
 import { Fragment } from 'react';
 
-type valueType = { identifier: string; translation: string };
+export type ListboxValueType<T> = { identifier: T; translation: string };
 
-type CustomListboxProps = {
-  value: valueType;
-  setValue: (value: valueType) => void;
-  options?: valueType[];
+type CustomListboxProps<T> = {
+  value: T;
+  setValue: (value: T) => void;
+  options: ListboxValueType<T>[];
   className?: string;
 };
 
@@ -17,13 +18,16 @@ export const CustomListbox = ({
   setValue,
   options,
   className,
-}: CustomListboxProps) => {
+}: CustomListboxProps<string>) => {
+  const chosen = options.find((item) => item.identifier === value);
+  if (!chosen) return;
+
   return (
     <div className={clsx(className)}>
       <Listbox value={value} onChange={setValue}>
         <div className="relative mt-1">
           <Listbox.Button className="focus-visible:border-indigo-500 focus-visible:ring-offset-orange-300 relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 sm:text-sm">
-            <span className="block truncate">{value.translation}</span>
+            <span className="block truncate">{chosen.translation}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon
                 className="h-5 w-5 text-gray"
@@ -38,15 +42,15 @@ export const CustomListbox = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {options.map((option, optionIdx) => (
+              {options.map((option) => (
                 <Listbox.Option
-                  key={optionIdx}
+                  key={uuid()}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active ? 'bg-light-gray text-green' : 'text-gray'
                     }`
                   }
-                  value={option}
+                  value={option.identifier}
                 >
                   {({ selected }) => (
                     <>

@@ -1,6 +1,6 @@
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import LoginSerializer, UserDetailsSerializer
-from django.core.validators import MinLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from drf_extra_fields.fields import Base64ImageField
 from grocerin.validators import OnlyAlphaAndSpacesValidator
 from notifications.business_logic import (
@@ -13,15 +13,16 @@ from users.models import User
 
 
 class CustomLoginSerializer(LoginSerializer):
-    class Meta:
-        fields = ["email", "password"]
-
     username = serializers.HiddenField(default=None)
     email = serializers.EmailField(required=True, allow_blank=False)
     password = serializers.CharField(required=True, write_only=True)
 
 
 class CustomRegisterSerializer(RegisterSerializer):
+    """
+    Serializer for user registration.
+    """
+
     class Meta:
         fields = [
             "email",
@@ -35,13 +36,27 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     username = serializers.HiddenField(default=None)
     first_name = serializers.CharField(
-        required=True, validators=[MinLengthValidator(2), OnlyAlphaAndSpacesValidator]
+        required=True,
+        validators=[
+            MinLengthValidator(2),
+            MaxLengthValidator(100),
+            OnlyAlphaAndSpacesValidator,
+        ],
     )
     last_name = serializers.CharField(
-        required=True, validators=[MinLengthValidator(2), OnlyAlphaAndSpacesValidator]
+        required=True,
+        validators=[
+            MinLengthValidator(2),
+            MaxLengthValidator(100),
+            OnlyAlphaAndSpacesValidator,
+        ],
     )
 
     def validate_username(self, username):
+        # NOTE: this is a hack to override the default username validation
+        # from the library, which would raise an error since the username
+        # field is not used in our app.
+
         return username
 
     def custom_signup(self, request, user):
@@ -50,10 +65,12 @@ class CustomRegisterSerializer(RegisterSerializer):
         # to the serializer (it already provides a "user" object),
         # which doesn't allow us to create it from scratch in
         # business_logic.py, but only add new fields to it.
-        user.first_name = self.data.get("first_name")
-        user.last_name = self.data.get("last_name")
+        user.first_name = self.validated_data.get("first_name")
+        user.last_name = self.validated_data.get("last_name")
         user.save(update_fields=["first_name", "last_name"])
+
         send_reminder_complete_profile_notification(user)
+
         return user
 
 
@@ -61,7 +78,6 @@ class CustomRegisterSerializer(RegisterSerializer):
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     photo = Base64ImageField()
     phone = PhoneNumberField(region="ES", required=False)
-    location = serializers.CharField(required=False)
 
     class Meta:
         fields = [

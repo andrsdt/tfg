@@ -8,9 +8,14 @@ class Report(TimestampsMixin):
         "users.User", on_delete=models.CASCADE, related_name="reports"
     )
     reported = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="reported"
+        "users.User", on_delete=models.CASCADE, related_name="reported", null=True
     )
     order = models.OneToOneField("orders.Order", on_delete=models.CASCADE, null=True)
-    comment = models.TextField(max_length=2000)
+    description = models.TextField(max_length=2000)
+    is_resolved = models.BooleanField(default=False)
 
     objects = ReportManager()
+
+    @property
+    def target(self) -> str:
+        return "ORDER" if hasattr(self, "order") else "PRODUCER"

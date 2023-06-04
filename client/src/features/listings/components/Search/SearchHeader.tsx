@@ -9,6 +9,7 @@ import { AllergensFilter } from './Filters/AllergensFilter';
 import { FeaturesFilter } from './Filters/FeaturesFilter';
 import { ListingSearchBar } from './SearchBar';
 import { DistanceFilter } from './Filters/DistanceFilter';
+import { PriceFilter } from './Filters/PriceFilter';
 
 type SearchHeaderProps = {
   numberOfListings: number | undefined;
@@ -72,6 +73,7 @@ const FilterPicker = () => {
       <DistanceFilter />
       <AllergensFilter />
       <FeaturesFilter />
+      <PriceFilter />
       {/* TODO: add the rest of filters (look at the backend's available queryParams for the filter) */}
     </div>
   );

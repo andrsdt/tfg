@@ -137,6 +137,9 @@ declare namespace Components {
             email: string; // email
             password: string;
         }
+        /**
+         * Serializer for user registration.
+         */
         export interface CustomRegisterRequest {
             email: string; // email
             password1: string;
@@ -162,7 +165,21 @@ declare namespace Components {
             has_completed_onboarding: boolean;
             photo: string; // uri
             phone?: string;
-            location?: string;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
             created_at: string; // date-time
             average_rating: number; // double
             number_ratings: number;
@@ -175,7 +192,21 @@ declare namespace Components {
             last_name?: string;
             photo: string; // binary
             phone?: string;
-            location?: string;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
         }
         /**
          * * `ALLOWS_DELIVERY` - allows_delivery
@@ -426,7 +457,21 @@ declare namespace Components {
             last_name?: string;
             photo?: string; // binary
             phone?: string;
-            location?: string;
+            location?: {
+                type?: "Point";
+                /**
+                 * example:
+                 * [
+                 *   12.9721,
+                 *   77.5933
+                 * ]
+                 */
+                coordinates?: [
+                    number,
+                    number,
+                    number?
+                ];
+            } | null;
         }
         export interface PatchedListingCreateRequest {
             title?: string;
@@ -533,6 +578,20 @@ declare namespace Components {
              * * `IS_SUGAR_FREE` - is_sugar_free
              */
             FeatureEnum;
+        }
+        export interface ReportCreate {
+            id: number;
+            reported?: number;
+            created_at: string; // date-time
+            updated_at: string; // date-time
+            description: string;
+            is_resolved: boolean;
+            order?: null | number;
+        }
+        export interface ReportCreateRequest {
+            reported?: number;
+            description: string;
+            order?: null | number;
         }
         export interface RestAuthDetail {
             detail: string;
@@ -682,7 +741,7 @@ declare namespace Paths {
         }
     }
     namespace AuthRegistrationCreate {
-        export type RequestBody = Components.Schemas.CustomRegisterRequest;
+        export type RequestBody = /* Serializer for user registration. */ Components.Schemas.CustomRegisterRequest;
         namespace Responses {
             export type $201 = /* Serializer for Token model. */ Components.Schemas.Token;
         }
@@ -933,6 +992,12 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Producer;
         }
     }
+    namespace ReportsCreate {
+        export type RequestBody = Components.Schemas.ReportCreateRequest;
+        namespace Responses {
+            export type $201 = Components.Schemas.ReportCreate;
+        }
+    }
     namespace ReviewsCreate {
         export type RequestBody = Components.Schemas.ReviewCreateRequest;
         namespace Responses {
@@ -1044,7 +1109,7 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.AuthRegistrationCreate.Responses.$201>
   /**
-   * auth_set_csrf_retrieve
+   * auth_set_csrf_retrieve - Retrieves the CSRF token and sets it as a cookie.
    */
   'auth_set_csrf_retrieve'(
     parameters?: Parameters<UnknownParamsObject> | null,
@@ -1257,6 +1322,14 @@ export interface OperationMethods {
     config?: AxiosRequestConfig  
   ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
   /**
+   * reports_create
+   */
+  'reports_create'(
+    parameters?: Parameters<UnknownParamsObject> | null,
+    data?: Paths.ReportsCreate.RequestBody,
+    config?: AxiosRequestConfig  
+  ): OperationResponse<Paths.ReportsCreate.Responses.$201>
+  /**
    * reviews_list
    */
   'reviews_list'(
@@ -1373,7 +1446,7 @@ export interface PathsDictionary {
   }
   ['/auth/set-csrf/']: {
     /**
-     * auth_set_csrf_retrieve
+     * auth_set_csrf_retrieve - Retrieves the CSRF token and sets it as a cookie.
      */
     'get'(
       parameters?: Parameters<UnknownParamsObject> | null,
@@ -1615,6 +1688,16 @@ export interface PathsDictionary {
       data?: any,
       config?: AxiosRequestConfig  
     ): OperationResponse<Paths.ProducersRetrieve.Responses.$200>
+  }
+  ['/reports/']: {
+    /**
+     * reports_create
+     */
+    'post'(
+      parameters?: Parameters<UnknownParamsObject> | null,
+      data?: Paths.ReportsCreate.RequestBody,
+      config?: AxiosRequestConfig  
+    ): OperationResponse<Paths.ReportsCreate.Responses.$201>
   }
   ['/reviews/']: {
     /**
