@@ -1,0 +1,54 @@
+% !TEX root = ../../proyect.tex
+
+\section{Diseño}\label{sec:diseno}
+
+En esta sección se describirá el diseño de la aplicación a nivel de interfaz y experiencia de usuario. Se explicará la estructura de las pantallas de la aplicación, así como las decisiones tomadas para su diseño.
+
+El diseño de la aplicación se basa principalmente en el uso de una barra de navegación inferior. Dicho diseño facilita el acceso y la interacción con las funcionalidades principales de la aplicación, ya que de esa forma quedan ubicadas dentro del alcance natural del pulgar. Esto hace que los usuarios no tengan que estirar tanto dedo o cambiar la forma de agarrar el dispositivo para alcanzar los elementos de navegación principales, como ocurriría con aquellos elementos situados en la parte superior de la pantalla. Una investigación\footnote{Citar en referencias del final a \url{https://link.springer.com/chapter/10.1007/978-3-319-96071-5_50}} de Steven Hoober, revela que aproximadamente el 49\% de las personas utilizan principalmente su pulgar a la hora de interactuar con sus teléfonos móviles.
+
+El uso de una \textit{bottom navbar}, como se le conoce en inglés, también proporciona una ventaja en términos de visibilidad y contexto. Al estar situada en la parte inferior de la pantalla se encuentra cerca del área de enfoque del usuario, por lo que las opciones disponibles están más a la vista y brindan una referencia visual constante conforme se van navegando las secciones de la aplicación. El hecho de que sea un diseño tan recurrente en aplicaciones del día a día hace que la interacción del usuario con la aplicación sea mucho más natural.
+
+Por otra parte, el diseño de la aplicación también ha tenido como influencia más ligera la no oficial —y controvertida— \textquote{Regla de los Tres Clics}\footnote{Añadir estudio sobre la three clicks rule}, que sugiere que un usuario debería poder encontrar lo que quiere en menos de tres clics. Dicha suposición ha sido desmentida\footnote{Añadir link a estudio donde se desmiente la suposición} en varias ocasiones, quedando demostrado que el nivel de satisfacción de un usuario no se ve alterado significativamente por el número de clics —o \textit{taps} en una pantalla móvil— que tenga que realizar para encontrar lo que busca, pero se puede tomar a modo de sugerencia a la hora de estructurar la aplicación para evitar añadir complejidad innecesaria en la navegación de la misma.
+
+Finalmente, el diseño de la aplicación ha tenido influencias significativas en las famosas \textit{Laws of UX}. Tal y como se describe en su propia web\footnote{Página principal de \textit{Laws of UX}, traducida al español. \url{https://lawsofux.com/es/}}, se trata de \textit{una colección de mejores prácticas que los diseñadores pueden considerar al crear interfaces de usuario}. Algunas de ellas han tenido un papel primordial a la hora de desarrollar los prototipos de interfaz y las consecuentes pantallas. Concretamente son las siguientes:
+
+\todo{Citar todas estas leyes en las referencias del final, si no voy a sobrecargar las notas a pie de página}
+
+\todo{CITAR EN APA, EN INGLÉS O ESPAÑOL? TRADUCIR?}
+
+\begin{enumerate}
+    \item \textbf{Efecto De Estética-Usabilidad}\footnote{\url{https://www.nngroup.com/articles/aesthetic-usability-effect/}}: \textit{Los usuarios a menudo perciben un diseño estéticamente agradable como un diseño que es más útil}. En el caso de la aplicación, se ha hecho un fuerte enfoque en ofrecer un diseño moderno y fácil de usar. El motivo principal es que, en las aplicaciones analizadas durante el estudio previo, se identificaba una fuerte correlación entre cómo de agradable a la vista era la plataforma y cuánto éxito había tenido. De la misma forma, se emplea un tono de verde como color principal, lo que refuerza el aspecto ecológico de la aplicación y crea una conexión visual con la naturaleza. 
+
+    \item \textbf{Efecto Von Restorff}\footnote{\url{https://en.wikipedia.org/wiki/Von_Restorff_effect}}: \textit{Cuando hay varios objetos similares presentes, es más probable que se recuerde el que difiere del resto}. En el caso de la aplicación, se destacan aquellas secciones donde se requiere atención del usuario con colores vivos o elementos distintivos, como puede ser un punto rojo para notificaciones sin leer o un botón amarillo que destaca sobre el resto de botones grises (véase la figura \ref{fig:von-restorff}).
+
+    \figura{0.8}{img/diseno/von-restorff}{Elementos distintivos en la interfaz de la aplicación.}{fig:von-restorff}{}
+    
+    \item \textbf{Ley De Hick}\footnote{\url{https://www.interaction-design.org/literature/article/hick-s-law-making-the-choice-easier-for-users}}: \textit{El tiempo que lleva tomar una decisión aumenta con el número y la complejidad de las opciones}. Para paliar dicho problema, se han dividido en partes aquellos formularios en los que es necesario tomar decisiones o introducir mucha información (véase la figura \ref{fig:hick}). 
+    
+    \figura{0.4}{img/diseno/hick}{Al subir un producto, los campos van apareciendo conforme se rellenan los anteriores.}{fig:hick}{}
+
+    \item \textbf{Ley De Jakob}\footnote{\url{https://www.nngroup.com/videos/jakobs-law-internet-ux/}}: \textit{Los usuarios pasan la mayor parte de su tiempo en otros sitios. Esto significa que los usuarios prefieren que su sitio funcione de la misma manera que todos los demás sitios que ya conocen}. Es por esto que el diseño de la aplicación a nivel funcional gira en torno al uso de una barra de navegación inferior, y se ha visto influenciado en gran medida por otros \textit{marketplaces} o aplicaciones que operan de forma similar, tales como Ebay o Wallapop en la forma de listar los elementos (véase la figura \ref{fig:jakob-wallapop}), o LinkedIn en la forma de buscar y filtrar publicaciones (véase la figura \ref{fig:jakob-linkedin}).
+
+    \figura{0.8}{img/diseno/jakob-wallapop}{Listado de elementos, similar a otros marketplaces}{fig:jakob-wallapop}{}
+
+    \figura{0.8}{img/diseno/jakob-linkedin}{Búsqueda y filtrado mediante píldoras}{fig:jakob-linkedin}{}
+
+    \item \textbf{Ley De Miller}\footnote{\url{https://psycnet.apa.org/record/1957-02914-001}}: \textit{La persona promedio solo puede mantener 7 (más 2 o menos 2) elementos en su memoria de trabajo}. Con el fin de disminuir la carga cognitiva en la navegación, el número de elementos visibles en cada pantalla no suele superar los 6 ó 7, y nunca los 9. (véase la figura \ref{fig:miller}).
+
+    \figura{0.8}{img/diseno/miller}{Número de elementos en cada pantalla, minimizando la carga congitiva}{fig:miller}{}
+
+    \item \textbf{Ley De Postel}\footnote{\url{https://en.wikipedia.org/wiki/Robustness_principle}}: \textit{Sea liberal en lo que acepta y conservador en lo que envía}. Dicha ley, más aplicable a la experiencia de usuario, se ve reforzada por el hecho de que nuestro servidor siempre va a enviar los datos en un formato predecible, mientras que es capaz de manejar datos entrantes por parte de los usuarios en varios formatos para asegurar una experiencia de usuario fluida. Un ejemplo de esto es que, al subir imágenes de un producto, estas se comprimen del lado del cliente para hacer la experiencia más responsiva, pero el sistema también es capaz de recibir imágenes sin comprimir. Por otra parte, el sistema es conservador en lo que envía, ya que siempre devuelve las imágenes como una URL predecible y optimizadas para el tamaño de pantalla del cliente.
+
+    \item \textbf{Ley De Región Común}\footnote{\url{https://www.nngroup.com/articles/common-region/}}: \textit{Los elementos tienden a percibirse en grupos si comparten un área con un límite claramente definido}. En el caso de la aplicación aplicamos dicha ley en pantallas como el perfil del usuario, donde las funcionalidades similares están agrupadas por secciones; o en la pantalla de subir un nuevo producto, donde todos los alérgenos se encuentran englobados dentro de un mismo borde gris (véase la figura \ref{}).
+
+    \item \textbf{Ley De Tesler}\footnote{\url{https://en.wikipedia.org/wiki/Law_of_conservation_of_complexity}}: \textit{Para cualquier sistema existe una cierta cantidad de complejidad que no se puede reducir}. A modo de ejemplo, cuando un productor quiere crear una publicación tiene que introducir tres piezas de información esenciales: stock disponible, unidad y precio por unidad. Esto es lo mínimo que necesitamos para realizar cálculos de diversos tipos en nuestra lógica de negocio, y por lo tanto dicha complejidad tiene que asumirse por el usuario. No obstante, para hacerlo más ameno, estos campos se van mostrando de forma progresiva conforme el resto de campos se van rellenando, siguiendo la Ley De Hick (véase la figura \ref{}).
+    
+\end{enumerate}
+
+\todo{Hablar de los bottom drawers y buscar una base científica o periodística para usarlos. Si no recurrir a la Ley de Jakob}
+
+Con estos principios en mente a la hora de idear la experiencia de usuario de la aplicación llegamos a un diseño que oscila alrededor de una barra de navegación inferior (véase la figura \ref{fig:bottom-navbar}), con pantallas emergentes ocasionales, asistido por cajones o \textit{drawers} para mostrar información adicional.
+
+\figura{0.8}{img/diseno/bottom-navbar}{Pantallas accesibles desde la barra de navegación inferior}{fig:bottom-navbar}{}
+
+\todo{Hablar de accesibilidad: aria-labels, underline en links..., simular como ve nuestra app una persona mayor, letra grande, daltónico de los 3 tipos más comunes...}

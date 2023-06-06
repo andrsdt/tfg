@@ -4,68 +4,162 @@
 
 En esta sección, se presentarán las historias de usuario de la aplicación que se va a desarrollar. Las historias de usuario son descripciones detalladas de funcionalidades que deben ser implementadas en la aplicación desde el punto de vista del usuario. Cada historia de usuario representa una necesidad específica del usuario que la aplicación debe satisfacer. Estas historias se utilizarán como base para el desarrollo de la aplicación y guiarán todo el proceso de diseño y desarrollo.
 
-\begin{enumerate}[HU-1:]
+\begin{enumerate}[label=HU-\protect\twodigits{\arabic*}:, align=left, leftmargin=*]
 
-\subsection{Administradores}
+% Administradores
 
-\item \textbf{Gestionar publicaciones}: Como administrador, quiero poder eliminar publicaciones inapropiadas o spam en la plataforma para mantener la calidad de la experiencia de usuario.
+\item \textbf{Ver lista de pedidos}: Como administrador, quiero poder ver una lista de todos los pedidos realizados en la plataforma, para tener un control sobre ellos.
 
-\item \textbf{Gestionar categorías}: Como administrador, quiero poder agregar nuevas categorías de productos para que los productores puedan publicar productos más específicos.
+\item \textbf{Ver lista de usuarios}: Como administrador, quiero poder ver una lista de todos los usuarios registrados en la plataforma, para poder llevar a cabo acciones sobre ellos si no cumplen con las condiciones de uso de la plataforma.
 
-\item \textbf{Gestionar pedidos}: Como administrador, quiero ver una lista de todos los pedidos realizados en la plataforma, para poder asegurarme de que se están cumpliendo correctamente.
+\item \textbf{Ver lista de denuncias}: Como administrador, quiero poder gestionar y resolver las denuncias de los usuarios en caso de problemas o desacuerdos con productores o pedidos, para mantener una comunidad justa y equitativa.
 
-\item \textbf{Gestionar usuarios}: Como administrador, quiero poder ver una lista de todos los usuarios registrados en la plataforma, para poder verificar su identidad y asegurarme de que cumplen con los requisitos para ser usuarios de la plataforma.
+\item \textbf{Eliminar publicaciones inapropiadas}: Como administrador, quiero poder eliminar publicaciones inapropiadas o spam en la plataforma para mantener la calidad de la experiencia de usuario.
 
-\item \textbf{Gestionar quejas y reclamaciones}: Como administrador, quiero poder gestionar las quejas y reclamaciones de los usuarios, para poder resolver los problemas de manera efectiva y garantizar la satisfacción del usuario.
+\item \textbf{Desactivar usuario}: Como administrador, quiero poder desactivar y activar la cuenta de un usuario concreto, para asegurarme de que no puedan usar plataforma aquellos usuarios que no cumplen las normas.
 
-\item \textbf{Crear promociones}: Como administrador, quiero poder crear promociones para productos específicos en la plataforma, para fomentar la venta de ciertos productos y mejorar la rentabilidad de la plataforma.
+\item \textbf{Ver estadísticas y análisis de la plataforma}: Como administrador, quiero poder ver estadísticas y análisis de la plataforma, tales como el número total de publicaciones, el número de publicaciones activas o el número de usuarios registrados, para poder tomar decisiones estratégicas sobre la plataforma.
 
-\item \textbf{Ver estadísticas y análisis de la plataforma}: Como administrador, quiero poder ver estadísticas y análisis de la plataforma, para poder tomar decisiones estratégicas y mejorar la rentabilidad de la plataforma.
+\item \textbf{Enviar notificaciones personalizadas}: Como administrador, quiero poder enviar notificaciones personalizadas a los usuarios, para hacerles llegar información de propósito general tal como notificaciones de mantenimiento de la aplicación.
 
-\subsection{Productores}
+\todo{Esto es una HU o un RNF?}
+\item \textbf{Requerir verificación de email}: Como administrador, quiero que los usuarios tengan que verificar su dirección de correo electrónico al registrarse antes de poder usar la aplicación, para reducir el spam y las cuentas falsas.
 
-\item \textbf{Crear publicaciones}: Como productor, quiero poder publicar mis productos en venta para que los consumidores locales puedan ver lo que tengo disponible y ponerse en contacto conmigo para realizar una compra en persona.
+% Usuarios no autenticados
 
-\item \textbf{Gestionar ventas}: Como productor, quiero poder gestionar las ventas realizadas y ver el historial de ventas para llevar un control de mis ingresos.
+\item \textbf{Página principal con información general}: Como usuario no autenticado, quiero tener acceso a una \textit{landing page} de la aplicación, para poder hacerme una idea general del funcionamiento de la misma antes de decidir usarla.
 
-\item \textbf{Gestionar disponibilidad}: Como productor, quiero poder actualizar la disponibilidad de mis productos en tiempo real para evitar que los consumidores se interesen por productos que ya no tengo disponibles.
+\item \textbf{Ver preguntas frecuentes}: Como usuario no autenticado, quiero poder visitar una sección de preguntas frecuentes de la plataforma, para poder encontrar respuestas a las preguntas que me surjan sobre la plataforma.
 
-\item \textbf{Gestionar reservas}: Como productor, quiero poder marcar mis publicaciones como reservadas o vendidas para evitar confusiones o malentendidos con los consumidores.
+\item \textbf{Contactar al equipo de la aplicación}: Como usuario no autenticado, quiero disponer de un método de contacto con el equipo detrás de la aplicación, tal como un correo electrónico, para poder hacer consultas más específicas sobre el funcionamiento de la plataforma.
 
-\item \textbf{Publicar una cosecha en venta}: Como productor, quiero poder publicar en la plataforma la cosecha que tengo disponible para su venta, incluyendo información como el tipo de producto, cantidad, precio y fecha de recolección, para que los consumidores interesados puedan contactarme para realizar el intercambio en persona.
+\item \textbf{Términos de uso}: Como usuario no autenticado, quiero tener acceso a una página de términos de uso de la aplicación, para poder recurrir a ella en caso de dudas sobre qué debo o no debo hacer en la plataforma.
 
-\item \textbf{Actualizar la información de una cosecha en venta}: Como productor, quiero poder editar la información de una cosecha que ya he publicado en la plataforma, para corregir errores o actualizar la información de la disponibilidad del producto.
+\item \textbf{Onboarding en el primer acceso}: Como usuario no autenticado, quiero ser recibido en la aplicación por primera vez con un \textit{onboarding} que resuma cómo opera la aplicación, para tener nociones básicas sobre el funcionamiento de la misma.
 
-\item \textbf{Eliminar una cosecha en venta}: Como productor, quiero poder eliminar una cosecha que ya no está disponible para la venta, para evitar que los consumidores intenten contactarme para realizar una compra.
+\item \textbf{Registrarme mediante correo electrónico}: Como usuario no autenticado, quiero poder registrarme en la aplicación usando como identificador único mi dirección de correo electrónico, para poder disfrutar de las funcionalidades de usuario autenticado.
 
-\item \textbf{Recibir notificaciones de nuevos pedidos}: Como productor, quiero recibir una notificación en la plataforma o por correo electrónico cuando un consumidor realiza un nuevo pedido de alguno de mis productos, para que pueda contactarlo y coordinar la entrega.
+\item \textbf{Inciar sesión mediante correo electrónico}: Como usuario no autenticado, quiero poder iniciar sesión en la aplicación mediante mi correo electrónico y contraseña, para poder acceder a mi cuenta como usuario autenticado.
 
-\item \textbf{Visualizar el historial de pedidos}: Como productor, quiero poder ver el historial de pedidos realizados por los consumidores a través de la plataforma, para poder llevar un registro y mejorar mi planificación de la producción futura.
+\item \textbf{Inciar sesión mediante Facebook}: Como usuario no autenticado, quiero poder iniciar sesión en la aplicación mediante mi cuenta de Facebook, para poder disfrutar de las funcionalidades de usuario autenticado de forma más sencilla.
 
-\subsection{Consumidores}
+\item \textbf{Inciar sesión mediante Google}: Como usuario no autenticado, quiero poder iniciar sesión en la aplicación mediante mi cuenta de Google, para poder disfrutar de las funcionalidades de usuario autenticado de forma más sencilla.
 
-\item \textbf{Ver lista de productos en venta}: Como consumidor, quiero poder ver una lista de productos destacados venta para poder decidir qué productos comprar.
+\item \textbf{Inciar sesión mediante Twitter}: Como usuario no autenticado, quiero poder iniciar sesión en la aplicación mediante mi cuenta de Twitter, para poder disfrutar de las funcionalidades de usuario autenticado de forma más sencilla.
 
-\item \textbf{Buscar productos}: Como consumidor, quiero poder buscar mediante un buscador productos locales en mi zona para poder apoyar a los productores locales y comprar productos frescos y de calidad.
+\item \textbf{Inciar sesión mediante método OTP}: Como usuario no autenticado, quiero poder iniciar sesión en la aplicación mediante una OTP (\textit{one-time password}) recibido mediante SMS, para poder disfrutar de las funcionalidades de usuario autenticado de forma más sencilla.
 
-\item \textbf{Filtrar lista de productos por categoría}: Como consumidor, quiero poder filtrar la lista de productos en venta por categoría (por ejemplo, frutas, verduras, carne, lácteos...) para poder encontrar productos específicos.
+\item \textbf{Restablecer mi contraseña}: Como vistante, quiero poder restaurar mi contraseña, para poder acceder a mi cuenta en el caso de haber olvidado mi contraseña.
 
-\item \textbf{Ver detalles de un producto}: Como consumidor, quiero poder ver los detalles de un producto en particular (descripción, precio, ubicación del productor) para poder tomar una decisión informada sobre si quiero comprar ese producto o no.
+\item \textbf{Ver lista de últimas publicaciones}: Como usuario no autenticado, quiero poder ver una lista de publicaciones ordenadas por más recientes, para tener una vista general del tipo de productos que se venden en la aplicación.
 
-\item \textbf{Agregar producto al carrito de compras}: Como consumidor, quiero poder agregar productos al carrito de compras para poder comprar varios productos a la vez.
+\todo{Modificar esto en la aplicación ya que ahora mismo usa la ubicación del perfil del usuario autenticado. Puede usarla como fallback si no da permiso a la ubicación}
+\item \textbf{Ver lista de publicaciones cercanas}: Como usuario no autenticado, quiero poder ver una lista de publicaciones ordenadas por distancia, para saber qué productos se están vendiendo en mi zona.
 
-\item \textbf{Editar cantidad de producto en el carrito de compras}: Como consumidor, quiero poder editar la cantidad de un producto en el carrito de compras para poder ajustar la cantidad de productos que voy a comprar.
+\item \textbf{Ver productores en un mapa}: Como usuario no autenticado, quiero poder ver la ubicación de los productores en un mapa, para poder encontrar aquellos que venden cerca de mí.
 
-\item \textbf{Eliminar producto del carrito de compras}: Como consumidor, quiero poder eliminar productos del carrito de compras para poder comprar solo los productos que realmente quiero.
+\item \textbf{Ver publicaciones seleccionadas}: Como usuario no autenticado, quiero poder ver una lista curada de publicaciones seleccionadas por el equipo de la plataforma, para poder acceder a publicaciones de calidad de forma más accesible.
 
-\item \textbf{Realizar el pago de los productos en el carrito de compras}: Como consumidor, quiero poder realizar el pago de los productos en el carrito de compras para poder finalizar la compra y recibir los productos.
+\item \textbf{Ver detalles de publicación}: Como usuario no autenticado, quiero poder ver una descripción en detalle de la publicación, para saber más sobre una publicación en concreto.
 
-\item \textbf{Ver historial de compras}: Como consumidor, quiero poder ver mi historial de compras para poder recordar qué productos he comprado anteriormente.
+\item \textbf{Ver perfil de productor}: Como usuario no autenticado, quiero poder ver el perfil de un productor, para saber qué productos vende y en qué lugar se encuentra.
 
-\item \textbf{Contactar con productores}: Como consumidor, quiero poder contactar directamente con el agricultor para acordar un punto de encuentro y realizar la compra en persona.
+\item \textbf{Ver lista de reseñas de productor}: Como vistante, quiero poder ver las reseñas de un productor, para poder conocer más sobre la comunidad de la aplicación.
 
-\item \textbf{Ubicación de productores}: Como consumidor, quiero poder ver la ubicación de los productores en un mapa para poder encontrar el punto de encuentro más cercano.
+\item \textbf{Buscar publicaciones}: Como vistante, quiero poder buscar publicaciones por su nombre o descripción, para saber si están disponibles productos de mi interés.
 
-\item \textbf{Gestionar reseñas}: Como consumidor, quiero poder dejar una reseña o comentario en la publicación de un productor para ayudar a otros consumidores a tomar una decisión informada.
+\item \textbf{Filtrar búsqueda por precio}: Como usuario no autenticado, quiero poder filtrar las publicaciones de mi búsqueda por precio, para poder encontrar sólo aquellas publicaciones por las que estoy dispuesto a pagar.
+
+\item \textbf{Filtrar búsqueda por stock disponible}: Como usuario no autenticado, quiero poder filtrar las publicaciones de mi búsqueda por cantidad de producto disponible, para poder encontrar sólo aquellas publicaciones en las que haya al menos el stock que necesito.
+
+\item \textbf{Filtrar búsqueda por alérgenos}: Como usuario no autenticado, quiero poder filtrar las publicaciones de mi búsqueda por alérgenos, para poder excluír aquellos productos a los que soy intolerante o alérgico.
+
+\item \textbf{Filtrar búsqueda por características}: Como usuario no autenticado, quiero poder filtrar las publicaciones de mi búsqueda por características, para poder encontrar aquellas publicaciones que cumplan con mis requisitos.
+
+% Usuarios autenticados
+
+\item \textbf{Ver mi perfil privado}: Como usuario autenticado, quiero poder ver mi perfil privado de usuario, para poder ver mi información personal y modificarla si es necesario.
+
+\item \textbf{Editar mi perfil}: Como usuario autenticado, quiero poder editar mi perfil, para dar al resto de la comunidad más información sobre mi persona y crear así más confianza.
+
+\item \textbf{Eliminar mi cuenta}: Como usuario autenticado, quiero poder solicitar la eliminación de mi cuenta y la anonimización de mis datos, para poder ejercer mi derecho al olvido en base al Reglamento General de Protección de Datos (RGPD).
+
+\item \textbf{Ver contador de notificaciones sin leer}: Como usuario autenticado, quiero poder disponer de un contador de notificaciones no leídas, para poder saber de un vistazo si hay alguna acción que requiera de mi atención antes de entrar a la sección de notificaciones.
+
+\item \textbf{Ver lista de mis notificaciones}: Como usuario autenticado, quiero poder consultar mis notificaciones dentro de la aplicación, para estar al tanto de las últimas novedades que me repercuten.
+
+\item \textbf{Ver lista de publicaciones favoritas}: Como usuario autenticado, quiero poder ver una lista de mis publicaciones marcadas como favoritas, para poder acceder rápidamente a las publicaciones en las que estoy interesado.
+
+\item \textbf{Marcar publicación como favorita}: Como usuario autenticado, quiero poder marcar una publicación como favorita, para poder tenerla guardada y acceder a ella fácilmente.
+
+\item \textbf{Poner alerta de precio en una publicación}: Como usuario autenticado, quiero poder poner una alerta de precio en una publicación para recibir notificaciones si el vendedor cambia el precio de las mismas a uno igual o inferior a mi límite
+
+\item \textbf{Filtrar búsqueda por distancia}: Como usuario autenticado, quiero poder filtrar las publicaciones de mi búsqueda por distancia, para poder encontrar sólo aquellas publicaciones que están cerca de mí.
+
+\item \textbf{Denunciar a productor}: Como usuario autenticado, quiero poder denunciar a un productor, para hacer saber al administrador de la aplicación que el productor está haciendo un uso indebido de la plataforma.
+
+\item \textbf{Denunciar problema con pedido}: Como usuario autenticado, quiero poder notificar de un problema con un pedido realizado, para hacer saber al administrador de la aplicación que el producto no ha cumplido con mis expectativas.
+
+\item \textbf{Enviar mensajes a los productores}: Como usuario autenticado, quiero poder enviar mensajes mediante un chat en tiempo real directamente a los productores dentro de la plataforma, para poder hacer preguntas sobre sus publicaciones.
+
+\item \textbf{Ver lista de mis conversaciones}: Como usuario autenticado, quiero poder ver una lista de conversaciones en las que participo, para poder tener una forma de retomar los chats que estaba teniendo con otros usuarios.
+
+\item \textbf{Ver mi historial de compras}: Como usuario autenticado, quiero poder ver una lista de mis compras realizadas, para poder tener un control sobre los productos que he adquirido.
+
+\item \textbf{Valorar compra}: Como usuario autenticado, quiero poder valorar una compra realizada, indicando una puntuación de 1 a 5 estrellas y opcionalmente un comentario, para hacer saber al productor qué me ha parecido el producto y ayudar a otros consumidores a tomar una decisión informada.
+
+\item \textbf{Anonimizar valoración}: Como usuario autenticado, quiero poder marcar una reseña como anónima antes de enviarla, para preservar mi privacidad en la plataforma y prevenir que otros usuarios de la comunidad me identifiquen.
+
+\item \textbf{Ver mi tarjeta de socio}: Como usuario autenticado, quiero ver al entrar en mi perfil una tarjeta con el título de \textquote{Impulsor del comercio local}, para sentirme más conectado con la plataforma e implicado en la promoción del comercio local 
+
+\item \textbf{Recibir notificación de completar mi perfil}: Como usuario autenticado, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando me registre, para saber que aún hay campos opcionales de mi perfil sin completar, tales como mi número de teléfono o mi ubicación
+
+\item \textbf{Recibir notificación de nuevo mensaje}: Como usuario autenticado, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando otro usuario me envíe un mensaje, para saber que está esperando mi respuesta.
+
+\item \textbf{Recibir notificación de valorar pedido}: Como usuario autenticado, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando haga una compra pidiéndome que la valore, para recordar que puedo llevar a cabo dicha evaluación.
+
+\item \textbf{Recibir notificación de confirmación de denuncia}: Como usuario autenticado, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando envíe una denuncia sobre un productor o pedido, para tener constancia de que se ha enviado correctamente a los administradores de la aplicación.
+
+\todo{Envío de notificaciones, }
+\item \textbf{Recibir notificaciones mediante correo electrónico}: Como usuario autenticado, quiero poder recibir notificaciones por correo electrónico, para tener constancia de las mismas sin tener que entrar a la aplicación.
+
+\item \textbf{Recibir notificaciones mediante SMS}: Como usuario autenticado, quiero poder recibir notificaciones importantes por mensajería instantánea (SMS), para tener constancia de las mismas sin tener que entrar a la aplicación.
+
+\item \textbf{Recibir notificaciones mediante push}: Como usuario autenticado, quiero poder recibir notificaciones por sistema \textit{push}, para tener constancia de las mismas sin tener que entrar a la aplicación.
+
+\item \textbf{Establecer preferencias de notificaciones}: Como usuario autenticado, quiero poder indicar qué notificaciones quiero recibir y mediante qué vías de comunicación (\textit{in-app}, \textit{push}, correo electrónico o SMS), para tener más control sobre la información que recibo de la aplicación y de qué forma la recibo.
+
+\todo{Debería añadir cosas como pagar por paypal o stripe (y el objetivo de gestionar pagos)? Estaba planteado en un principio pero ha cambiado el enfoque de la plataforma}
+% \item \textbf{Realizar el pago de productos mediante PayPal}: Como usuario autenticado, quiero poder realizar el pago de un producto mediante Paypal para poder realizar una transacción segura y conveniente.
+
+% \item \textbf{Realizar el pago de productos mediante Stripe}: Como usuario autenticado, quiero poder realizar el pago de un producto mediante Stripe para poder realizar una transacción mediante una pasarela de pago cómoda y segura.
+
+% \item \textbf{Recibir confirmación de pago}: Como usuario autenticado, quiero recibir una confirmación inmediata de la compra y del pago, para tener una prueba de que la transacción se ha realizado correctamente.
+
+% Productores
+
+\todo{Debería haber un objetivo de gestión de productores? para asociar estas HU, o las asocio a gestión de usuarios?}
+\item \textbf{Publicar productos en venta}: Como productor, quiero poder publicar mis productos en venta a modo de publicaciones, incluyendo información como el título, descripción, cantidad disponible, precio, características y alérgenos, para que los consumidores interesados puedan contactarme y concertar una venta.
+
+\item \textbf{Modificar publicaciones}: Como productor, quiero poder modificar los campos de mis publicaciones, para asegurarme de que tienen la información actualizada.
+
+\item \textbf{Marcar publicaciones como vendidas a usuarios}: Como productor, quiero poder marcar una publicación como vendida a un usuario de la aplicación, para que se actualice el stock del producto y que además el comprador pueda enviar una valoración sobre su pedido.
+
+\item \textbf{Marcar publicaciones como vendidas fuera de la aplicación}: Como productor, quiero poder marcar una publicación como vendida a un usuario ajeno de la aplicación, para poder llevar la cuenta del stock del producto en el caso de haber hecho la venta ajena a la aplicación.
+
+\item \textbf{Desactivar publicaciones}: Como productor, quiero poder activar o desactivar una publicación, para evitar que otros usuarios puedan encontrarla o interactuar con ella temporalmente sin tener que borrarla y volver a crearla de cero en un futuro
+
+\todo{Esto está implementado? Qué pasa con las reseñas, pedidos y similares cuando se borra una publicación}
+\item \textbf{Eliminar publicaciones}: Como productor, quiero poder eliminar una publicación que ya no está en venta, para evitar que otros usuarios intenten contactarme para realizar una compra.
+
+\item \textbf{Ver mi historial de ventas}: Como productor, quiero poder ver la lista de publicaciones vendidas en el pasado, para poder llevar un registro y mejorar mi planificación de cara al futuro.
+
+\item \textbf{Responder a mensajes sobre mis publicaciones}: Como productor, quiero poder responder a mensajes mediante un chat en tiempo real directamente a los usuarios que me contacten dentro de la plataforma, para poder resolver sus dudas sobre mis productos de una forma rápida y precisa.
+
+\item \textbf{Recibir notificación de nueva reseña}: Como productor, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando el comprador de una de mis publicaciones publique una reseña sobre la misma, para estar al tanto del \textit{feedback} de mis clientes.
+
+\item \textbf{Recibir notificación de nuevo favorito}: Como productor, quiero recibir una notificación en mi sección de notificaciones de la aplicación cuando mi publicación sea marcada como favorita por primera vez por parte de algún usuario, para estar al tanto de la actividad en mis publicaciones.
+
+\item \textbf{Exportar mi historial de pedidos a Excel}: Como productor, quiero poder exportar una lista de todos los pedidos que he tramitado, para poder evaluar el impacto que tiene la plataforma en mis ventas totales.
 
 \end{enumerate}

@@ -1,0 +1,28 @@
+% !TEX root = ../../proyect.tex
+
+\section{Arquitectura}\label{sec:arquitectura}
+
+En esta sección describiré el patrón arquitectónico de alto nivel que utilizaré para implementar la aplicación, así como las principales decisiones de diseño y las tecnologías y herramientas elegidas para llevar a cabo la construcción del sistema.
+
+La parte del cliente de la aplicación gira en torno al concepto de una aplicación web progresiva, más conocida por sus siglas en inglés, \textbf{PWA}. Como se define en la documentación de Mozilla\footnote{\url{https://developer.mozilla.org/es/docs/Web/Progressive_web_apps}}, \textquote{\textit{son aplicaciones web que utilizan APIs y funciones emergentes del navegador web junto a una estrategia tradicional de mejora progresiva para ofrecer una aplicación nativa}}. De la misma forma, definen que \textquote{\textit{para poder llamar PWA a una aplicación web, técnicamente hablando debe tener las siguientes características: Contexto seguro (HTTPS), uno o más servicios Workers y un archivo de manifiesto.}}
+
+A la hora de diseñar de la aplicación se ha hecho especial hincapié en desarrollar un sistema escalable y mantenible. Para lograr esto, se ha utilizado un enfoque basado en componentes en la capa del cliente, utilizando React y Next.js para crear una interfaz de usuario dinámica y modular. En el enfoque basado en componentes, se construyen pequeñas \textquote{piezas} de la interfaz de usuario que pueden ser reutilizadas en toda la aplicación (véase la figura \ref{fig:react-components}). Cada componente encapsula la lógica y la presentación de una parte de la interfaz de usuario y puede ser fácilmente combinado con otros componentes para construir páginas más complejas. Se hace una analogía muy acertada en W3Schools\footnote{\url{https://www.w3schools.com/react/react_components.asp}}: \textquote{They serve the same purpose as JavaScript functions, but work in isolation and return HTML.} Este enfoque en componentes facilita la construcción de la interfaz de usuario y la hace más escalable y mantenible, ya que cada componente es independiente y puede ser fácilmente modificado sin afectar el resto de la aplicación.
+
+\todo{Como cito esta figura? Lo he sacado de un post de medium, la web oficial (Tech Diagonal) ya no existe}
+\figura{0.5}{img/diagramas/react-components}{Ejemplo abstracto de componentes en React. Fuente: Tech Diagonal}{fig:react-components}{}
+
+En cuanto a la arquitectura de la aplicación, se basa en el patrón Model-View-Template (MVT) de Django, es decir, viene impuesto por el framework. Los motivos que me han llevado a elegir Django y no otro framework se debaten más en profundidad en la siguiente sección, que profundiza en el stack tecnológico. En el caso del MVT se trata de un patrón que, según la documentación de Django\footnote{\url{https://docs.djangoproject.com/es/4.2/faq/general/\#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names}}, se parece a MVC, pero difiere en la forma en que los componentes interactúan entre ellos. En este patrón, la lógica de la aplicación se divide en tres capas principales:
+\todo{La cita de abajo de Mozilla cuenta como cita larga, tengo que citarlo en un parrafo aparte? (apa7): \url{https://guiasbus.us.es/ld.php?content_id=20512221}}
+
+\begin{itemize}
+    \item \textbf{Modelo}: como se define en la documentación de Mozilla\footnote{\url{https://developer.mozilla.org/es/docs/Glossary/MVC#modelo}}, \textquote{\textit{El modelo define qué datos debe contener la aplicación. Si el estado de estos datos cambia, el modelo generalmente notificará a la vista (para que la pantalla pueda cambiar según sea necesario) y, a veces, el controlador (si se necesita una lógica diferente para controlar la vista actualizada).}} En mi caso, utilizo PostgreSQL como sistema de bases de datos para manejar la persistencia de datos.
+
+\todo{Lo saco de la misma página que la definición del modelo, la repito o referencio a la misma?}
+    \item \textbf{Vista}: En Django, la vista se asemeja a lo que sería el controlador en el patrón MVC. Es la encargada de describir qué datos se presentan (o en el caso del proyecto, los datos se exponen al cliente de React, ya que se hará mediante una API REST). En este escenario, el controlador en sí es el mismo framework, que se encarga de redirigir cada petición a la vista apropiada.
+
+    \item \textbf{Template}: Una plantilla, o \textquote{template}, es una forma de presentar información en HTML. Una plantilla contiene bloques de texto y \textquote{tags} que se convierten en el HTML que se envía al navegador. En mi caso, utilizo React y Next.js para crear una interfaz de usuario de cliente que proporcione una experiencia de usuario más interactiva e intuitiva, difiriendo ligeramente de la estructura tradicional de Django que aporta su propia solución para plantillas.
+\end{itemize}
+
+\figura{0.75}{img/diagramas/mvt}{Diagrama que describe el patrón MVT común \footnote{\url{https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Home_page}}.}{fig:diagrama-mvt}{}
+
+\todo{poner aquí un diagrama o similar del MTV que uso}

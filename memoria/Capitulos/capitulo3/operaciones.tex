@@ -1,0 +1,679 @@
+% !TEX root = ../../proyect.tex
+
+\section{Operaciones}\label{sec:operaciones}
+
+En esta sección se detallarán las operaciones que conformarán los casos de uso de de la aplicación. Las operaciones son un conjunto de acciones que se realizan sobre un sistema con el fin de obtener un resultado específico. Las mismas representan las interacciones entre el actor y el sistema, y son \textquote{piezas de construcción reutilizables} para elaborar los casos de uso. Definir estas operaciones de forma previa al desarrollo nos va a permitir identificar patrones comunes en el funcionamiento interno de nuestra plataforma, ayudándonos a hacerla más modular y fácil de testear de forma unitaria.
+
+\begin{enumerate}[label=SOP-\protect\twodigits{\arabic*}:, align=left, leftmargin=*]
+        
+% Ver lista de pedidos
+\item \textbf{Obtener lista de pedidos}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveOrderList()
+\item \textbf{Descripción}: Permite obtener una lista de todos los pedidos realizados en la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de pedidos, con información detallada de cada uno.
+\end{itemize}
+\end{itemize}
+
+% Ver lista de usuarios
+\item \textbf{Obtener lista de usuarios}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveUserList()
+\item \textbf{Descripción}: Permite obtener una lista de todos los usuarios registrados en la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de usuarios registrados, con información relevante de cada uno.
+\end{itemize}
+\end{itemize}
+
+% Ver lista de denuncias
+\item \textbf{Obtener lista de denuncias}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveReportList()
+\item \textbf{Descripción}: Permite obtener una lista de todas las denuncias registradas en la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de denuncias, con información relevante de cada una.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Resolver denuncia}
+\begin{itemize}
+\item \textbf{Nombre}: resolveReport(reportId, actions)
+\item \textbf{Descripción}: Permite al administrador resolver una denuncia tomando las acciones necesarias.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la denuncia
+\item Acciones tomadas por el administrador para resolver la denuncia
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Operaciones asociadas
+\item \textbf{Obtener lista de publicaciones}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveListingList()
+\item \textbf{Descripción}: Permite obtener una lista de todas las publicaciones realizadas en la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de publicaciones
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Eliminar publicación}
+\begin{itemize}
+\item \textbf{Nombre}: deleteListing(listingId)
+\item \textbf{Descripción}: Permite eliminar una publicación de la plataforma.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación a eliminar
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Desactivar usuario
+\item \textbf{Desactivar cuenta de usuario}
+\begin{itemize}
+\item \textbf{Nombre}: deactivateUser(userId)
+\item \textbf{Descripción}: Permite desactivar la cuenta de un usuario en la plataforma.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del usuario cuya cuenta se desea desactivar.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Ver estadísticas y análisis de la plataforma
+\item \textbf{Obtener estadísticas de la plataforma}
+\begin{itemize}
+\item \textbf{Nombre}: retrievePlatformStatistics()
+\item \textbf{Descripción}: Permite obtener las estadísticas de la plataforma, como el número total de publicaciones, el número de publicaciones activas y el número de usuarios registrados.
+\item \textbf{Parámetros de entrada}: Ninguno.
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Estadísticas de la plataforma (número total de publicaciones, número de publicaciones activas, número de usuarios registrados, etc.).
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Obtener análisis de la plataforma}
+\begin{itemize}
+\item \textbf{Nombre}: retrievePlatformAnalysis()
+\item \textbf{Descripción}: Permite obtener análisis de la plataforma para identificar patrones, tendencias o áreas de mejora.
+\item \textbf{Parámetros de entrada}: Ninguno.
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Análisis de la plataforma (patrones de uso, tendencias de actividad, áreas de mejora, etc.).
+\end{itemize}
+\end{itemize}
+
+% Enviar notificación personalizada
+\item \textbf{Enviar notificación personalizada}
+\begin{itemize}
+\item \textbf{Nombre}: sendCustomNotification(content, recipients)
+\item \textbf{Descripción}: Permite enviar notificaciones personalizadas a los usuarios de la plataforma.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Contenido: el contenido de la notificación.
+\item Destinatarios: una lista de usuarios destinatarios a los cuales se enviará la notificación.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Registrarme mediante correo electrónico
+\item \textbf{Registrar usuario}
+\begin{itemize}
+\item \textbf{Nombre}: registerUser(email, password)
+\item \textbf{Descripción}: Permite registrar un nuevo usuario en la aplicación utilizando una dirección de correo electrónico y una contraseña.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico del usuario.
+\item Contraseña del usuario.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno.
+\end{itemize}
+
+\item \textbf{Verificar registro}
+\begin{itemize}
+\item \textbf{Nombre}: verifyRegistration(email)
+\item \textbf{Descripción}: Permite verificar el registro de un usuario mediante la confirmación de su dirección de correo electrónico.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico del usuario.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno.
+\end{itemize}
+
+\item \textbf{Reenviar correo de verificación}
+\begin{itemize}
+\item \textbf{Nombre}: resendVerificationEmail(email)
+\item \textbf{Descripción}: Permite reenviar el correo electrónico de verificación a un usuario que no ha recibido el correo electrónico inicial.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico del usuario.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno.
+\end{itemize}
+
+% Iniciar sesión mediante correo electrónico
+\item \textbf{Iniciar sesión}
+\begin{itemize}
+\item \textbf{Nombre}: loginUser(email, password)
+\item \textbf{Descripción}: Permite al usuario iniciar sesión en la aplicación utilizando su correo electrónico y contraseña.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico del usuario.
+\item Contraseña del usuario.
+\end{itemize}
+\item \textbf{Parámetros de salida}: Token de sesión.
+\end{itemize}
+
+% Inicio de sesión mediante OTP
+\item \textbf{Generar OTP}
+\begin{itemize}
+\item \textbf{Nombre}: generateOTP(phoneNumber)
+\item \textbf{Descripción}: Genera una OTP única y la asocia con el número de teléfono móvil proporcionado.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Número de teléfono móvil del usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item OTP generada
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Enviar OTP mediante SMS}
+\begin{itemize}
+\item \textbf{Nombre}: sendOTPviaSMS(phoneNumber, otp)
+\item \textbf{Descripción}: Envía la OTP al número de teléfono móvil del usuario mediante un mensaje de texto (SMS).
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Número de teléfono móvil del usuario
+\item OTP generada
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+\item \textbf{Verificar OTP}
+\begin{itemize}
+\item \textbf{Nombre}: verifyOTP(phoneNumber, otp)
+\item \textbf{Descripción}: Verifica si la OTP ingresada por el usuario coincide con la OTP generada previamente.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Número de teléfono móvil del usuario
+\item OTP ingresada
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Resultado de verificación (coincide o no coincide)
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante OTP}
+\begin{itemize}
+\item \textbf{Nombre}: loginOTP(phoneNumber, otp)
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando su número de teléfono móvil y la OTP generada.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Número de teléfono móvil del usuario
+\item OTP generada
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Token de sesión
+\end{itemize}
+\end{itemize}
+
+% Restablecer mi contraseña
+\item \textbf{Verificar dirección de correo electrónico}
+\begin{itemize}
+\item \textbf{Nombre}: verifyEmail(email)
+\item \textbf{Descripción}: Permite al sistema verificar si una dirección de correo electrónico es válida y está asociada a una cuenta de usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico a verificar
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Booleano que indica si la dirección de correo electrónico es válida y está asociada a una cuenta de usuario
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Generar enlace de restablecimiento de contraseña}
+\begin{itemize}
+\item \textbf{Nombre}: generateResetPasswordLink(email)
+\item \textbf{Descripción}: Permite al sistema generar un enlace único de restablecimiento de contraseña para una dirección de correo electrónico asociada a una cuenta de usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Dirección de correo electrónico asociada a la cuenta de usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Enlace de restablecimiento de contraseña único
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Actualizar contraseña de usuario}
+\begin{itemize}
+\item \textbf{Nombre}: updatePassword(token, newPassword)
+\item \textbf{Descripción}: Permite al usuario actualizar su contraseña.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Token de restablecimiento de contraseña
+\item Nueva contraseña
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Ver lista de últimas publicaciones
+\item \textbf{Obtener últimas publicaciones}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveLatestListings()
+\item \textbf{Descripción}: Permite obtener la lista de las últimas publicaciones realizadas en la aplicación.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de publicaciones (título, imagen, precio, entre otros campos)
+\end{itemize}
+\end{itemize}
+
+% Ver lista de publicaciones cercanas
+\item \textbf{Obtener ubicación del usuario}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveLocation()
+\item \textbf{Descripción}: Permite obtener la ubicación del usuario.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Ubicación del usuario (latitud, longitud)
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Obtener lista de publicaciones cercanas}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveNearbyListings(location)
+\item \textbf{Descripción}: Permite obtener una lista de publicaciones cercanas a una ubicación dada.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Ubicación del usuario (latitud, longitud)
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de publicaciones ordenadas por distancia
+\end{itemize}
+\end{itemize}
+
+% Ver publicaciones seleccionadas
+\item \textbf{Consultar publicaciones seleccionadas}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveSelectedListings()
+\item \textbf{Descripción}: Permite obtener la lista de publicaciones seleccionadas por el equipo de la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de publicaciones seleccionadas
+\end{itemize}
+\end{itemize}
+
+% Ver productores en un mapa
+\item \textbf{Consultar ubicación de productores}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveProducersLocation()
+\item \textbf{Descripción}: Permite obtener la información de ubicación de los productores registrados en la plataforma.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de ubicaciones de los productores
+\end{itemize}
+\end{itemize}
+
+% Ver detalles de publicación
+\item \textbf{Consultar detalles de publicación}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveListing(listingId)
+\item \textbf{Descripción}: Permite consultar los detalles de una publicación específica.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Detalles de la publicación (título, descripción, imágenes, precio, cantidad disponible, etc.)
+\end{itemize}
+\end{itemize}
+
+% Ver perfil de productor
+\item \textbf{Consultar perfil de productor}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveProducerProfile(producerId)
+\item \textbf{Descripción}: Permite consultar el perfil de un productor.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del productor
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Información del perfil del productor (nombre, biografía, ubicación, imagen de perfil, lista de productos)
+\end{itemize}
+\end{itemize}
+
+% Ver lista de reseñas de productor
+\item \textbf{Consultar reseñas de productor}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveProducerReviews(producerId)
+\item \textbf{Descripción}: Permite consultar las reseñas de un productor en particular.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del productor
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de reseñas del productor
+\end{itemize}
+\end{itemize}
+
+% Buscar publicaciones
+\item \textbf{Buscar publicaciones}
+\begin{itemize}
+\item \textbf{Nombre}: searchListings(query, filters)
+\item \textbf{Descripción}: Permite buscar publicaciones en la plataforma utilizando palabras clave y filtros.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Palabras clave (query): Cadena de texto que contiene las palabras clave relacionadas con el producto que se desea buscar.
+\item Filtros (filters): Conjunto de filtros opcionales para refinar la búsqueda. Incluye parámetros como precio mínimo, precio máximo, cantidad disponible mínima, productor (id), alérgenos (lista separada por comas), características (lista separada por comas) y distancia (en metros). Además, se pueden especificar opciones de ordenamiento, como ordenar por precio, cantidad disponible y fecha de creación.
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de publicaciones que coinciden con las palabras clave y los filtros aplicados.
+\end{itemize}
+\end{itemize}
+
+% Ver mi perfil privado
+\item \textbf{Consultar datos de perfil}
+\begin{itemize}
+  \item \itembf{Nombre}: retrieveUser(userId)
+\item \textbf{Descripción}: Permite consultar todos los datos de un perfil de usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del perfil de usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Datos del perfil de usuario
+\end{itemize}
+\end{itemize}
+
+% Editar mi perfil
+\item \textbf{Editar datos de perfil}
+\begin{itemize}
+  \item \itembf{Nombre}: updateUser(userId, newData)
+\item \textbf{Descripción}: Permite editar los datos de un perfil de usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del perfil de usuario
+\item Datos del perfil de usuario a actualizar
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Datos del perfil de usuario actualizados
+\end{itemize}
+\end{itemize}
+
+% Eliminar mi cuenta
+\item \textbf{Eliminar cuenta de usuario}
+\begin{itemize}
+\item \textbf{Nombre}: deleteUser(userId)
+\item \textbf{Descripción}: Permite eliminar una cuenta de usuario y anonimizar sus datos personales.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Mensaje de confirmación de eliminación de cuenta
+\end{itemize}
+\end{itemize}
+
+% Ver lista de mis notificaciones
+\item \textbf{Consultar notificaciones de usuario}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveUserNotifications(userId)
+\item \textbf{Descripción}: Permite consultar la lista de notificaciones de un usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de notificaciones del usuario
+\end{itemize}
+\end{itemize}
+
+% Ver mi historial de compras
+\item \textbf{Consultar historial de compras}
+\begin{itemize}
+\item \textbf{Nombre}: retrievePurchaseHistory()
+\item \textbf{Descripción}: Permite consultar el historial de compras del usuario.
+\item \textbf{Parámetros de entrada}: Ninguno
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de compras realizadas por el usuario, ordenadas por fecha y agrupadas por año y mes
+\end{itemize}
+\end{itemize}
+
+% Valorar compra
+\item \textbf{Consultar detalles de compra}
+\begin{itemize}
+\item \textbf{Nombre}: retrievePurchaseDetails(purchaseId)
+\item \textbf{Descripción}: Permite consultar los detalles de una compra realizada.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la compra
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Detalles de la compra
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Valorar compra}
+\begin{itemize}
+\item \textbf{Nombre}: ratePurchase(purchaseId, rating, comment)
+\item \textbf{Descripción}: Permite valorar una compra realizada.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la compra
+\item Puntuación de 1 a 5 estrellas
+\item Comentario adicional (opcional)
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Establecer preferencias de notificaciones
+\item \textbf{Obtener preferencias de notificaciones}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveNotificationPreferences(userId)
+\item \textbf{Descripción}: Permite obtener las preferencias de notificaciones de un usuario.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del usuario
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Tipo de notificaciones configuradas por el usuario
+\item Métodos de comunicación configurados por el usuario
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Establecer preferencias de notificaciones}
+\begin{itemize}
+\item \textbf{Nombre}: setNotificationPreferences(userId, notificationType, communicationMethods)
+\item \textbf{Descripción}: Permite al usuario establecer sus preferencias de notificaciones.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del usuario
+\item Tipo de notificaciones (actualizaciones de productos, promociones, noticias, etc.)
+\item Métodos de comunicación (in-app, push, correo electrónico, SMS)
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Publicar productos en venta
+\item \textbf{Crear publicación de producto}
+\begin{itemize}
+\item \textbf{Nombre}: createListing(productData)
+\item \textbf{Descripción}: Permite crear una nueva publicación de producto en la plataforma.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Datos del producto (título, descripción, imágenes, cantidad disponible, precio, alérgenos, características, etc.)
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Identificador único de la publicación
+\end{itemize}
+\end{itemize}
+
+% Editar publicación
+\item \textbf{Editar publicación}
+\begin{itemize}
+\item \textbf{Nombre}: updateListing(listingId, listingData)
+\item \textbf{Descripción}: Permite editar los campos de una publicación existente.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación
+\item Datos modificados de la publicación
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Confirmación de que los cambios se han guardado con éxito
+\end{itemize}
+\end{itemize}
+
+% Marcar publicación como vendida a un usuario
+\item \textbf{Marcar publicación como vendida a un usuario}
+\begin{itemize}
+\item \textbf{Nombre}: markListingAsSoldToUser(listingId, buyerId, quantity, totalPrice)
+\item \textbf{Descripción}: Permite marcar una publicación como vendida a un usuario y registrar la transacción.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación
+\item Identificador único del usuario comprador
+\item Cantidad de producto vendida
+\item Precio total de la venta
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+\item \textbf{Enviar notificación de valoración}
+\begin{itemize}
+\item \textbf{Nombre}: sendRatingNotification(buyerId)
+\item \textbf{Descripción}: Envía una notificación al comprador solicitando que valore la compra realizada.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del comprador
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Marcar publicación como vendida fuera de la plataforma
+\item \textbf{Marcar publicación como vendida fuera de la plataforma}
+\begin{itemize}
+\item \textbf{Nombre}: markListingAsSoldOutside(listingId, quantitySold, totalPrice)
+\item \textbf{Descripción}: Permite marcar una publicación como vendida y registrar la venta.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación
+\item Cantidad de producto vendida
+\item Precio total de la venta
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Desactivar publicación
+\item \textbf{Desactivar publicación}
+\begin{itemize}
+\item \textbf{Nombre}: setListingEnableStauts(listingId, enabled)
+\item \textbf{Descripción}: Permite activar o desactivar una publicación.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación a desactivar
+\item Estado deseado de la publicación (activa o desactivada)
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Eliminar publicación
+\item \textbf{Eliminar publicación}
+\begin{itemize}
+\item \textbf{Nombre}: deleteListing(listingId)
+\item \textbf{Descripción}: Permite eliminar una publicación de la plataforma.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la publicación
+\end{itemize}
+\end{itemize}
+
+% Ver mi historial de ventas
+\item \textbf{Consultar historial de ventas del productor}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveSalesHistory(producerId)
+\item \textbf{Descripción}: Permite consultar el historial de ventas realizadas por un productor.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del productor
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de ventas realizadas, ordenadas por fecha de compra y agrupadas por año y mes
+\end{itemize}
+\end{itemize}
+
+% Responder mensajes
+\item \textbf{Consultar mensajes de usuario}
+\begin{itemize}
+\item \textbf{Nombre}: retrieveMessages(conversationId)
+\item \textbf{Descripción}: Permite consultar los mensajes de un usuario en una conversación específica.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la conversación
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Lista de mensajes de usuario
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Enviar mensaje}
+\begin{itemize}
+\item \textbf{Nombre}: sendMessage(conversationId, messageContent)
+\item \textbf{Descripción}: Permite enviar un mensaje como respuesta a un usuario en una conversación específica.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único de la conversación
+\item Contenido del mensaje
+\end{itemize}
+\item \textbf{Parámetros de salida}: Ninguno
+\end{itemize}
+
+% Exportar mi historial de pedidos a Excel
+\item \textbf{Exportar historial de pedidos a Excel}
+\begin{itemize}
+\item \textbf{Nombre}: exportOrdersAsExcel()
+\item \textbf{Descripción}: Permite exportar el historial de pedidos del productor en formato Excel.
+\item \textbf{Parámetros de entrada}:
+\begin{itemize}
+\item Identificador único del productor
+\end{itemize}
+\item \textbf{Parámetros de salida}:
+\begin{itemize}
+\item Archivo Excel con el historial de pedidos del productor
+\end{itemize}
+\end{itemize}
+
+\end{enumerate}

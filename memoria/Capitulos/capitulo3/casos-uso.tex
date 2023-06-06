@@ -1,255 +1,635 @@
 % !TEX root = ../../proyect.tex
 
 \section{Casos de uso}\label{sec:casos-uso}
-En esta sección, se presentan los casos de uso para la plataforma en línea de venta de productos. Estos casos de uso se han diseñado para permitir a los usuarios comprar y vender productos de forma eficiente y efectiva. Los casos de uso proporcionan una descripción detallada de las diferentes funcionalidades de la plataforma, y se han organizado en función del tipo de usuario que interactúa con el sistema.
+En esta sección, se presentan los casos de uso para la plataforma en línea de venta de productos. Los casos de uso proporcionan una descripción detallada de las diferentes funcionalidades de la plataforma. Estos casos de uso se han diseñado para permitir a los usuarios comprar y vender productos de forma eficiente y efectiva, y se han ordenado en función del tipo de usuario que interactúa con el sistema.
 
-Estos casos de uso describen los diferentes escenarios de interacción entre los usuarios (actores) y el sistema. Cada caso de uso describe una acción específica que el usuario puede realizar y cómo el sistema responde a ella, incluyendo los pasos que el usuario debe seguir para completar la acción, y se detallan posibles excepciones y flujos alternativos que el sistema puede tomar.
+Cada uno de los caso de uso describe una acción específica que el usuario puede realizar y cómo el sistema responde a ella, incluyendo los pasos que el usuario debe seguir para completar la acción. Se detallan además posibles excepciones y flujos alternativos que el sistema puede tomar.
 
-\begin{enumerate}[CU-1:]
-\item{Registro de usuario}
+\begin{enumerate}[label=UC-\protect\twodigits{\arabic*}:, align=left, leftmargin=*]	
+
+\item \textbf{Ver lista de pedidos}
+\todo{Meter aquí el diagrama}
 \begin{itemize}
-	\item \textbf{Actor:} Usuario
-	\item \textbf{Descripción:} Permite al usuario crear una cuenta en la aplicación.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El usuario accede a la página de registro.
-		\item El sistema muestra un formulario de registro con los campos obligatorios: nombre, correo electrónico y contraseña.
-		\item El usuario rellena el formulario con sus datos personales y confirma su registro.
-		\item El sistema verifica que los datos sean válidos, crea una cuenta para el usuario y lo redirige a la página de inicio de sesión
-	\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item[4a.] Si el correo electrónico ya está registrado, el sistema muestra un mensaje de error y pide al usuario que proporcione otro correo electrónico.
-		\end{itemize}
-\end{itemize}
-
-\item{Inicio de sesión}
-\begin{itemize}
-	\item \textbf{Actor:} Usuario registrado
-	\item \textbf{Descripción:} Permite al usuario iniciar sesión en su cuenta de la aplicación.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El usuario accede a la página de inicio de sesión.
-		\item El sistema muestra un formulario para introducir el correo electrónico y la contraseña del usuario.
-		\item El usuario introduce su correo electrónico y su contraseña.
-		\item El sistema comprueba que los datos son correctos, concede el acceso a la cuenta del usuario y lo redirige a su página de inicio.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item[4a.] Si los datos son incorrectos, el sistema muestra un mensaje de error y solicita que se vuelvan a introducir.
-		\end{itemize}
-	\item \textbf{Excepciones:}
-		\begin{itemize}
-		\item[4a.] Si el sistema detecta algún problema técnico, muestra un mensaje de error y pide al usuario que lo intente más tarde.
-		\end{itemize}
-\end{itemize}
-
-\item{Edición de perfil de usuario}
-\begin{itemize}
-	\item \textbf{Actor:} Usuario
-	\item \textbf{Descripción:} Permite al usuario editar su información personal y de contacto.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El usuario accede a la sección de \textquote{Editar perfil} en su cuenta.
-		\item El sistema muestra la información personal y de contacto del usuario.
-		\item El usuario edita los campos que desee modificar y confirma los cambios.
-		\item El sistema actualiza la información del perfil del usuario.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item[3a.] Si el usuario desea cancelar la edición de su perfil, puede seleccionar la opción de \textquote{Cancelar} y el sistema no realizará cambios en la información del perfil.
-		\item[4a.] Si el usuario no completa algún campo obligatorio, el sistema mostrará un mensaje de error y no permitirá la confirmación de los cambios hasta que el campo sea completado correctamente.
-		\end{itemize}
-\end{itemize}
-
-\item{Gestión de usuarios}
-\begin{itemize}
-	\item \textbf{Actor:} Administrador
-	\item \textbf{Descripción:} Permite al administrador gestionar la información de los usuarios registrados en la plataforma.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El administrador accede a la sección de gestión de usuarios.
-		\item El sistema muestra una lista de todos los usuarios registrados en la plataforma.
-		\item El administrador selecciona un usuario de la lista para ver su información.
-		\item El sistema muestra la información del usuario seleccionado, incluyendo su nombre, correo electrónico, fecha de registro y historial de compras en el caso de un consumidor (o ventas y productos publicados en el caso de un productor).
-		\item El administrador tiene la opción de editar la información del usuario o de eliminarlo de la plataforma.
-		\item El sistema actualiza la lista de usuarios después de realizar cualquier cambio.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-	\begin{itemize}
-		\item [5a.] Si se elige bloquear o eliminar un usuario, el sistema solicita confirmación antes de llevar a cabo la acción.
-		\end{itemize}
-\end{itemize}
-
-\item{Gestión de productos}
-\begin{itemize}
-	\item \textbf{Actor:} Administrador
-	\item \textbf{Descripción:} Permite al administrador gestionar los productos de la plataforma.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El administrador accede al panel de administración de productos.
-		\item El sistema muestra la lista de productos disponibles en la plataforma.
-		\item El administrador puede modificar información de los productos existentes (nombre, descripción, precio, categoría, etc.) o eliminarlos de la plataforma.
-		\item El administrador confirma la acción correspondiente.
-		\item El sistema registra la acción y muestra un mensaje de confirmación.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item [2a.] Si no hay productos registrados en la plataforma, el sistema muestra un mensaje indicando que no hay productos disponibles.
-		\item [3a.] Si el administrador intenta realizar una acción no permitida (por ejemplo, eliminar un producto que tiene órdenes pendientes o que no le pertenece), el sistema muestra un mensaje de error indicando que la acción no es posible.
-		\end{itemize}
-\end{itemize}
-
-\item{Gestión de pedidos}
-\begin{itemize}
-	\item \textbf{Actor:} Administrador
-	\item \textbf{Descripción:} Permite al administrador gestionar los pedidos recibidos en la plataforma.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El administrador accede a la sección de pedidos en su panel de control.
-		\item El sistema muestra una lista con los pedidos recibidos, indicando el número de pedido, la fecha, el comprador y el estado del pedido.
-		\item El administrador selecciona el pedido que desea gestionar.
-		\item El sistema muestra la información detallada del pedido, incluyendo el consumidor y el productor involucrados, los productos comprados y el método de pago utilizado.
-		\item El administrador modifica los detalles del pedido según corresponda.
-		\item El sistema actualiza el estado del pedido en la base de datos y notifica al comprador del cambio de estado.
-		\item El administrador puede añadir notas internas al pedido si lo considera necesario.
-		\item El sistema registra las notas internas en la base de datos y las presenta en la sección correspondiente del pedido.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item [5a.] Si el administrador detecta algún problema con el pago o la dirección de envío, puede contactar al comprador para solicitar la corrección de los datos.
-		\item [6a.] Si el administrador cancela el pedido, el sistema emite un reembolso al comprador si corresponde y actualiza el inventario de los productos en la base de datos.
-		\end{itemize}
-\end{itemize}
-
-\item{Búsqueda de productos}
-\begin{itemize}
-	\item \textbf{Actor:} Consumidor
-	\item \textbf{Descripción:} Permite al consumidor buscar productos en la aplicación.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El consumidor accede a la página de búsqueda de productos.
-		\item El sistema presenta una barra de búsqueda.
-		\item El consumidor introduce el término de búsqueda.
-		\item El sistema muestra una lista de palabras clave que coinciden con el término de búsqueda
-		\item El consumidor hace clic en el botón \textquote{buscar}
-		\item El sistema muestra una lista de productos incluyendo su primera imagen, título, precio y distancia
-		\item El consumidor hace clic en el producto para acceder a su página de información.
-		\item El sistema muestra la información del producto, incluyendo sus imágenes, título, descripción, categoría, precio, disponibilidad y ubicación.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-	\begin{enumerate}
-		\item[6a.] Si no se encuentra ningún producto que coincida con el término de búsqueda, el sistema muestra un mensaje indicando que no se han encontrado resultados.
-		\end{enumerate}
-	\item \textbf{Excepciones:}
-	\begin{enumerate}
-		\item[6a.] Si el término de búsqueda introducido por el consumidor contiene caracteres no alfanuméricos, el sistema muestra un mensaje de error indicando que el término de búsqueda es incorrecto.
-		\end{enumerate}
-\end{itemize}
-
-\item{Publicación de productos}
-\begin{itemize}
-	\item \textbf{Actor:} Productor
-	\item \textbf{Descripción:} Permite al productor publicar un nuevo producto en la plataforma.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El productor accede al apartado de \textquote{Publicar producto} en su perfil.
-		\item El sistema muestra un formulario con los campos para introducir la información del producto: imágenes, título, descripción, categoría, precio, disponibilidad y ubicación
-		\item El productor completa los campos y envía el formulario.
-		\item El sistema valida la información y registra el nuevo producto en la base de datos y muestra una confirmación de que el producto ha sido publicado con éxito.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item[2a.] El productor decide no publicar el producto: Si el productor decide no publicar el producto, puede cancelar el proceso y volver al menú principal.
-		\item[3a.] El formulario contiene errores: Si el formulario contiene errores o información incompleta, el sistema muestra una notificación de error y pide al productor que corrija los campos necesarios.
-		\end{itemize}
-\end{itemize}
-
-\item{Compra de productos}
-\begin{itemize}
-	\item \textbf{Actor:} Consumidor
-	\item \textbf{Descripción:} Permite al consumidor adquirir un producto específico.
-	\item \textbf{Precondiciones:} El consumidor ha iniciado sesión y ha buscado y seleccionado el producto que desea adquirir.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El consumidor accede a la página del producto que desea adquirir.
-		\item El sistema muestra la información del producto, incluyendo su precio y la opción de adquirirlo.
-		\item El consumidor selecciona la opción de adquirir el producto.
-		\item El sistema muestra al consumidor la confirmación de la compra y el precio total.
-		\item El consumidor confirma la compra.
-		\item El sistema registra la compra, la hace llegar al productor correspondiente y presenta al consumidor la información de contacto del productor.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-	\begin{enumerate}
-		\item [2a.] Si el sistema detecta que el producto ya ha sido vendido, se mostrará un mensaje de que el producto ya no está disponible.
-		\item [4a.] Si el consumidor cambia de opinión o detecta un error, puede cancelar la compra en lugar de confirmarla.
-		\item [7a.] Si el consumidor no puede contactar con el productor en un plazo después de la compra, se le dará la opción de cancelar la compra y recibir un reembolso en el caso de haber pagado mediante la aplicación
-		\end{enumerate}
-	\item \textbf{Excepciones:}
-	\begin{enumerate}
-		\item[5a.] Si el consumidor no ha iniciado sesión, se le solicitará que inicie sesión antes de poder adquirir el producto.
-		\item[6a.] Si el sistema detecta que el consumidor ha proporcionado información de pago incorrecta o no válida, se le solicitará que proporcione información de pago correcta antes de poder confirmar la compra.
-		\end{enumerate}
-\end{itemize}
-
-\item{Cancelación de pedido}
-\begin{itemize}
-\item \textbf{Actor:} Consumidor
-\item \textbf{Descripción:} Permite al consumidor cancelar un pedido antes de su confirmación por parte del productor
-\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-\item El consumidor accede a su historial de pedidos.
-\item El sistema muestra una lista de los pedidos realizados por el consumidor.
-\item El consumidor selecciona el pedido que desea cancelar.
-\item El sistema muestra la información del pedido, incluyendo la opción de cancelarlo.
-\item El consumidor confirma la cancelación del pedido.
-\item El sistema cancela el pedido y emite un reembolso al consumidor si corresponde.
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador visualizar una lista de todos los pedidos realizados en la plataforma
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita consultar la lista de pedidos.
+\item El sistema devuelve la lista de todos los pedidos, incluyendo información relevante de cada uno (identificador de pedido, fecha, producto, vendedor, comprador, cantidad, precio total, etc.).
 \end{enumerate}
-\item \textbf{Flujos alternativos:}
-\begin{enumerate}
-\item [4a.] Si el pedido ya ha sido confirmado por el productor, el sistema notifica al consumidor que no es posible cancelar el pedido.
-\item [5a.] Si se ha realizado un pago con tarjeta de crédito, el reembolso puede tardar varios días hábiles en aparecer en la cuenta del consumidor.
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Ver lista de usuarios}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador obtener una lista de todos los usuarios registrados en la plataforma.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita obtener la lista de usuarios.
+\item El sistema devuelve la lista de todos los usuarios registrados, incluyendo información relevante de cada uno (nombre, correo electrónico, fecha de registro, etc.).
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Ver lista de denuncias}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador obtener una lista de todas las denuncias registradas en la plataforma.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita obtener la lista de denuncias.
+\item El sistema devuelve la lista de todas las denuncias registradas, incluyendo información relevante de cada una (denunciante, denunciado, motivo, fecha, etc.).
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Eliminar publicación inapropiada}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador eliminar publicaciones inapropiadas o spam en la plataforma.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita obtener la lista de publicaciones.
+\item El sistema devuelve la lista de todas las publicaciones realizadas en la plataforma.
+\item El administrador solicita eliminar una publicación.
+\item El sistema solicita una confirmación al administrador para eliminar la publicación.
+\item El administrador confirma la eliminación de la publicación.
+\item El sistema elimina la publicación y registra la acción realizada por el administrador.
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Desactivar usuario}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador desactivar la cuenta de un usuario concreto en la plataforma.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita obtener la lista de usuarios.
+\item El sistema devuelve la lista de todos los usuarios registrados en la plataforma.
+\item El administrador solicita información del usuario específico que desea desactivar.
+\item El sistema muestra la información detallada del usuario seleccionado.
+\item El administrador solicita desactivar la cuenta del usuario.
+\item El sistema solicita una confirmación al administrador para desactivar la cuenta del usuario.
+\item El administrador confirma la desactivación de la cuenta.
+\item El sistema desactiva la cuenta del usuario y registra la acción realizada por el administrador.
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Ver estadísticas y análisis de la plataforma}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador acceder a las estadísticas y análisis de la plataforma para obtener información relevante y tomar decisiones estratégicas.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador solicita datos estadísticos sobre la plataforma.
+\item El sistema devuelve los datos estadísticos y de análisis de la plataforma y presenta al administrador las estadísticas y análisis disponibles, como el número total de publicaciones, el número de publicaciones activas y el número de usuarios registrados.
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize} 
+
+\item \textbf{Enviar notificación personalizada}
+\begin{itemize}
+\item \textbf{Actor}: Administrador
+\item \textbf{Descripción}: Permite al administrador enviar notificaciones personalizadas a los usuarios de la plataforma. Estas notificaciones contienen información de propósito general, como notificaciones de mantenimiento de la aplicación o anuncios importantes.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El administrador envía al sistema la información necesaria para crear una notificación personalizada.
+\item El sistema procesa la notificación y la envía a los usuarios destinatarios.
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[1a.] Si no se ha seleccionado ningún usuario destinatario, el sistema muestra un mensaje de error indicando que se debe seleccionar al menos un usuario destinatario. El caso de uso continúa en el paso 4, permitiendo al administrador seleccionar usuarios destinatarios válidos.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Registrarme mediante correo electrónico}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado registrarse en la aplicación utilizando su dirección de correo electrónico como identificador único.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado envía los datos de registro, incluyendo la dirección de correo electrónico y una contraseña válida.
+\item El sistema verifica la disponibilidad de la dirección de correo electrónico y crea una cuenta de usuario asociada a la dirección de correo electrónico y la contraseña proporcionadas. Acto seguido, envía un correo electrónico de verificación al usuario no autenticado.
+\item El usuario no autenticado verifica su registro siguiendo las instrucciones en el correo electrónico.
+\item El sistema confirma la verificación del registro y redirige al usuario no autenticado a la página de inicio de sesión.
+\end{enumerate}
+\item \textbf{Flujos alternativos}: Ninguno.
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[2a.] Si la dirección de correo electrónico ya está asociada a una cuenta existente en la aplicación, el sistema muestra un mensaje de error indicando que la dirección de correo electrónico ya está en uso.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante correo electrónico}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando su correo electrónico y contraseña.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado envía los datos de inicio de sesión, incluyendo su correo electrónico y contraseña.
+\item El sistema verifica la combinación de correo electrónico y contraseña, concede el acceso a la cuenta del usuario y redirige al usuario no autenticado a la página de inicio de la aplicación, confirmando que el inicio de sesión ha sido exitoso.
+\end{enumerate}
+\item \textbf{Flujos alternativos}:
+\begin{itemize}
+\item[2a.] Si la combinación de correo electrónico y contraseña no es válida, el sistema muestra un mensaje de error indicando que los datos de inicio de sesión son incorrectos.
+\end{itemize}
+\item \textbf{Excepciones}: Ninguna.
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante Facebook}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando su cuenta de Facebook.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita inicia sesión mediante Facebook.
+\item El sistema redirige al usuario no autenticado a la página de inicio de sesión de Facebook.
+\item El usuario no autenticado ingresa sus credenciales de Facebook.
+\todo{Tengo que poner aquí a Facebook como actor? es un sistema externo}
+\item Facebook autentica las credenciales del usuario no autenticado y devuelve un token de acceso a la aplicación.
+\item El sistema utiliza el token de acceso para verificar la identidad del usuario no autenticado y concede el acceso a la cuenta del usuario. Acto seguido, redirige al usuario a la página de inicio de la aplicación, confirmando que el inicio de sesión ha sido exitoso.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[3a.] Si el usuario no autenticado no puede acceder a su cuenta de Facebook, el sistema muestra un mensaje de error indicando que no se puede completar el inicio de sesión y ofrece otras opciones de inicio de sesión.
+\item[5a.] Si el sistema no puede verificar la identidad del usuario no autenticado utilizando el token de acceso de Facebook, muestra un mensaje de error indicando que el inicio de sesión no se pudo completar y ofrece otras opciones de inicio de sesión.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante Google}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando su cuenta de Google.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita inicia sesión mediante Google.
+\item El sistema redirige al usuario no autenticado a la página de inicio de sesión de Google.
+\item El usuario no autenticado ingresa sus credenciales de Google.
+\todo{Tengo que poner aquí a Google como actor? es un sistema externo}
+\item Google autentica las credenciales del usuario no autenticado y devuelve un token de acceso a la aplicación.
+\item El sistema utiliza el token de acceso para verificar la identidad del usuario no autenticado y concede el acceso a la cuenta del usuario. Acto seguido, redirige al usuario a la página de inicio de la aplicación, confirmando que el inicio de sesión ha sido exitoso.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[3a.] Si el usuario no autenticado no puede acceder a su cuenta de Google, el sistema muestra un mensaje de error indicando que no se puede completar el inicio de sesión y ofrece otras opciones de inicio de sesión.
+\item[5a.] Si el sistema no puede verificar la identidad del usuario no autenticado utilizando el token de acceso de Google, muestra un mensaje de error indicando que el inicio de sesión no se pudo completar y ofrece otras opciones de inicio de sesión.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante Twitter}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando su cuenta de Twitter.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita inicia sesión mediante Twitter.
+\item El sistema redirige al usuario no autenticado a la página de inicio de sesión de Twitter.
+\item El usuario no autenticado ingresa sus credenciales de Twitter.
+\todo{Tengo que poner aquí a Twitter como actor? es un sistema externo}
+\item Twitter autentica las credenciales del usuario no autenticado y devuelve un token de acceso a la aplicación.
+\item El sistema utiliza el token de acceso para verificar la identidad del usuario no autenticado y concede el acceso a la cuenta del usuario. Acto seguido, redirige al usuario a la página de inicio de la aplicación, confirmando que el inicio de sesión ha sido exitoso.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[3a.] Si el usuario no autenticado no puede acceder a su cuenta de Twitter, el sistema muestra un mensaje de error indicando que no se puede completar el inicio de sesión y ofrece otras opciones de inicio de sesión.
+\item[5a.] Si el sistema no puede verificar la identidad del usuario no autenticado utilizando el token de acceso de Twitter, muestra un mensaje de error indicando que el inicio de sesión no se pudo completar y ofrece otras opciones de inicio de sesión.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Iniciar sesión mediante método OTP}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado iniciar sesión en la aplicación utilizando una OTP recibida mediante SMS.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita iniciar sesión mediante OTP, proporcionando su número de teléfono móvil.
+\item El sistema genera una OTP única y la envía al número de teléfono móvil del usuario no autenticado a través de un mensaje de texto (SMS).
+\item El usuario no autenticado recibe la OTP en su dispositivo móvil y la ingresa en la aplicación.
+\item El sistema verifica que la OTP ingresada por el usuario no autenticado coincida con la OTP generada previamente, concede el acceso a la cuenta del usuario no autenticado y redirige al usuario a la página de inicio de la aplicación, confirmando que el inicio de sesión ha sido exitoso.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[4a.] El usuario no autenticado no recibe la OTP en un tiempo determinado.
+\item[5a.] La OTP ingresada por el usuario no autenticado no coincide con la OTP generada previamente.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Restablecer mi contraseña}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado restablecer su contraseña en caso de haberla olvidado.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita restablecer su contraseña, proporcionando su dirección de correo electrónico.
+\item El sistema verifica la dirección de correo electrónico proporcionada, genera un enlace único de restablecimiento de contraseña y lo envía al correo electrónico del usuario no autenticado.
+\item El usuario no autenticado accede al enlace de restablecimiento de contraseña recibido en su bandeja de entrada.
+\item El sistema muestra una página para que el usuario no autenticado ingrese una nueva contraseña.
+\item El usuario no autenticado ingresa una nueva contraseña y la confirma.
+\item El sistema actualiza la contraseña asociada a la cuenta del usuario no autenticado.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[2a.] La dirección de correo electrónico proporcionada no es válida o no está asociada a una cuenta de usuario. El sistema muestra un mensaje de error indicando que la dirección de correo electrónico no es válida y el caso de uso finaliza.
+\item[4a.] El usuario no autenticado no recibe el enlace de restablecimiento de contraseña en un tiempo determinado. El sistema muestra un mensaje de error indicando que no se pudo enviar el enlace y ofrece al usuario no autenticado la opción de volver a enviar el enlace.
+\item[6a.] La nueva contraseña ingresada por el usuario no autenticado no cumple con los requisitos de seguridad establecidos por el sistema. El sistema muestra un mensaje de error indicando que la contraseña no cumple con los requisitos y permite al usuario no autenticado ingresar una nueva contraseña válida.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Ver lista de últimas publicaciones}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver una lista de las publicaciones más recientes en la aplicación.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita acceder a la lista de últimas publicaciones.
+\item El sistema devuelve al usuario no autenticado la lista de publicaciones ordenadas por fecha de creación, mostrando información básica de cada una, como el título, la imagen y el precio del producto.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver lista de publicaciones cercanas}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver una lista de publicaciones ordenadas por distancia.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita ver la lista de publicaciones cercanas.
+\item El sistema solicita permiso para acceder a la ubicación del Usuario.
+\item El usuario no autenticado concede el acceso a su ubicación.
+\item El sistema muestra una lista de publicaciones disponibles en la zona geográfica del usuario no autenticado, ordenadas por distancia.
+\end{enumerate}
+\item \textbf{Flujos alternativos}:
+\begin{itemize}
+\item[2a.] El sistema ya tiene acceso a la ubicación del usuario no autenticado. En ese caso, el caso de uso continúa sin solicitar permiso.
+\item[3a.] El usuario no autenticado deniega el acceso a su ubicación. El sistema muestra un mensaje indicando que no se puede mostrar la lista de publicaciones cercanas sin acceso a la ubicación. El caso de uso termina sin efecto.
+\end{itemize}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver publicaciones seleccionadas}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver una lista curada de publicaciones seleccionadas.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita acceder a las publicaciones seleccionadas.
+\item El sistema devuelve las publicaciones destacadas por el equipo de la plataforma.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver productores en un mapa}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver la ubicación de los productores en un mapa.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita visualizar el mapa de productores.
+\item El sistema recupera la información de ubicación de los productores registrados y muestra un mapa interactivo con los marcadores que representan la ubicación de los productores.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver detalles de publicación}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver una descripción en detalle de una publicación específica.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita ver los detalles de una publicación, pasando como parámetro el identificador único de la publicación.
+\item El sistema devuelve los detalles de la publicación.
+\end{enumerate}
+\item \textbf{Flujos alternativos}:
+\begin{itemize}
+\item[1a.] Si la publicación no existe o está desactivada, el sistema devuelve un mensaje de error indicando que la publicación no está disponible.
+\end{itemize}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver perfil de productor}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver el perfil de un productor en particular.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita ver el perfil de un productor, pasando como parámetro el identificador único del productor.
+\item El sistema busca y devuelve al usuario no autenticado la información del perfil del productor, incluyendo su nombre, biografía, ubicación, imagen de perfil y la lista de productos que ofrece.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+
+\item \textbf{Ver lista de reseñas de productor}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado ver las reseñas de un productor en particular.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita ver la lista de reseñas de un productor específico, pasando como parámetro el identificador único del productor.
+\item El sistema busca y devuelve al usuario no autenticado la lista de reseñas realizadas por otros usuarios sobre el productor.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Buscar publicaciones}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado buscar publicaciones en la plataforma utilizando palabras clave y filtros para encontrar productos de su interés.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado envía una solicitud de búsqueda de publicaciones, proporcionando palabras clave y filtros opcionales.
+\item El sistema devuelve una lista de publicaciones que coinciden con las palabras clave y los filtros aplicados.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+
+\item \textbf{Filtrar búsqueda por precio}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado filtrar las publicaciones de su búsqueda por rango de precios.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado realiza una búsqueda de publicaciones según sus palabras clave en el sistema, proporcionando los parámetros de búsqueda, incluyendo las palabras clave y los límites del rango de precios.
+\item El sistema recibe los parámetros de búsqueda y realiza una consulta en la base de datos para obtener las publicaciones que coincidan con las palabras clave y estén dentro del rango de precios especificado. Acto seguido, devuelve al usuario no autenticado una lista de publicaciones filtradas que cumplen con los criterios de búsqueda
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+
+\item \textbf{Filtrar búsqueda por stock disponible}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado filtrar las publicaciones de su búsqueda por la cantidad de producto disponible.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita realizar una búsqueda de publicaciones según sus palabras clave.
+\item El sistema consulta la base de datos para obtener las publicaciones que coinciden con las palabras clave y muestra al usuario no autenticado la lista de publicaciones obtenidas.
+\item El usuario no autenticado solicita aplicar un filtro de stock mínimo a las publicaciones.
+\item El sistema filtra las publicaciones y muestra solo aquellas que cuentan con al menos la cantidad de stock especificada.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Filtrar búsqueda por alérgenos}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado filtrar las publicaciones de su búsqueda por alérgenos, para excluir aquellos productos a los que es intolerante o alérgico.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario no autenticado solicita realizar una búsqueda de publicaciones según sus palabras clave.
+\item El sistema consulta la base de datos para obtener las publicaciones que coinciden con las palabras clave y muestra al usuario no autenticado la lista de publicaciones obtenidas.
+\item El usuario no autenticado solicita aplicar un filtro de exclusión de alérgenos.
+\item El sistema filtra las publicaciones y muestra solo aquellas que no contienen los alérgenos especificados.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Filtrar búsqueda por características}
+\begin{itemize}
+\item \textbf{Actor}: Usuario no autenticado
+\item \textbf{Descripción}: Permite al usuario no autenticado filtrar las publicaciones de su búsqueda por características, para encontrar aquellas publicaciones que cumplan con sus requisitos.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+  \item El usuario no autenticado solicita realizar una búsqueda de publicaciones según sus palabras clave.
+  \item El sistema consulta la base de datos para obtener las publicaciones que coinciden con las palabras clave y muestra al usuario no autenticado la lista de publicaciones obtenidas.
+  \item El usuario no autenticado solicita aplicar un filtro por características.
+  \item El sistema filtra las publicaciones y muestra solo aquellas que no contienen las características especificadas.
+  \end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver mi perfil privado}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado ver su perfil privado.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita acceder a los datos de su perfil, pasando como parámetro su identificador único.
+\item El sistema devuelve al usuario los datos de su perfil.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Editar mi perfil}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado editar su perfil.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita acceder a los datos de su perfil, pasando como parámetro su identificador único.
+\item El sistema devuelve al usuario los datos de su perfil.
+\item El usuario envía los datos de su perfil editar que quiere editar, pasando como parámetro su identificador único y los nuevos datos.
+\item El sistema actualiza la información del perfil con los cambios realizados y devuelve al usuario los datos actualizados.
+\end{enumerate}
+\item \textbf{Excepciones}: 
+\begin{itemize}
+\item[3a.] El usuario envía datos inválidos. El sistema devuelve un mensaje de error. El caso de uso vuelve al paso 2.
+\end{itemize} 
+\end{itemize}
+
+\item \textbf{Eliminar mi cuenta}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado solicitar la eliminación de su cuenta y la anonimización de sus datos personales.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita eliminar su cuenta, pasando como parámetro su identificador único.
+\item El sistema muestra un mensaje de confirmación solicitando al usuario que confirme su decisión de eliminar la cuenta.
+\item El usuario confirma su decisión de eliminar la cuenta.
+\item El sistema inicia el proceso de eliminación de la cuenta y anonimización de los datos personales del usuario, y devuelve un mensaje de confirmación indicando que la cuenta ha sido eliminada y los datos personales han sido anonimizados.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver lista de mis notificaciones}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado consultar la lista de sus notificaciones dentro de la aplicación.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita acceder a la lista de sus notificaciones, pasando como parámetro su identificador único.
+\item El sistema devuelve al usuario la lista de notificaciones asociadas a él ordenadas por fecha de recepción.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Ver mi historial de compras}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado ver una lista de sus compras realizadas anteriormente.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita acceder a su historial de compras.
+\item El sistema devuelve al usuario la lista de compras realizadas, ordenadas por fecha de compra y agrupadas por año y mes.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Valorar compra}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado valorar una compra realizada.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario solicita acceder a los detalles de una compra para valorarla, pasando como parámetro el identificador único de la compra.
+\item El sistema devuelve al usuario los detalles de la compra.
+\item El usuario envía la valoración de la compra, incluyendo la puntuación de 1 a 5 estrellas y, opcionalmente, un comentario adicional. Se pasa como parámetros el identificador único de la compra, la puntuación y el comentario.
+\item El sistema registra la valoración de la compra y la asocia al usuario que la ha realizado.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[3a.] El usuario no envía una puntuación de estrellas. El sistema devuelve un mensaje de error. El caso de uso vuelve al paso 2.
+\item[3b.] El usuario ya ha valorado la compra. El sistema devuelve un mensaje de error. El caso de uso finaliza.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Establecer preferencias de notificaciones}
+\begin{itemize}
+\item \textbf{Actor}: Usuario autenticado
+\item \textbf{Descripción}: Permite al usuario autenticado establecer sus preferencias de notificaciones.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El usuario envía una solicitud para establecer sus preferencias de notificaciones, proporcionando los parámetros necesarios, como el tipo de notificaciones y los medios de comunicación.
+\item El sistema procesa la solicitud y guarda las preferencias de notificaciones del usuario en su perfil. Acto seguido, devuelve una confirmación al usuario de que sus preferencias de notificaciones han sido actualizadas correctamente.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Publicar productos}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor publicar sus productos en venta en forma de publicaciones.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita publicar un producto, proporcionando la información necesaria del producto.
+\item El sistema registra la publicación del producto en la plataforma y devuelve al productor un identificador único de la publicación.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[1a.] El productor proporciona información inválida o incompleta. El sistema devuelve un mensaje de error indicando la razón. El caso de uso finaliza.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Editar publicaciones}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor modificar los campos de sus publicaciones existentes.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita acceder a los datos de una publicación existente, pasando como parámetro el identificador único de la publicación.
+\item El sistema devuelve al productor los detalles de la publicación.
+\item El productor envía los datos modificados de la publicación que desea editar, incluyendo el identificador único y los campos a actualizar.
+\item El sistema devuelve una confirmación de que los cambios se han guardado con éxito.
+\end{enumerate}
+\item \textbf{Excepciones}:
+\begin{itemize}
+\item[3a.] El productor envía datos inválidos o incompletos. El sistema devuelve un mensaje de error indicando los campos que deben corregirse. El caso de uso vuelve al paso 2.
+\end{itemize}
+\end{itemize}
+
+\item \textbf{Marcar publicaciones como vendidas a usuarios}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor marcar una publicación como vendida a un usuario de la aplicación.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita marcar una publicación como vendida, pasando como parámetro el identificador único de la publicación.
+\item El sistema verifica la existencia de la publicación y muestra los detalles de la misma, incluyendo la opción para marcarla como vendida.
+\item El productor envía la solicitud para marcar la publicación como vendida, pasando como parámetros el identificador único del usuario comprador, la cantidad de producto vendida y el precio total de la venta.
+\item El sistema marca la publicación como vendida al usuario seleccionado y registra la transacción y envía una notificación al comprador solicitando que valore la compra.
 \end{enumerate}
 \end{itemize}
 
-\item{Consulta de pedidos recibidos}
+\item \textbf{Marcar publicaciones como vendidas fuera de la aplicación}
 \begin{itemize}
-	\item \textbf{Actor:} Productor
-	\item \textbf{Descripción:} Permite al productor ver los pedidos recibidos por sus productos.
-	\item \textbf{Flujo básico de eventos:}
-	\begin{enumerate}[1:]
-		\item El productor accede a la sección de \textquote{Pedidos recibidos} en su perfil de usuario.
-		\item El sistema muestra una lista de los pedidos recibidos, ordenados por fecha de solicitud.
-		\item El productor selecciona un pedido de la lista para ver más detalles.
-		\item El sistema muestra la información del pedido, incluyendo el nombre y la dirección del comprador, los productos solicitados, el precio total y el estado actual del pedido.
-		\end{enumerate}
-	\item \textbf{Flujos alternativos:}
-		\begin{itemize}
-		\item [2a.] Si el productor no tiene ningún pedido recibido, el sistema muestra un mensaje indicando que no hay pedidos disponibles.
-		\item [3a.] Si el productor selecciona un pedido que ha sido cancelado o finalizado, el sistema muestra la información del pedido pero indica que ya no puede ser modificado.
-		\end{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor marcar una publicación como vendida a un usuario ajeno a la aplicación.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita marcar una publicación como vendida, pasando como parámetro el identificador único de la publicación.
+\item El sistema verifica la existencia y la pertenencia de la publicación al productor, muestra los detalles de la publicación y proporciona al productor una opción para marcarla como vendida.
+\item El productor selecciona la opción de marcar la publicación como vendida.
+\item El sistema solicita al productor que ingrese la cantidad de producto vendida y el precio total de la venta.
+\item El productor introduce la cantidad de producto vendida y el precio total de la venta, y confirma la operación.
+\item El sistema marca la publicación como vendida, actualiza el stock del producto y registra la venta en el historial del productor.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
 \end{itemize}
 
-\item{Rechazo de pedido}
+\item \textbf{Desactivar publicaciones}
 \begin{itemize}
-\item \textbf{Actor:} Productor
-\item \textbf{Descripción:} Permite al productor rechazar un pedido recibido del consumidor.
-\item \textbf{Precondición:} El productor ha recibido un pedido del consumidor.
-\item \textbf{Flujo básico de eventos:}
-\begin{enumerate}[1:]
-\item El productor accede a la lista de pedidos recibidos.
-\item El sistema muestra la lista de pedidos recibidos.
-\item El productor selecciona el pedido que desea rechazar.
-\item El sistema muestra la información del pedido, incluyendo la opción de rechazarlo.
-\item El productor selecciona la opción de rechazar el pedido.
-\item El sistema muestra un mensaje de confirmación para rechazar el pedido y da la posibilidad al productor de añadir una nota para el consumidor.
-\item El productor confirma la acción.
-\item El sistema registra la cancelación del pedido y notifica al comprador.
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor activar o desactivar una publicación.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita desactivar una publicación, pasando como parámetro el identificador único de la publicación.
+\item El sistema desactiva la publicación correspondiente al identificador proporcionado.
 \end{enumerate}
-\item \textbf{Flujos alternativos:}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Eliminar publicaciones}
 \begin{itemize}
-\item[5a.] Si el pedido ya ha sido entregado al comprador, el productor no podrá rechazarlo.
-\item[7a.] Si el productor decide no rechazar el pedido, éste sigue su curso.
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor eliminar una publicación de la plataforma.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita eliminar una publicación, pasando como parámetro el identificador único de la publicación.
+\item El sistema elimina permanentemente la publicación de la plataforma.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
 \end{itemize}
+
+
+\item \textbf{Ver mi historial de ventas}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor ver una lista de su historial de ventas realizadas.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita acceder a su historial de ventas.
+\item El sistema devuelve la lista de ventas realizadas, ordenadas por fecha de compra y agrupadas por año y mes.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
 \end{itemize}
+
+\item \textbf{Responder mensajes sobre mis productos}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor responder a mensajes de los usuarios que se pongan en contacto con él.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor selecciona la conversación a la que desea responder, pasando como parámetro el identificador único de la conversación.
+\item El sistema abre un chat en tiempo real con el usuario correspondiente, pasando como parámetro el identificador único de la conversación.
+\item El productor envía un mensaje en el chat, pasando como parámetro el identificador único de la conversación y el contenido del mensaje.
+\item El sistema entrega la respuesta al usuario y actualiza el estado del mensaje.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\item \textbf{Exportar mi historial de pedidos a Excel}
+\begin{itemize}
+\item \textbf{Actor}: Productor
+\item \textbf{Descripción}: Permite al productor exportar una lista de todos los pedidos que ha tramitado en la plataforma en formato Excel.
+\item \textbf{Secuencia normal}:
+\begin{enumerate}[label={\arabic*}:]
+\item El productor solicita exportar su historial de pedidos.
+\item El sistema genera un archivo Excel que contiene la información detallada de los pedidos y lo envía al productor.
+\end{enumerate}
+\item \textbf{Excepciones}: No se han identificado excepciones para este caso de uso.
+\end{itemize}
+
+\todo{No hay CU de crear chat (un usuario autenticado le abre conversación a un productor) ni de que un productor responda a un chat.}
+
 \end{enumerate}

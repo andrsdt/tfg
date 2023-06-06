@@ -1,0 +1,94 @@
+% !TEX root = ../../proyect.tex
+
+\section{Stack tecnológico}\label{sec:stack-tecnologico}
+
+\todo{Cambiar la parte de Redis, dependiendo del uso que le dé finalmente}
+En esta sección se describirá el stack tecnológico utilizado para desarrollar la aplicación web. A grandes rasgos, las tecnologías elegidas para la construcción de la aplicación incluyen React y Next.js para el cliente, Django Rest Framework para el servidor y PostgreSQL para la base de datos, haciendo un uso ocasional de Redis para casos de uso concretos. Estas tecnologías han sido seleccionadas cuidadosamente y destacan por ser altamente escalables, seguras y confiables, que junto a la extensiva documentación disponible sobre ellas, las hace ideales para la construcción de una aplicación de este tipo. Además se tendrán en cuenta diversas herramientas de integración continua, \textquote{contenerización} y despliegue que aseguren un producto final resiliente.
+
+\subsection{Base de datos}
+
+Para el almacenamiento de datos se ha decidido utilizar PostgreSQL como base de datos relacional. Esta elección se debe a que es una tecnología ampliamente utilizada y probada en el ámbito de desarrollo web, y en particular, en la comunidad de Django. Además, es altamente escalable, ofrece soporte para ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad) y tiene una gran cantidad de herramientas y funcionalidades para la gestión de datos.
+
+\todo{Tengo pensado utilizar Redis como \"Message Broker\", a modo de \"drop-in replacement\" del broker en memoria de django. Debería incluírlo aquí? No lo voy a usar como BBDD persistente como tal}
+% Por otra parte, se ha decidido utilizar, en menor medida y para un caso de uso concreto, la base de datos NoSQL Redis, más concretamente para el sistema de chats que se desea implementar mediante websockets. Redis sirve como sistema de caché y almacenamiento en memoria para el manejo de datos en tiempo real, y es además la opción recomendada para usar en conjunto con la librería \textquote{Django Channels}\footnote{\url{https://github.com/django/channels}}, que es la capa de integración de Django por excelencia para dotarlo de soporte asíncrono (ASGI) y websockets (o long-poll HTTP si el navegador no lo soporta).
+
+\figura{0.15}{img/tecnologias/postgresql}{Tecnologías de bases de datos del proyecto}{fig:tecnologias-db}{}
+
+\subsection{Servidor}
+
+En la elección de las tecnologías para el desarrollo del servidor, se ha optado por el lenguaje de programación Python, ya que es uno de los lenguajes más populares y utilizados en la actualidad. Según el índice TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}}, Python es el tercer lenguaje más popular a fecha de abril de 2023, lo que asegura una gran comunidad detrás y una amplia disponibilidad de recursos para el desarrollo. A nivel personal, es un lenguaje en el que he desarrollado proyectos de forma ocasional desde hace 4 años, por lo que no me supondrá una curva de aprendizaje pronunciada.
+
+Además, se ha decidido utilizar el framework Django para el desarrollo del servidor, ya que es uno de los más populares y reconocidos en el ámbito Python. Django permite desarrollar aplicaciones web de manera más rápida y sencilla, a la vez que de una forma muy personalizable para poder ajustarlas a nuestras necesidades. En cuanto a preferencia personal, tengo interés en profundizar en este framework y considero este proyecto una oportunidad para terminar de afianzar mis conocimientos.
+
+Se utilizará la especificación OpenAPI —anteriormente conocida como especificación Swagger— para definir la API expuesta por el servidor y documentar los endpoints de la aplicación. Estas definiciones se generarán automáticmaente mediante el uso de librerías externas en Django con el fin de agilizar el desarrollo de la aplicación.
+
+Para el desarrollo de tests se empleará Pytest como una herramienta orientada a realizar pruebas, que nos permitirá realizar pruebas unitarias con el fin de garantizar que el código se comporte como se espera. Se crearán casos de prueba para comprobar el funcionamiento no trivial en la aplicación de forma aislada, en la medida de lo posible.
+
+\figura{0.9}{img/tecnologias/servidor}{Tecnologías del lado del servidor del proyecto}{fig:tecnologias-servidor}{}
+
+\subsection{Cliente}
+
+En cuanto al lenguaje de programación, se ha elegido Typescript, un lenguaje tipado y muy popular en el desarrollo de aplicaciones web modernas. Con más de 90.000 estrellas en GitHub\footnote{\url{https://github.com/microsoft/TypeScript}}, Typescript es una opción sólida y madura para el desarrollo de aplicaciones web que solventa problemas de Javascript (que derivan indirectamente de su simplicidad y facilidad de uso). Además, he trabajado con Typescript en proyectos anteriores, lo que me permitirá tener una mayor productividad y reducir el tiempo de aprendizaje.
+
+Para el desarrollo del cliente, se ha decidido utilizar React. Según la encuesta anual de StackOverflow\footnote{\url{https://survey.stackoverflow.co/2022/\#section-most-popular-technologies-web-frameworks-and-technologies}}, se encuentra en la posición número 2 de tecnologías web más usadas, siendo la número 1 en su ámbito (desarrollo de aplicaciones). Además, la librería es creada y mantenida por Facebook, y dispone de una comunidad muy amplia y activa, por lo que es fácil encontrar recursos y soluciones a los problemas que puedan surgir durante el desarrollo. Personalmente, he trabajado con React en proyectos previos, lo que me permite va a permitir acelerar el proceso de desarrollo y poder centrarme en el dominio del problema más que en aprender la tecnología.
+
+Para dar solución a situaciones comunes en el desarrollo de apliaciones de una sola página como es mi caso (SPA), me he decantado por Next.js. El framework, desarrollado por Vercel, ofrece una solución integral de enrutado dinámico, renderizado en el servidor (SSR), optimización de imágenes, y manejo de errores, \textquote{middlewares} entre otros. En lo personal, he utilizado Next.js en un proyecto anterior y ha agilizado en gran medida el desarrollo del mismo. Es un marco de desarrollo en auge, el más usado en React y con una gran comunidad detrás (Más de 100.000 estrellas en GitHub\footnote{\url{https://github.com/vercel/next.js}}). Además, ofrecen en su página web una documentación\footnote{\url{https://nextjs.org/docs}} bien organizada, extensiva y actualizada con regularidad.
+
+En cuanto a la elección de una librería CSS para la maquetación de la aplicación, se ha optado por utilizar TailwindCSS. Esta librería ha experimentado un crecimiento considerable en los últimos años gracias a su enfoque en la utilidad y la eficiencia en la escritura de CSS, lo que permite una mayor velocidad en el desarrollo. Además, cuenta con una gran comunidad que ha desarrollado una gran cantidad de recursos y herramientas para trabajar con ella, lo que facilita su implementación en cualquier proyecto. Personalmente, he trabajado con TailwindCSS en varios proyectos personales y me he sentido muy cómodo con su enfoque y su sintaxis, lo que me ha permitido ahorrar tiempo y aumentar la eficiencia en el desarrollo, a la vez que me ha dado libertad total para representar una interfaz de usuario fiel a los prototipos de diseño.
+
+Se utilizará SWR (stale-while-revalidate) como estrategia de caché HTTP. Tal y como describe Vercel en su web\footnote{\url{https://swr.vercel.app/es-ES}} (SWR, 2023) \textquote{El nombre “SWR” es derivado de stale-while-revalidate, una estrategia de invalidación de caché HTTP popularizada por HTTP RFC 5861. SWR es una estrategia para devolver primero los datos en caché (obsoletos), luego envíe la solicitud de recuperación (revalidación), y finalmente entrege los datos actualizados.}. He utilizado SWR en proyectos anteriores y me ha resultado muy útil para mejorar el rendimiento de las aplicaciones, por lo que considero que es una buena opción para el desarrollo de esta aplicación para dar una experiencia más reactiva al usuario final cuando interactúe con ciertas partes de la aplicación.
+\todo{Está bien citado?}
+
+Por último, para el testing se utilizarán dos herramientas: Cypress y Jest. Cypress es una herramienta para testing end-to-end, mientras que Jest (junto con React Testing Library) se utilizarán para testing unitario. Ambas son herramientas populares y ampliamente utilizadas en el desarrollo de aplicaciones web que no he tenido la oportunidad de utilizar antes, por lo que veo en ellas una oportunidad de mejorar mis conocimientos en testing.
+
+\figura{0.9}{img/tecnologias/cliente}{Tecnologías del lado del cliente del proyecto}{fig:tecnologias-cliente}{}
+
+\subsection{Calidad de código}
+
+En cuanto a calidad de código, Git se utilizará como la herramienta de control de versiones. Dicha herramienta nos permite mantener un registro de los cambios realizados en el código. Junto con GitHub, una plataforma de almacenamiento de código en la nube, se asegura que el código esté siempre disponible y se pueda acceder a él desde cualquier lugar y en cualquier momento.
+
+\todo{Citar a https://www.conventionalcommits.org/es/v1.0.0/}
+Por otra parte, y para mantener la consistencia con los mensajes de commit, se seguirá la especificación definida por Conventional Commits. Tal y como lo describen en su web, \textquote{es una convención ligera sobre los mensajes de commits. Proporciona un conjunto sencillo de reglas para crear un historial de commits explícito; lo que hace más fácil escribir herramientas automatizadas encima del historial. Esta convención encaja con SemVer, al describir en los mensajes de los commits las funcionalidades, arreglos, y cambios de ruptura hechos}.
+
+La \textquote{primera linea de defensa} para tener un código legible y mantenible se encuentra en el entorno local del desarrollador. Para ello se emplearán herramientas de formato de código, detección de errores y control de commits adaptadas a cada tecnología, Python y Typescript (véase la tabla \ref{tabla:comparativa})
+
+Para garantizar la calidad del código del servidor se hará uso de diversas herramientas: por una parte se emplearán dependencias de Python como pre-commit, black, isort y flake8. Estas herramientas ayudan a mantener un estilo de codificación coherente y a detectar errores potenciales antes de que se conviertan en problemas más graves, así como de asegurar el cumplimiento de unos estándares de código bien definidos.
+
+En cuanto a los mecanismos de calidad de código en el cliente, se utilizarán principalmente ESLint, Prettier y husky. ESLint es una herramienta de análisis de código estático para identificar patrones problemáticos en el código Javascript o Typescript, mientras que Prettier se utiliza para mantener un estilo de código coherente en todo el proyecto. Por otro lado, husky se encarga de ejecutar scripts personalizados en determinados eventos de Git, como en el momento de hacer un commit, con el fin de asegurarse de que se cumplan ciertas reglas de calidad de código antes de enviar el código al repositorio.
+
+La combinación de estas herramientas ayuda a garantizar la calidad del código en el cliente, asegurando que se mantengan unos estándares de calidad, legibilidad y mantenibilidad consistentes en todo el proyecto. Además, estas herramientas cuentan con una gran comunidad detrás y son ampliamente utilizadas en el desarrollo de aplicaciones web modernas, lo que las convierte en una elección sólida para cualquier proyecto web. En mi experiencia previa, he trabajado con estas herramientas en otros proyectos y he podido experimentar en primera persona los beneficios que aportan en términos de calidad y consistencia del código, tanto trabajando de forma colaborativa como individual.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Lenguaje} & \textbf{Formato} & \textbf{Detección de errores} & \textbf{Control de commits} \\ \hline
+		Typescript         & Prettier & ESLint & Husky \\ \hline
+		Python             & Black, iSort & Flake8 & Pre-commit \\ \hline
+	\end{tabular}
+    \caption{Tabla de herramientas de control de calidad empleadas}
+    \label{tabla:comparativa}
+\end{table}
+
+\todo{citar a Amazon aquí}
+Como \textquote{segunda línea de defensa}, se trabajará con flujos de integración continua que se ejecutarán mediante GitHub Actions. Tal y como lo define Amazon (AWS, 2023) la integración continua es \textquote{una práctica de desarrollo de software mediante la cual los desarrolladores combinan los cambios en el código en un repositorio central de forma periódica, tras lo cual se ejecutan versiones y pruebas automáticas}. Estas acciones se encargarán de realizar análisis estáticos del código con SonarCloud de una forma más exhaustiva, con el fin de proporcionar soporte a las herramientas de análisis y detección de errores mencionadas previamente, que se usan desde el propio entorno local.
+
+El flujo de integración continua del proyecto se activará automáticamente cada vez que haga un push a la rama de desarrollo del repositorio en GitHub. Se ejecutarán las pruebas unitarias elaboradas y llevar a cabo un análisis estático del código utilizando SonarCloud. Esto me ayudará a detectar cualquier error o problema de calidad de código antes de que se integre en la rama principal.
+
+\figura{0.9}{img/tecnologias/calidad}{Tecnologías de calidad de código del proyecto}{fig:tecnologias-calidad}{}
+
+\subsection{Integración y despliegue}
+En cuanto a tecnologías de despliegue, se hará uso de tecnologías actuales y conocidas para asegurar el soporte y la disponibilidad de documentación actualizada.
+
+Para la \textquote{containerización} y replicabilidad de la aplicación se utilizará Docker. Generar una imagen de Docker del proyecto permitirá distribuír la aplicación fácilmente en diferentes entornos, lo que resultará en una aplicación más escalable y replicable.
+
+Para orquestar los diferentes contenedores necesarios para el proyecto se utilizará Docker Compose, lo que permitirá definir y ejecutar múltiples contenedores de forma conjunta y replicable. En este caso concreto se utilizará para ejecutar simultáneamente instancias de PostgreSQL y Django. Esto permitirá la gestión y configuración centralizada de los diferentes servicios necesarios para la aplicación, lo que facilitará su implementación y escalabilidad.
+
+\todo{citar a google en https://cloud.google.com/appengine?hl=es-419}
+Para el despliegue a producción se utilizará Google Cloud Platform, concretamente App Engine, lo que permitirá una fácil y escalable implementación de la aplicación en la nube. Tal y como lo describe Google (GCP, 2023), gracias a esta plataforma el usuario \textquote{Crea sitios web monolíticos que se renderizan en el servidor}. App Engine es una plataforma completamente administrada y escalable que se encarga de la infraestructura, y que además proporciona una amplia gama de herramientas y servicios adicionales, que estarán a nuestro alcance para el despliegue en la nube.
+
+En cuanto a la estructura del proyecto, se ha decidido seguir una estructura \textquote{monorepo}. La principal ventaja de esta forma de organización es que facilita la integración y la gestión de dependencias. Al utilizar una estructura de monorepo, el código de servidor y cliente se encuentra en un mismo repositorio y los cambios en el código se pueden hacer y subir de forma simultánea, de la misma forma que se pueden gestionar de manera más sencilla las dependencias entre ambas partes. Personalmente, he trabajado con monorepos en proyectos anteriores y he concluído en que hace más fácil gestionar el código en proyectos que involucran tanto frontend como backend, en lugar de tener varios repositorios para distintas partes de la aplicación.
+
+Para redirigir el tráfico a los correspondientes servicios se utilizará Nginx. Nginx es un servidor web que también puede ser utilizado como proxy inverso, lo que permite redirigir el tráfico a diferentes servicios en función de la ruta de la petición. En este caso, se utilizará para redirigir el tráfico a la API de Django o a la aplicación de React, en función de la ruta de la petición. Con esto conseguiremos que los usuarios finales interactúen con el servidor Nginx, sin conocer los detalles de los servicios que se encuentran detrás de él.
+
+\figura{0.9}{img/tecnologias/despliegue}{Tecnologías de despliegue e integración del proyecto}{fig:tecnologias-despliegue}{}

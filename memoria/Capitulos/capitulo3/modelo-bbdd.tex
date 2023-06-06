@@ -1,0 +1,12 @@
+% !TEX root = ../../proyect.tex
+
+\section{Modelo de la base de datos}\label{sec:modelo-de-datos}
+
+En esta sección se abordará la definición de la base de datos relacional que se utilizará en la aplicación, con el objetivo de garantizar su eficiencia, consistencia y escalabilidad. Para ello, se priorizará que la definición cumpla la tercera forma normal, es decir, normalizando en la medida de lo posible los datos y eliminar las dependencias transitivas entre las entidades.
+% TODO: reescribir lo de arriba, citar definiciones...
+
+Para entender la tercera forma normal, es importante entender las dos formas normales previas. La primera forma normal (1FN) establece que cada tabla en la base de datos debe tener valores atómicos, es decir, valores que no se puedan descomponer en partes más pequeñas. La segunda forma normal (2FN) establece que, además de lo anterior, cada columna en una tabla debe depender únicamente de la clave primaria de la tabla.
+
+La tercera forma normal (3FN) va un paso más allá y establece que, además de cumplir con la segunda forma normal, las columnas que no son parte de la clave primaria de la tabla deben depender únicamente de la clave primaria de la tabla y no de otras columnas no clave. Esto significa que todas las dependencias transitivas deben eliminarse para evitar la redundancia y la inconsistencia de datos. En otras palabras, cada hecho o atributo debe estar representado en una única tabla y sin información redundante.
+
+En el contexto de la aplicación, esto implica que la base de datos debe estar diseñada de manera que la información se almacene de manera coherente y lógica, evitando la redundancia y la inconsistencia de datos.

@@ -1,0 +1,16 @@
+% !TEX root = ../../proyect.tex
+
+\section{Actores del sistema}\label{sec:actores-sistema}
+En esta sección se presentan los diferentes actores que interactuarán con el sistema, es decir, aquellos usuarios o entidades que tendrán un papel en la ejecución de las funcionalidades de la aplicación. Los actores se definen en función de sus objetivos y responsabilidades en la aplicación. De esta manera, se establece un marco de referencia que permite entender las interacciones que se producen entre los diferentes elementos del sistema. Basándonos en los objetivos definidos para la aplicación, podemos identificar los siguientes actores:
+
+\begin{enumerate}[label=ACT-\protect\twodigits{\arabic*}:, align=left, leftmargin=*]
+
+    \item \textbf{Administrador}: Este actor tiene el papel de gestionar los recursos y realizar tareas de administración en la aplicación. Tiene acceso al panel de administrador y puede listar, modificar y eliminar productos, usuarios y pedidos. Puede acceder a la información de contacto de los usuarios, tal como su correo electrónico o su número de teléfono, con el fin de poder contactar con los mismos en caso de detectar por su parte un uso sospechoso de la aplicación.
+
+    \item \textbf{Usuario no autenticado}: Este actor representa a las personas que utilizan la aplicación sin haber iniciado sesión. Pueden registrarse, iniciar sesión o navegar la aplicación con normalidad a modo de \textquote{solo lectura}. Esto significa que podrán ver perfiles de productores o publicaciones, pero no podrán iniciar conversaciones con productores o marcar publicaciones como favoritas
+    
+    \item \textbf{Usuario autenticado}: Este actor representa a los usuarios de la aplicación que tienen su sesión abierta. Pueden editar su perfil y cerrar sesión, además de iniciar conversaciones de chat con productores, emitir denuncias o dejar reseñas y calificaciones cuando un productor informe de que le ha vendido un producto. Además de esto, \textbf{pueden llevar a cabo las mismas operaciones de lectura que los usuarios no registrados}, como consultar publicaciones o perfiles de productores. Los usuarios autenticados pueden tener además el rol de productor.
+    
+    \item \textbf{Productor}: Este actor dispone de un perfil público y tiene la capacidad de publicar, editar y eliminar sus productos en la aplicación. Puede marcar sus publicaciones como vendidas y recibir reseñas de los consumidores por cada una de estas ventas. \textbf{Un usuario autenticado podrá convertirse en productor cuando complete su perfil}
+
+\end{enumerate}
