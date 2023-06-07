@@ -1,46 +1,40 @@
-# Tests that valid input data creates a new listing instance with correct data, sets listing images, allergens, and features correctly, and returns the created listing instance.
 import pytest
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from listings.business_logic import create_listing
 from listings.models import ListingImage, ProductAllergen, ProductFeature
+from producers.models import Producer
+from users.models import User
 
+# Tests that valid input data creates a new listing instance with correct data, sets listing
+# images, allergens, and features correctly, and returns the created listing instance.
 # TODO: test_create_listing_valid_input(mocker):
 
 
-# Tests that empty input data creates a new listing instance with default values and returns the created listing instance.
+# Tests that empty input data does not allow to create a new listing instance.
 @pytest.mark.django_db
-def test_create_listing_empty_input(mocker):
+def test_create_listing_empty_input():
     # Arrange
     validated_data = {}
-    mocker.patch("listings.models.Listing.objects.create")
 
-    # Act
-    result = create_listing(validated_data)
-
-    # Assert
-    assert result is not None
-    assert result.title == "New Listing"
-    assert result.description == ""
-    assert result.unit == "unit"
-    assert result.price_per_unit == 0.0
-    assert result.g_per_unit == 0
-    assert result.available_quantity == 0
-    assert result.producer == ""
+    # Act and assert
+    with pytest.raises(IntegrityError):
+        create_listing(validated_data)
 
 
 # Tests that missing required input data raises an error.
 @pytest.mark.django_db
 def test_create_listing_missing_required_input(mocker):
     # Arrange
+    user_mock = mocker.Mock(spec=User)
+    producer = Producer.objects.create(user=user_mock)
     validated_data = {
         "title": "Test Listing",
         "description": "This is a test listing",
         "unit": "kg",
         "price_per_unit": 10.0,
         "g_per_unit": 1000,
-        "producer": "Test Producer",
+        "producer": producer,
     }
-    mocker.patch("listings.models.Listing.objects.create")
 
     # Act and Assert
     with pytest.raises(KeyError):
@@ -51,6 +45,7 @@ def test_create_listing_missing_required_input(mocker):
 @pytest.mark.django_db
 def test_create_listing_atomic_transaction(mocker):
     # Arrange
+    producer = mocker.Mock(spec=Producer)
     validated_data = {
         "title": "Test Listing",
         "description": "This is a test listing",
@@ -58,12 +53,12 @@ def test_create_listing_atomic_transaction(mocker):
         "price_per_unit": 10.0,
         "g_per_unit": 1000,
         "available_quantity": 50,
-        "producer": "Test Producer",
+        "producer": producer,
         "images": ["test_image1.jpg", "test_image2.jpg"],
         "allergens": ["peanuts", "gluten"],
         "features": ["organic", "non-GMO"],
     }
-    mocker.patch("listings.models.Listing.objects.create")
+    # mocker.patch("listings.models.Listing.objects.create")
     mocker.patch("listings.models.ListingImage.objects.update_or_create")
     mocker.patch("listings.models.ProductAllergen.objects.get_or_create")
     mocker.patch("listings.models.ProductFeature.objects.get_or_create")
@@ -92,7 +87,6 @@ def test_create_listing_invalid_input(mocker):
         "allergens": ["peanuts", "gluten"],
         "features": ["organic", "non-GMO"],
     }
-    mocker.patch("listings.models.Listing.objects.create")
 
     # Act and Assert
     with pytest.raises(ValueError):

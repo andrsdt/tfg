@@ -3,6 +3,7 @@
 import django.contrib.auth.models
 from django.db import migrations, models
 import django.utils.timezone
+from django.contrib.postgres.operations import CreateExtension
 
 
 class Migration(migrations.Migration):
@@ -13,6 +14,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # TODO: ensure this works properly on production
+        # https://docs.djangoproject.com/en/4.2/ref/contrib/gis/install/postgis/#post-installation
+        CreateExtension("postgis"),
         migrations.CreateModel(
             name="User",
             fields=[

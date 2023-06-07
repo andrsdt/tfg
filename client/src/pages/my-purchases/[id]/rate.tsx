@@ -13,11 +13,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import router from 'next/router';
 import { Controller } from 'react-hook-form';
-import { z } from 'zod';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import { createReview } from '@/features/reviews/api/create';
 import { emitSuccess } from '@/utils/toasts';
 import { Stars } from '@/features/reviews/components/Stars';
+import { createReviewSchema } from '@/features/reviews/schemas/create';
 
 export const getServerSideProps = async ({ params }) => {
   return {
@@ -39,16 +39,6 @@ export type ReviewListingValues = {
   comment: string;
   order: number;
 };
-
-const schema = z.object({
-  rating: z.number().min(1).max(5),
-  comment: z.optional(
-    z.string().max(500, {
-      message: 'El comentario no puede tener más de 500 caracteres',
-    })
-  ),
-  order: z.number(),
-});
 
 const redirectAndNotify = async () => {
   emitSuccess({
@@ -108,9 +98,10 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
           </Link>
         </div>
       </div>
-      <Form<ReviewListingValues, typeof schema>
+      {/* TODO: extract form and logic to @/features/reviews folder */}
+      <Form<ReviewListingValues, typeof createReviewSchema>
         onSubmit={handleCreateReview}
-        schema={schema}
+        schema={createReviewSchema}
         defaults={{ order: order.id, rating: 3, comment: '' }}
         className="h-full"
       >

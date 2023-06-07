@@ -33,21 +33,23 @@ const Profile = () => {
       <h1 className="mt-2 text-2xl font-bold">
         {user.first_name} {user.last_name}
       </h1>
-      <h2 className="text-xl">
-        {user.average_rating
-          ? `⭐ ${user.average_rating.toFixed(1)} · ${
-              user.number_ratings
-            } valoraciones`
-          : 'No hay valoraciones'}
-      </h2>
-      {/* NOTE: this is working because producer uses the user.id as its PK too */}
       {user.is_producer && (
-        <Link
-          href={NEXT_ROUTES.PRODUCER_PROFILE(user.pk)}
-          className="mt-1 text-gray underline"
-        >
-          Ver perfil público
-        </Link>
+        <>
+          <h2 className="text-xl">
+            {user.average_rating
+              ? `⭐ ${user.average_rating.toFixed(1)} · ${
+                  user.number_ratings
+                } valoraciones`
+              : 'No hay valoraciones'}
+          </h2>
+          {/* NOTE: this is working because producer uses the user.id as its PK too */}
+          <Link
+            href={NEXT_ROUTES.PRODUCER_PROFILE(user.pk)}
+            className="mt-1 text-gray underline"
+          >
+            Ver perfil público
+          </Link>
+        </>
       )}
       <div className="mt-8 flex w-full flex-col space-y-4">
         {!user.has_completed_onboarding && (

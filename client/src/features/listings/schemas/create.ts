@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createSchema = z.object({
+export const createListingSchema = z.object({
   title: z
     .string()
     .min(1, ' ')

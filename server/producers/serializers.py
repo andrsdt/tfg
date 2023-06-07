@@ -29,7 +29,4 @@ class BecomeProducerSerializer(serializers.ModelSerializer):
         fields = ("user",)
 
     def create(self, validated_data):
-        producer = become_producer(
-            user=validated_data["user"],
-        )
-        return producer
+        return become_producer(**validated_data)

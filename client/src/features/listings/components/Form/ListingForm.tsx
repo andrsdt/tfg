@@ -15,7 +15,7 @@ import CurrencyInput from 'react-currency-input-field';
 import { FieldError } from 'react-hook-form';
 import { CreateListingDTO } from '../../api/create';
 import { UpdateListingDTO } from '../../api/update';
-import { createSchema } from '../../schemas/create';
+import { createListingSchema } from '../../schemas/create';
 import { UNITS, Unit } from '../../types/units';
 import { MutableAllergensList, MutableFeaturesList } from '../Lists';
 import { ImageCarouselInput } from './ImageCarouselInput';
@@ -38,9 +38,9 @@ export const ListingForm = ({
   const submitMessage = isEdit ? 'ACTUALIZAR' : 'PUBLICAR';
 
   return (
-    <Form<ListingDTO, typeof createSchema>
+    <Form<ListingDTO, typeof createListingSchema>
       onSubmit={onSubmit}
-      schema={createSchema}
+      schema={createListingSchema}
       defaults={defaults}
     >
       {({ register, formState, watch, setValue }) => {
@@ -155,7 +155,11 @@ export const ListingForm = ({
                 </WithUnitField>
               </ConditionalInputField>
             </div>
-            <Button disabled={isSubmitting} type="submit" className="w-full">
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              className="my-4 w-full"
+            >
               {submitMessage}
             </Button>
           </div>

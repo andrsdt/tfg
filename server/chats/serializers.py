@@ -60,5 +60,4 @@ class ConversationCreateSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        conversation = create_conversation(**validated_data)
-        return conversation
+        return create_conversation(**validated_data)

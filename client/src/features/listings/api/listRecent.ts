@@ -9,6 +9,6 @@ export const listRecentListings = async (): Promise<
   const client = await getApiClient();
   return await client.listings_list({
     order_by: '-created_at' as any,
-    exclude_mine: true,
+    // exclude_mine: false,
   });
 };

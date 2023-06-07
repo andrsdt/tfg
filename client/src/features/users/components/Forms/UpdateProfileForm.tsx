@@ -1,26 +1,19 @@
 import { Button } from '@/components/Elements/Button';
 import { Form } from '@/components/Form';
+import { LocationAutocompleteField } from '@/components/Form/LocationAutocompleteField';
 import { WithUnitField } from '@/components/Form/WithUnitField';
+import Map from '@/components/Map/Map';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
+import { formatWKTAsCoordinates } from '@/utils/formatters';
 import { emitSuccess } from '@/utils/toasts';
 import { MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import router from 'next/router';
 import { Controller } from 'react-hook-form';
 import PhoneInput from 'react-phone-input-2';
-import * as z from 'zod';
 import { updateProfile } from '../../api/update';
-import { LocationAutocompleteField } from '@/components/Form/LocationAutocompleteField';
-import Map from '@/components/Map/Map';
-import { formatWKTAsCoordinates } from '@/utils/formatters';
-
-const schema = z.object({
-  phone: z.optional(z.string()),
-  // .min(9, { message: 'El teléfono debe tener 9 dígitos' }),
-  location: z.optional(z.string()),
-  // .nonempty({ message: 'La ubicación es obligatoria' }),
-});
+import { updateSchema } from '../../schemas/update';
 
 type UpdateProfileValues = {
   phone: string;
@@ -50,9 +43,9 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
 
   if (!user) return <>Loading...</>;
   return (
-    <Form<UpdateProfileValues, typeof schema>
+    <Form<UpdateProfileValues, typeof updateSchema>
       onSubmit={handleUpdateProfile}
-      schema={schema}
+      schema={updateSchema}
       className={className}
     >
       {({ control, watch }) => {

@@ -11,6 +11,6 @@ export const listNearbyListings = async (): Promise<
     order_by: '-updated_at' as any,
     distance_order: 'asc',
     distance: '5000', // meters
-    exclude_mine: true,
+    // exclude_mine: true,
   });
 };

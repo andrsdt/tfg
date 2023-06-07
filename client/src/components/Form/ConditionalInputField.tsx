@@ -12,7 +12,7 @@ export const ConditionalInputField = ({
   title,
   children,
 }: ConditionalInputFieldProps) => (
-  <div className={clsx(!showIf && 'hidden', 'pb-4')}>
+  <div className={clsx(!showIf && 'hidden')}>
     <h3 className="mb-2 text-xl font-semibold">{title}</h3>
     {children}
   </div>

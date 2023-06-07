@@ -17,4 +17,5 @@ dayjs.locale('es');
 dayjs.tz.setDefault(
   Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Madrid'
 );
+
 export default dayjs;

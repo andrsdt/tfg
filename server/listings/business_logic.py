@@ -48,23 +48,23 @@ def dislike_listing(instance: Listing, user: User):
 
 def _create_listing_instance(validated_data):
     return Listing.objects.create(
-        title=validated_data["title"],
-        description=validated_data["description"],
-        unit=validated_data["unit"],
-        price_per_unit=validated_data["price_per_unit"],
-        g_per_unit=validated_data["g_per_unit"],
-        available_quantity=validated_data["available_quantity"],
-        producer=validated_data["producer"],
+        title=validated_data.get("title"),
+        description=validated_data.get("description"),
+        unit=validated_data.get("unit"),
+        price_per_unit=validated_data.get("price_per_unit"),
+        g_per_unit=validated_data.get("g_per_unit"),
+        available_quantity=validated_data.get("available_quantity"),
+        producer=validated_data.get("producer"),
     )
 
 
 def _update_listing_instance(validated_data, instance):
-    instance.title = validated_data["title"]
-    instance.description = validated_data["description"]
-    instance.unit = validated_data["unit"]
-    instance.price_per_unit = validated_data["price_per_unit"]
-    instance.g_per_unit = validated_data["g_per_unit"]
-    instance.available_quantity = validated_data["available_quantity"]
+    instance.title = validated_data.get("title")
+    instance.description = validated_data.get("description")
+    instance.unit = validated_data.get("unit")
+    instance.price_per_unit = validated_data.get("price_per_unit")
+    instance.g_per_unit = validated_data.get("g_per_unit")
+    instance.available_quantity = validated_data.get("available_quantity")
     instance.save()
 
 

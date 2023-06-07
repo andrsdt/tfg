@@ -51,13 +51,13 @@ const Listing = ({ pageProps }: ListingProps) => {
   const [disableListing, isSubmittingDisable] = useSubmissionHandler(
     () => deactivateListing({ id }),
     {
-      onSuccess: () => setIsActive(false),
+      onSuccess: async () => setIsActive(false),
     }
   );
   const [enableListing, isSubmittingEnable] = useSubmissionHandler(
     () => activateListing({ id }),
     {
-      onSuccess: () => setIsActive(true),
+      onSuccess: async () => setIsActive(true),
     }
   );
 
@@ -117,7 +117,9 @@ const Listing = ({ pageProps }: ListingProps) => {
           )}
           <h1 className="-mb-1 text-2xl font-bold">{listing.title}</h1>
           <AllergenList allergens={listing.allergens.map((a) => a.allergen)} />
-          <p className="mt-2 text-lg">{listing.description}</p>
+          <p lang="es" className="mt-2 hyphens-auto text-lg">
+            {listing.description}
+          </p>
           {/* TODO: use <date/> instead of <p/> */}
           <p className="mt-5 text-gray">
             {capitalize(dayjs(listing.updated_at).fromNow())}

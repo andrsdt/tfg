@@ -28,7 +28,7 @@ export const InputField = (props: InputFieldProps) => {
           id={registration.name}
           type={type}
           className={clsx(
-            'peer block min-h-[auto] appearance-none rounded-lg border-none bg-transparent px-4 py-3 text-lg outline outline-1 transition-all duration-200 ease-linear motion-reduce:transition-none',
+            'peer block min-h-[auto] appearance-none rounded-lg border-none bg-transparent px-2 py-3 text-lg outline outline-1 transition-all duration-200 ease-linear motion-reduce:transition-none',
             error
               ? 'text-light-red outline-light-red focus:outline-light-red'
               : 'outline-light-gray focus:outline-green'

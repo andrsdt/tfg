@@ -5,17 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import * as z from 'zod';
-
-const lettersOnly = /^[A-zÀ-ÖØ-öø-ÿ]+( ?[A-zÀ-ÖØ-öø-ÿ]+)?$/;
-
-const schema = z.object({
-  email: z.string().email('La dirección de correo electrónico no es válida'),
-  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
-  // FirstName can't have numbers
-  firstName: z.string().min(2, ' ').regex(lettersOnly, ' '),
-  lastName: z.string().min(2, ' ').regex(lettersOnly, ' '),
-});
+import { createSignupSchema } from '../schemas/createSignup';
 
 type SignupValues = {
   email: string;
@@ -32,11 +22,16 @@ export const SignupForm = ({ className }: SignupFormProps) => {
   const { signup } = useAuth();
   const router = useRouter();
   const [handleSignup, isSubmitting] = useSubmissionHandler(signup, {
-    onSuccess: () => router.push(NEXT_ROUTES.COMPLETE_ONBOARDING),
+    onSuccess: async () => {
+      router.push(NEXT_ROUTES.COMPLETE_ONBOARDING);
+    },
   });
 
   return (
-    <Form<SignupValues, typeof schema> onSubmit={handleSignup} schema={schema}>
+    <Form<SignupValues, typeof createSignupSchema>
+      onSubmit={handleSignup}
+      schema={createSignupSchema}
+    >
       {({ register, formState }) => {
         return (
           <div className={clsx('space-y-8', className)}>

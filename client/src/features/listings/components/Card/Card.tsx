@@ -52,7 +52,9 @@ export const ListingCard = ({
           {listing.title}
         </h3>
         {!mini && (
-          <p className="mb-1 line-clamp-3 break-all">{listing.description}</p>
+          <p lang="es" className="mb-1 line-clamp-3 hyphens-auto">
+            {listing.description}
+          </p>
         )}
       </Link>
       <span className="flex w-full justify-between">

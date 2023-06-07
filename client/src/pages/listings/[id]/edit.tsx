@@ -66,6 +66,7 @@ const EditListing = ({ pageProps }: EditListingProps) => {
           await handleUpdateListing({ id: listingId }, data)
         }
         isSubmitting={isSubmitting}
+        isEdit
       />
     </BaseLayout>
   );
@@ -85,5 +86,6 @@ const listingToDTO = async (listing: Listing): Promise<UpdateListingDTO> => {
     ),
     allergens: listing.allergens?.map((a) => a.allergen),
     features: listing.features?.map((f) => f.feature),
+    price_per_unit: listing.price_per_unit / 100, // Database stores price in cents, but user enters it in EUR
   };
 };

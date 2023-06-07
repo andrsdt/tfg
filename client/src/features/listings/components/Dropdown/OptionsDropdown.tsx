@@ -55,7 +55,7 @@ export const ListingOptionsDropdown = ({
     >
       <div className="justify-between p-4">
         <Menu.Item>
-          <Link href={NEXT_ROUTES.PRODUCER_PROFILE(listing.producer)}>
+          <Link href={NEXT_ROUTES.PRODUCER_PROFILE(listing.producer.user.id)}>
             Ver perfil
           </Link>
         </Menu.Item>

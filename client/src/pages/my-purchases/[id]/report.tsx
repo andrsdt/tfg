@@ -2,8 +2,9 @@ import { BackButton } from '@/components/Elements';
 import { BaseLayout } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
-import { schema, sendReport } from '@/features/reports/api/create';
+import { sendReport } from '@/features/reports/api/create';
 import { ReportForm } from '@/features/reports/components/Form';
+import { createReportSchema } from '@/features/reports/schemas/create';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import { emitSuccess } from '@/utils/toasts';
@@ -56,7 +57,7 @@ const ReportOrder = ({ pageProps }: ReportOrderProps) => {
         <ReportForm
           isSubmitting={isSubmitting}
           onSubmit={handleSubmitReport}
-          schema={schema}
+          schema={createReportSchema}
           defaults={{
             target: 'ORDER',
             description: '',

@@ -44,7 +44,7 @@ export const formatQuantityWithUnit = (
 export const formatSpanishPhoneNumber = (phone: string | number) => {
   return phone
     .toString()
-    .replace(/(\d{2})(\d{3})(\d{3})(\d{3})/, '+$1 $2 $3 $4');
+    .replace(/(\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
 };
 
 // WKT is the Well-Known Text format for representing vector geometry objects

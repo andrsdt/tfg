@@ -135,7 +135,7 @@ type DeleteButtonProps = {
 
 const DeleteButton = ({ element, handleDelete }: DeleteButtonProps) => (
   <MinusCircleIcon
-    className="absolute right-2 top-0 z-10 w-14 cursor-pointer fill-light-red stroke-white"
+    className="absolute right-2 top-2 z-10 w-14 cursor-pointer fill-light-red stroke-white"
     onClick={(e) => {
       e.preventDefault();
       handleDelete(element);

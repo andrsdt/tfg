@@ -8,6 +8,7 @@ import { listConversationsFromListing } from '@/features/chats/api/listFromListi
 import { ConversationListItem } from '@/features/chats/components/ConversationListItem';
 import { ConversationPreview } from '@/features/chats/types/conversations';
 import { retrieveListing } from '@/features/listings/api/retrieve';
+import { markAsSoldSchema } from '@/features/listings/schemas/markAsSold';
 import { Listing } from '@/features/listings/types/listings';
 import { UNITS } from '@/features/listings/types/units';
 import { createOrder } from '@/features/orders/api/create';
@@ -16,12 +17,10 @@ import { BasicUser } from '@/features/users/types/users';
 import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { parseMoneyString } from '@/utils/formatters';
 import { emitSuccess } from '@/utils/toasts';
 import Image from 'next/image';
 import router from 'next/router';
 import CurrencyInput from 'react-currency-input-field';
-import { z } from 'zod';
 
 export const getServerSideProps = async ({ params }) => {
   return {
@@ -118,26 +117,6 @@ export type MarkAsSoldValues = {
   listing_id: number;
   consumer_id: number;
 };
-
-const markAsSoldSchema = z.object({
-  quantity: z
-    .number({
-      invalid_type_error: '',
-    })
-    .min(1, 'Debes vender al menos 1 producto')
-    .max(10000, 'No puedes vender más de 10.000 productos'),
-  total_price: z.preprocess(
-    parseMoneyString,
-    z
-      .number({
-        invalid_type_error: '',
-      })
-      .min(0, 'El precio no puede ser negativo')
-      .max(100000, 'No puedes vender productos de más de 1000€')
-  ),
-  listing_id: z.number(),
-  consumer_id: z.optional(z.number()),
-});
 
 type MarkListingAsSoldFormProps = {
   listing: Listing;

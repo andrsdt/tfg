@@ -22,7 +22,9 @@ class InadequateLanguageValidator:
 
     def __call__(self, value):
         for word in value.split(" "):
-            if any(curse_word in word.lower() for curse_word in self.CURSE_WORDS):
+            if word and any(
+                word.lower() == curse_word for curse_word in self.CURSE_WORDS
+            ):
                 message = "Este campo contiene lenguaje inapropiado"
                 code = "inadequate_language"
                 raise ValidationError(message, code=code)

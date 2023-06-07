@@ -4,8 +4,9 @@ import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import { retrieveListing } from '@/features/listings/api/retrieve';
 import { Listing } from '@/features/listings/types/listings';
-import { sendReport, schema } from '@/features/reports/api/create';
+import { sendReport } from '@/features/reports/api/create';
 import { ReportForm } from '@/features/reports/components/Form';
+import { createReportSchema } from '@/features/reports/schemas/create';
 import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
@@ -61,7 +62,7 @@ const ReportListing = ({ pageProps }: ReportListingProps) => {
         <ReportForm
           isSubmitting={isSubmitting}
           onSubmit={handleSubmitReport}
-          schema={schema}
+          schema={createReportSchema}
           defaults={{
             target: 'PRODUCER',
             description: '',

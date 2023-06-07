@@ -43,7 +43,7 @@ export const MutableAllergensList = ({
             onClick: toggleModal,
           }}
           allergens={selectedAllergens}
-          className="mb-4 cursor-pointer rounded-md outline outline-1 outline-light-gray"
+          className="mb-4 cursor-pointer rounded-md px-2 outline outline-1 outline-light-gray"
         />
       ) : (
         <button

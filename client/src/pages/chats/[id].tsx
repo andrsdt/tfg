@@ -1,6 +1,5 @@
 import { BaseLayout } from '@/components/Layouts';
 import { ChatHeader, MessageList } from '@/features/chats/components';
-import { Message } from '@/features/chats/types/conversations';
 import { useChat } from '@/hooks/useChat';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';

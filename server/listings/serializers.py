@@ -93,7 +93,7 @@ class ListingCreateSerializer(serializers.ModelSerializer):
     images = ListingImageSerializer(many=True)
     unit = serializers.ChoiceField(required=True, choices=PRODUCT_UNIT_CHOICES)
     price_per_unit = serializers.IntegerField(
-        required=True, min_value=0, max_value=100000
+        required=True, min_value=1, max_value=100000
     )
     g_per_unit = serializers.IntegerField(min_value=0, max_value=100000)
     available_quantity = serializers.IntegerField(

@@ -1,3 +1,5 @@
+import { Id } from '@/types/ids';
+
 const NEXT_ROUTES = {
   HOME: '/',
   LOGIN: '/login',
@@ -13,13 +15,14 @@ const NEXT_ROUTES = {
   BECOME_PRODUCER: '/become-producer',
   COMPLETE_ONBOARDING: '/complete-onboarding',
   SEARCH_LISTINGS: '/search',
-  CHAT: (id) => urlWithParams('/chats/[id]', { id }),
-  PRODUCER_PROFILE: (id) => urlWithParams('/producers/[id]', { id }),
-  PRODUCER_REVIEWS: (id) => urlWithParams('/producers/[id]/reviews', { id }),
-  DETAILS_LISTING: (id) => urlWithParams('/listings/[id]', { id }),
-  EDIT_LISTING: (id) => urlWithParams('/listings/[id]/edit', { id }),
-  REPORT_LISTING: (id) => urlWithParams('/listings/[id]/report', { id }),
-  MARK_SOLD_LISTING: (id) => urlWithParams('/listings/[id]/sell', { id }),
+  CHAT: (id: Id) => urlWithParams('/chats/[id]', { id }),
+  PRODUCER_PROFILE: (id: Id) => urlWithParams('/producers/[id]', { id }),
+  PRODUCER_REVIEWS: (id: Id) =>
+    urlWithParams('/producers/[id]/reviews', { id }),
+  DETAILS_LISTING: (id: Id) => urlWithParams('/listings/[id]', { id }),
+  EDIT_LISTING: (id: Id) => urlWithParams('/listings/[id]/edit', { id }),
+  REPORT_LISTING: (id: Id) => urlWithParams('/listings/[id]/report', { id }),
+  MARK_SOLD_LISTING: (id: Id) => urlWithParams('/listings/[id]/sell', { id }),
   MARK_SOLD_LISTING_VIA_CONVERSATION: (id, conversationId) =>
     urlWithParams('/listings/[id]/sell/[conversationId]', {
       id,

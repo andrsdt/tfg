@@ -23,7 +23,9 @@ const Signup = () => {
           <p className="inline-block font-light text-gray">
             ¿Ya tienes una cuenta?
           </p>
-          <Link href={NEXT_ROUTES.LOGIN}>&nbsp;Inicia sesión</Link>
+          <Link href={NEXT_ROUTES.LOGIN} className="font-semibold text-green">
+            &nbsp;Inicia sesión
+          </Link>
         </div>
       </div>
     </BaseLayout>
