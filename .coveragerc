@@ -1,0 +1,7 @@
+[run]
+branch = True
+omit = */migrations/*, */tests/*
+
+[report]
+show_missing = True
+skip_covered = True

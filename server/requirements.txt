@@ -33,3 +33,4 @@ django-filter==23.2
 channels==4.0.0
 daphne==4.0.0
 pytest-mock==3.10.0
+pytest-cov==4.1.0
