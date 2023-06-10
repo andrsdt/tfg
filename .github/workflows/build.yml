@@ -6,21 +6,37 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  server:
+    name: Build and test (server)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan (server)
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install tox and any other packages
+        run: pip install tox
+      - name: Run tox
+        run: cd server && tox -e py
+      - name: Scan with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: server
-      - name: SonarCloud Scan (client)
+
+  client:
+    name: Build and test (client)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Scan with SonarCloud
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
