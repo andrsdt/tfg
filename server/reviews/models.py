@@ -5,6 +5,7 @@ from reviews.managers import ReviewManager
 
 
 class Review(TimestampsMixin):
+    # unique constraint
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="review")
     rating = models.PositiveIntegerField()
     comment = models.TextField(max_length=150, null=True)

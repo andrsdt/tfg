@@ -1,10 +1,13 @@
 import notifications
 import pytest
-from authentication.serializers import CustomLoginSerializer, CustomRegisterSerializer
+from authentication.serializers import (
+    CustomLoginSerializer,
+    CustomRegisterSerializer,
+    CustomUserDetailsSerializer,
+)
+from conftest import NEW_YORK_COORDINATES
 from grocerin.validators import OnlyAlphaAndSpacesValidator
-from notifications.business_logic import send_reminder_complete_profile_notification
 from rest_framework.serializers import ValidationError
-from users.models import User
 
 """
 Code Analysis
@@ -27,7 +30,7 @@ class TestCustomLoginSerializer:
     # Tests that the serializer raises a validation error for an invalid email format.
     def test_invalid_email_format(self):
         # Edge case test for invalid email format
-        data = {"email": "testexample.com", "password": "password123"}
+        data = {"email": "testexample.com"}
         serializer = CustomLoginSerializer(data=data)
         assert not serializer.is_valid()
         assert "email" in serializer.errors
@@ -35,7 +38,7 @@ class TestCustomLoginSerializer:
     # Tests that the serializer raises a validation error for an empty email.
     def test_empty_email(self):
         # Edge case test for empty email
-        data = {"email": "", "password": "password123"}
+        data = {"email": ""}
         serializer = CustomLoginSerializer(data=data)
         assert not serializer.is_valid()
         assert "email" in serializer.errors
@@ -43,7 +46,7 @@ class TestCustomLoginSerializer:
     # Tests that the serializer raises a validation error for an empty password.
     def test_empty_password(self):
         # Edge case test for empty password
-        data = {"email": "test@example.com", "password": ""}
+        data = {"password": ""}
         serializer = CustomLoginSerializer(data=data)
         assert not serializer.is_valid()
         assert "password" in serializer.errors
@@ -69,42 +72,20 @@ Fields:
 @pytest.mark.django_db
 class TestCustomRegisterSerializer:
     # Tests that valid input data is successfully registered.
-    def test_custom_register_serializer_valid_input(self):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
-            "first_name": "John",
-            "last_name": "Doe",
-            "phone": "1234567890",
-            "location": "New York",
-        }
-        serializer = CustomRegisterSerializer(data=data)
+    def test_custom_register_serializer_valid_input(self, register_user_data):
+        serializer = CustomRegisterSerializer(data=register_user_data)
         assert serializer.is_valid()
 
     # Tests that the custom_signup method updates the user's first and last name fields and sends a notification.
-    def test_custom_register_serializer_custom_signup(self, mocker):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
-            "first_name": "John",
-            "last_name": "Doe",
-            "phone": "1234567890",
-            "location": "New York",
-        }
-        request = mocker.Mock()
-        serializer = CustomRegisterSerializer(data=data)
+    def test_custom_register_serializer_custom_signup(self, mocker, register_user_data):
+        serializer = CustomRegisterSerializer(data=register_user_data)
         assert serializer.is_valid()
-        # The user is created internally by the auth library
-        # in this point, after the serializer is validated
-        user = User.objects.create(email="test@example.com")
-        # After that, our custom_signup method is called
-        serializer.custom_signup(request, user)
+        request = mocker.MagicMock(data=register_user_data, method="POST")
+        user = serializer.save(request)
         assert user.first_name == "John"
         assert user.last_name == "Doe"
         mocker.patch("notifications.business_logic._send_notification")
-        send_reminder_complete_profile_notification(user)
+        notifications.business_logic.send_reminder_complete_profile_notification(user)
         notifications.business_logic._send_notification.assert_called_once_with(
             user, "REMINDER_COMPLETE_PROFILE", {}
         )
@@ -116,13 +97,13 @@ class TestCustomRegisterSerializer:
             validator("John123")
 
     # Tests that input data missing required fields raises a validation error.
-    def test_custom_register_serializer_missing_fields(self):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
+    def test_custom_register_serializer_missing_fields(self, register_user_data):
+        incomplete_data = {
+            "email": register_user_data["email"],
+            "password1": register_user_data["password1"],
+            "password2": register_user_data["password2"],
         }
-        serializer = CustomRegisterSerializer(data=data)
+        serializer = CustomRegisterSerializer(data=incomplete_data)
         assert not serializer.is_valid()
         assert serializer.errors == {
             "first_name": ["This field is required."],
@@ -136,25 +117,20 @@ class TestCustomRegisterSerializer:
         validator("John Doe")
 
     # Tests that the send_reminder_complete_profile_notification function successfully sends a notification.
-    def test_send_reminder_complete_profile_notification(self, mocker):
-        user = User.objects.create(email="test@example.com")
+    def test_send_reminder_complete_profile_notification(self, mocker, bare_user):
+        user = bare_user
         mocker.patch("notifications.business_logic._send_notification")
-        send_reminder_complete_profile_notification(user)
+        notifications.business_logic.send_reminder_complete_profile_notification(user)
         notifications.business_logic._send_notification.assert_called_once_with(
             user, "REMINDER_COMPLETE_PROFILE", {}
         )
 
     # Tests that input data containing invalid characters raises a validation error.
-    def test_custom_register_serializer_invalid_characters(self):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
-            "first_name": "John123",
-            "last_name": "Doe123",
-            "phone": "1234567890",
-            "location": "New York",
-        }
+    def test_custom_register_serializer_invalid_characters(self, register_user_data):
+        data = register_user_data
+        data["first_name"] = "John123"
+        data["last_name"] = "Doe123"
+
         serializer = CustomRegisterSerializer(data=data)
         assert not serializer.is_valid()
         assert serializer.errors == {
@@ -163,16 +139,11 @@ class TestCustomRegisterSerializer:
         }
 
     # Tests that input data containing fields with too few characters raises a validation error.
-    def test_custom_register_serializer_too_few_characters(self):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
-            "first_name": "J",
-            "last_name": "D",
-            "phone": "1234567890",
-            "location": "New York",
-        }
+    def test_custom_register_serializer_too_few_characters(self, register_user_data):
+        data = register_user_data
+        data["first_name"] = "J"
+        data["last_name"] = "D"
+
         serializer = CustomRegisterSerializer(data=data)
         assert not serializer.is_valid()
         assert serializer.errors == {
@@ -181,16 +152,11 @@ class TestCustomRegisterSerializer:
         }
 
     # Tests that input data containing fields with too many characters raises a validation error.
-    def test_custom_register_serializer_too_many_characters(self):
-        data = {
-            "email": "test@example.com",
-            "password1": "testpassword",
-            "password2": "testpassword",
-            "first_name": "J" * 101,
-            "last_name": "D" * 101,
-            "phone": "1234567890",
-            "location": "New York",
-        }
+    def test_custom_register_serializer_too_many_characters(self, register_user_data):
+        data = register_user_data
+        data["first_name"] = "J" * 101
+        data["last_name"] = "D" * 101
+
         serializer = CustomRegisterSerializer(data=data)
         assert not serializer.is_valid()
         assert serializer.errors == {
@@ -205,11 +171,85 @@ class TestCustomRegisterSerializer:
         serializer = CustomRegisterSerializer()
         assert serializer.validate_username("testusername") == "testusername"
 
-    # Tests that the send_reminder_complete_profile_notification function fails to send a notification.
-    def test_send_reminder_complete_profile_notification_failure(self, mocker):
-        user = User.objects.create(email="test@example.com")
-        mocker.patch(
-            "notifications.business_logic._send_notification", side_effect=Exception
+
+@pytest.mark.django_db
+class TestCustomUserDetailsSerializer:
+    # Tests that valid input data is correctly serialized and returned
+    def test_valid_input_data_serialized(self, user_with_completed_profile):
+        serializer = CustomUserDetailsSerializer(user_with_completed_profile)
+        expected_data = {
+            "pk": user_with_completed_profile.pk,
+            "email": "test@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "is_producer": False,
+            "photo": None,
+            "has_completed_onboarding": True,
+            "phone": "+34666123456",
+            "location": {"type": "Point", "coordinates": [-74.00597, 40.71427]},
+            "created_at": user_with_completed_profile.created_at.isoformat().replace(
+                "+00:00", "Z"
+            ),
+            "average_rating": None,
+            "number_ratings": 0,
+        }
+        assert serializer.data == expected_data
+
+    # Tests that updating a user's data with valid input data correctly updates the user and returns the updated data
+    def test_update_user_with_valid_input_data(self, bare_user):
+        data = {"first_name": "Jane", "last_name": "Doe", "phone": "+34666123456"}
+        serializer = CustomUserDetailsSerializer(bare_user, data=data, partial=True)
+        assert serializer.is_valid()
+        updated_user = serializer.save()
+        assert updated_user.first_name == "Jane"
+        assert updated_user.last_name == "Doe"
+        assert updated_user.phone == "+34666123456"
+
+    # Tests that invalid input data raises a validation error
+    def test_invalid_input_data_raises_validation_error(self):
+        data = {"phone": "invalid_phone", "location": "invalid_email"}
+        serializer = CustomUserDetailsSerializer(data=data)
+        assert not serializer.is_valid()
+        assert "phone" in serializer.errors
+        assert "location" in serializer.errors
+
+    # Tests that updating a user's data with invalid input data raises a validation error
+    def test_update_user_with_invalid_input_data_raises_validation_error(
+        self, bare_user
+    ):
+        data = {"phone": "invalid_phone", "location": "invalid_email"}
+        serializer = CustomUserDetailsSerializer(bare_user, data=data, partial=True)
+        assert not serializer.is_valid()
+        assert "phone" in serializer.errors
+        assert "location" in serializer.errors
+
+    # Tests that a user cannot update their email
+    def test_user_cannot_update_email(self, bare_user):
+        data = {"email": "valid_email@mail.com"}
+        serializer = CustomUserDetailsSerializer(bare_user, data=data, partial=True)
+        assert serializer.is_valid()
+        assert serializer.data["email"] == bare_user.email
+
+    # Tests that updating a user's data with no changes returns the original data
+    def test_update_user_with_no_changes_returns_original_data(self, bare_user):
+        serializer = CustomUserDetailsSerializer(bare_user, data={}, partial=True)
+        assert serializer.is_valid()
+        updated_user = serializer.save()
+        assert updated_user == bare_user
+
+    # Tests that updating a user's data with completed onboarding deletes the reminder notification
+    def test_completed_onboarding_deletes_reminder_notification(
+        self, mocker, bare_user
+    ):
+        user = bare_user
+        notification_filter_mock = mocker.patch(
+            "notifications.models.Notification.objects.filter"
         )
-        with pytest.raises(Exception):
-            send_reminder_complete_profile_notification(user)
+        data = {"location": NEW_YORK_COORDINATES, "phone": "+34666123456"}
+        serializer = CustomUserDetailsSerializer(user, data=data, partial=True)
+        assert serializer.is_valid()
+        serializer.save()
+        notification_filter_mock.assert_called_once_with(
+            receiver=user, notification_type="REMINDER_COMPLETE_PROFILE"
+        )
+        notification_filter_mock.return_value.delete.assert_called_once()

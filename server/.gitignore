@@ -43,6 +43,7 @@ htmlcov/
 .nox/
 .coverage
 .coverage.*
+lcov.info
 .cache
 nosetests.xml
 coverage.xml

@@ -1,6 +1,6 @@
 [run]
 branch = True
-omit = */migrations/*, */tests/*
+omit = */migrations/*, */tests/*, conftest.py
 
 [report]
 show_missing = True

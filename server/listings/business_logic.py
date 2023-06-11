@@ -18,9 +18,9 @@ def create_listing(validated_data):
 def update_listing(validated_data, instance):
     # TODO: use individual params instead of validated_data (**validated_data in serializers)
     _update_listing_instance(validated_data, instance)
-    _set_listing_images(validated_data.get("images", []), instance)
-    _set_listing_allergens(validated_data.get("allergens", []), instance)
-    _set_listing_features(validated_data.get("features", []), instance)
+    _set_listing_images(validated_data.get("images"), instance)
+    _set_listing_allergens(validated_data.get("allergens"), instance)
+    _set_listing_features(validated_data.get("features"), instance)
     return instance
 
 
@@ -46,7 +46,7 @@ def dislike_listing(instance: Listing, user: User):
     user.favorites.remove(instance)
 
 
-def _create_listing_instance(validated_data):
+def _create_listing_instance(validated_data: dict):
     return Listing.objects.create(
         title=validated_data.get("title"),
         description=validated_data.get("description"),
@@ -59,27 +59,36 @@ def _create_listing_instance(validated_data):
 
 
 def _update_listing_instance(validated_data, instance):
-    instance.title = validated_data.get("title")
-    instance.description = validated_data.get("description")
-    instance.unit = validated_data.get("unit")
-    instance.price_per_unit = validated_data.get("price_per_unit")
-    instance.g_per_unit = validated_data.get("g_per_unit")
-    instance.available_quantity = validated_data.get("available_quantity")
+    instance.title = validated_data.get("title", instance.title)
+    instance.description = validated_data.get("description", instance.description)
+    instance.unit = validated_data.get("unit", instance.unit)
+    instance.price_per_unit = validated_data.get(
+        "price_per_unit", instance.price_per_unit
+    )
+    instance.g_per_unit = validated_data.get("g_per_unit", instance.g_per_unit)
+    instance.available_quantity = validated_data.get(
+        "available_quantity", instance.available_quantity
+    )
     instance.save()
 
 
 def _set_listing_images(images, listing):
+    if images is None:
+        return
+
     # NOTE: this is currently deleting all images and uploading the new ones.
     # This is because names are generated via uuid and there is no way to
     # match new images to old ones. This is could have performance implications
     # in the future, if the load is too big, or excessive S3 bandwith usage.
     ListingImage.objects.filter(listing=listing).exclude(image__in=images).delete()
-
     for image in images:
         ListingImage.objects.update_or_create(listing=listing, image=image)
 
 
 def _set_listing_allergens(allergens, listing):
+    if allergens is None:
+        return
+
     # Delete all allergens that are not in the new list of allergens
     ProductAllergen.objects.filter(listing=listing).exclude(
         allergen__in=allergens
@@ -94,6 +103,9 @@ def _set_listing_allergens(allergens, listing):
 
 
 def _set_listing_features(features, listing):
+    if features is None:
+        return
+
     # Delete all features that are not in the new list of features
     ProductFeature.objects.filter(listing=listing).exclude(
         feature__in=features

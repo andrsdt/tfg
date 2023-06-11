@@ -56,7 +56,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         # NOTE: this is a hack to override the default username validation
         # from the library, which would raise an error since the username
         # field is not used in our app.
-
         return username
 
     def custom_signup(self, request, user):
