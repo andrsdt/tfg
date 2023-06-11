@@ -51,11 +51,6 @@ def producer(mocker, user_with_completed_profile):
 
 
 @pytest.fixture
-def allergens():
-    """Returns a list of allergens."""
-
-
-@pytest.fixture
 def create_listing_data(producer):
     """Returns a dictionary with valid data to create a new listing."""
     return {
