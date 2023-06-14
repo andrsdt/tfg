@@ -33,7 +33,6 @@ export const OrdersList = ({ orders, type }: OrdersListProps) => {
             {Object.entries((ordersByMonth as any) || {})?.map(
               ([month, orders]) => (
                 <div key={`${month}/${year}`}>
-                  {/* TODO: use <date/> instead of <h3/> */}
                   <h3 className="mb-3 text-2xl">{capitalize(month)}</h3>
                   <div className="flex flex-col space-y-4">
                     {(orders as Order[])?.map((order) => (

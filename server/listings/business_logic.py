@@ -25,7 +25,7 @@ def update_listing(validated_data, instance):
 
 
 @transaction.atomic
-def delete_listing(instance):
+def delete_listing(instance: Listing):
     # NOTE: are images, features and allergens deleted automatically? check this
     # (I think they have on_delete=models.CASCADE, so they should be deleted)
     instance.delete()

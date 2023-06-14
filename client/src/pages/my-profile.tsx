@@ -1,11 +1,12 @@
 import { LayoutWithNavbar } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
-import { EditableAvatar } from '@/features/users/components/Avatar/EditableAvatar';
+import { Avatar } from '@/features/users/components/Avatar';
 import {
   ProfileBox,
   ProfileButton,
 } from '@/features/users/components/Button/ProfileBox';
+import { Rating } from '@/features/users/components/Card/Rating';
 import { useAuth } from '@/hooks/useAuth';
 import { formatSpanishPhoneNumber } from '@/utils/formatters';
 import {
@@ -29,19 +30,13 @@ const Profile = () => {
 
   return (
     <LayoutWithNavbar className="flex flex-col items-center px-4 pb-4 pt-6">
-      <EditableAvatar user={user} />
+      <Avatar src={user.photo} className="w-32" />
       <h1 className="mt-2 text-2xl font-bold">
         {user.first_name} {user.last_name}
       </h1>
       {user.is_producer && (
         <>
-          <h2 className="text-xl">
-            {user.average_rating
-              ? `⭐ ${user.average_rating.toFixed(1)} · ${
-                  user.number_ratings
-                } valoraciones`
-              : 'No hay valoraciones'}
-          </h2>
+          <Rating user={user} />
           {/* NOTE: this is working because producer uses the user.id as its PK too */}
           <Link
             href={NEXT_ROUTES.PRODUCER_PROFILE(user.pk)}
@@ -87,7 +82,11 @@ const Profile = () => {
           />
         </ProfileBox>
         <ProfileBox>
-          {/* TODO: implement profile general editing */}
+          <ProfileButton
+            title="Editar perfil"
+            Icon={<RectangleStackIcon />}
+            href={NEXT_ROUTES.EDIT_PROFILE}
+          />
           <ProfileButton title={user.email} Icon={<EnvelopeIcon />} href="" />
           {user.phone && (
             <ProfileButton
@@ -96,11 +95,6 @@ const Profile = () => {
               href=""
             />
           )}
-          {/* <ProfileButton
-            title="12 de enero de 1961"
-            Icon={<CakeIcon />}
-            href=""
-          /> */}
           <ProfileButton
             title="Cambiar contraseña..."
             Icon={<LockClosedIcon />}

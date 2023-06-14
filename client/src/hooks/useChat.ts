@@ -1,4 +1,5 @@
 import { WS_URL } from '@/config';
+import NEXT_ROUTES from '@/constants/routes';
 import { retrieveConversation } from '@/features/chats/api/retrieve';
 import { CONNECTION_STATUS } from '@/features/chats/types/connectionStatuses';
 import {
@@ -6,6 +7,7 @@ import {
   SocketMessage,
 } from '@/features/chats/types/conversations';
 import { useChatStore } from '@/stores/chats';
+import router from 'next/router';
 import { useEffect } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { useAuth } from './useAuth';
@@ -26,6 +28,11 @@ export const useChat = (id: string) => {
       shouldReconnect: () => true,
       reconnectAttempts: 10,
       reconnectInterval: 3000,
+      onClose: async () => {
+        // TODO: maybe this will also send user to home when the websocket has to reconnect.
+        // Specify a reason in the close() -> throw an error maybe?
+        await router.replace(NEXT_ROUTES.HOME);
+      },
       onMessage: (event) => {
         if (!event.data) return;
         const message = JSON.parse(event.data) as SocketMessage;

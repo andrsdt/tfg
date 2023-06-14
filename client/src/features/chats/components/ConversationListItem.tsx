@@ -60,7 +60,6 @@ export const ConversationListItem = ({
             hasUnreadMessages && 'font-bold'
           )}
         >
-          {/* TODO: use <date/> here */}
           {dayjs(last_message.created_at).format('HH:mm')}
           {!lastMessageWasMine && hasUnreadMessages && (
             <span className="flex aspect-square w-8 items-center justify-center rounded-full bg-light-red text-center font-semibold text-white">

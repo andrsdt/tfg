@@ -1,24 +1,19 @@
 import { Button } from '@/components/Elements/Button';
-import { Form } from '@/components/Form';
-import { LocationAutocompleteField } from '@/components/Form/LocationAutocompleteField';
-import { WithUnitField } from '@/components/Form/WithUnitField';
-import Map from '@/components/Map/Map';
+import { Form, InputField } from '@/components/Form';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
-import { formatWKTAsCoordinates } from '@/utils/formatters';
 import { emitSuccess } from '@/utils/toasts';
-import { MapPinIcon, PhoneIcon } from '@heroicons/react/24/solid';
 import router from 'next/router';
-import { Controller } from 'react-hook-form';
-import PhoneInput from 'react-phone-input-2';
-import { updateProfile } from '../../api/update';
+import { UpdateProfileValues, updateProfile } from '../../api/update';
 import { updateSchema } from '../../schemas/update';
-
-type UpdateProfileValues = {
-  phone: string;
-  location: string;
-};
+import { LocationFormField } from './LocationFormField';
+import { PhoneFormField } from './PhoneFormField';
+import {
+  formatCoordinatesAsWKT,
+  transformLocationToCoordinates,
+} from '@/utils/formatters';
+import { AvatarFormField } from './AvatarFormField';
 
 type UpdateProfileFormProps = {
   className?: string;
@@ -42,83 +37,67 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
   );
 
   if (!user) return <>Loading...</>;
+
   return (
     <Form<UpdateProfileValues, typeof updateSchema>
       onSubmit={handleUpdateProfile}
       schema={updateSchema}
       className={className}
+      defaults={{
+        first_name: user.first_name,
+        last_name: user.last_name,
+        photo: undefined,
+        phone: user.phone,
+        location: formatCoordinatesAsWKT(
+          transformLocationToCoordinates(user.location)
+        ),
+      }}
     >
-      {({ control, watch }) => {
+      {({ control, watch, register, setValue, formState }) => {
         return (
           <>
             <div>
-              {!user.location && (
-                <div className="mt-8">
-                  <h2 className="mb-2 text-2xl font-semibold">
-                    Añade tu ubicación
-                  </h2>
-                  <WithUnitField
-                    className="h-14 w-full"
-                    unit={<MapPinIcon className="w-6" />}
-                  >
-                    <Controller
-                      control={control}
-                      name="location"
-                      defaultValue=""
-                      render={({ field: { onChange } }) => (
-                        <LocationAutocompleteField
-                          className="w-full px-2 text-xl outline-none"
-                          inputProps={{
-                            className: 'text-xl outline-none',
-                          }}
-                          onChange={onChange}
-                        />
-                      )}
-                    />
-                  </WithUnitField>
-                  <Map
-                    center={formatWKTAsCoordinates(watch('location'))}
-                    className="my-2 h-48 w-full rounded-full"
-                  />
-                  <p className="text-sm text-gray">
-                    Sólo utilizaremos tu ubicación para mostrarte productos
-                    cerca de tí y para ubicar tus productos en venta. No
-                    venderemos tus datos a terceros.
-                  </p>
-                </div>
-              )}
-              {!user.phone && (
-                <div className="mt-8">
-                  <h2 className="mb-2 text-2xl font-semibold">
-                    Añade tu teléfono
-                  </h2>
-                  <WithUnitField
-                    className="h-14"
-                    unit={<PhoneIcon className="w-6" />}
-                  >
-                    <Controller
-                      name="phone"
-                      control={control}
-                      defaultValue=""
-                      render={({ field: { onChange, value } }) => (
-                        <PhoneInput
-                          inputClass="h-full text-2xl"
-                          placeholder="666 123 456"
-                          country="es"
-                          countryCodeEditable={false}
-                          disableDropdown={true}
-                          value={value}
-                          onChange={onChange}
-                        />
-                      )}
-                    />
-                  </WithUnitField>
-                  <p className="text-sm text-gray">
-                    Sólo utilizaremos tu número para enviarte notificaciones
-                    importantes mediante SMS si nos autorizas.
-                  </p>
-                </div>
-              )}
+              <AvatarFormField setValue={setValue} user={user} />
+              <div className="mt-8 flex">
+                <InputField
+                  type="text"
+                  label="Nombre"
+                  inputProps={{
+                    placeholder: 'Chiquito',
+                    autoComplete: 'given-name',
+                  }}
+                  error={formState.errors['first_name']}
+                  registration={register('first_name')}
+                  className="w-1/2 pr-4"
+                />
+                <InputField
+                  type="text"
+                  label="Apellidos"
+                  inputProps={{
+                    placeholder: 'De la Calzada',
+                    autoComplete: 'family-name',
+                  }}
+                  error={formState.errors['last_name']}
+                  registration={register('last_name')}
+                  className="w-1/2"
+                />
+              </div>
+              <div className="mt-8">
+                <LocationFormField control={control} watch={watch} />
+                <p className="text-sm text-gray">
+                  Sólo utilizaremos tu ubicación para mostrarte productos cerca
+                  de tí y para ubicar tus productos en venta. No venderemos tus
+                  datos a terceros.
+                </p>
+                d
+              </div>
+              <div className="mt-8">
+                <PhoneFormField control={control} defaultValue={user.phone} />
+                <p className="text-sm text-gray">
+                  Sólo utilizaremos tu número para enviarte notificaciones
+                  importantes mediante SMS si nos autorizas.
+                </p>
+              </div>
             </div>
             <Button disabled={isSubmitting} type="submit" className="w-full">
               GUARDAR
@@ -129,35 +108,3 @@ export const UpdateProfileForm = ({ className }: UpdateProfileFormProps) => {
     </Form>
   );
 };
-
-// const values = {...register('phone')}
-// values.
-// return (
-//   <div className={clsx('space-y-8', className)}>
-//     <WithUnitField
-//       unit={<PhoneIcon className="w-6" />}
-//       className="h-12 w-min"
-//       error={formState.errors['phone']}
-//     >
-// <Controller
-//   name="phone"
-//   control={control}
-//   defaultValue=""
-//   render={({ field: { onChange, value } }) => (
-//     <PhoneInput
-//       inputClass="h-full text-2xl"
-//       placeholder="666 123 456"
-//       country="es"
-//       countryCodeEditable={false}
-//       disableDropdown={true}
-//       value={value}
-//       onChange={onChange}
-//     />
-//   )}
-// />
-//     </WithUnitField>
-//     <Button disabled={isSubmitting} type="submit" className="w-full">
-//       GUARDAR
-//     </Button>
-//   </div>
-// );

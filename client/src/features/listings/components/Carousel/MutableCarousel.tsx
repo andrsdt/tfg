@@ -36,21 +36,23 @@ export const MutableCarousel = ({
     return <CarouselWaitingForUpload className={clsx(className)} />;
 
   return (
-    <div className={styles.embla}>
-      <div className={styles.embla__viewport} ref={emblaRef}>
-        <div className={styles.embla__container}>
+    <div className={styles['embla']}>
+      <div className={styles['embla__viewport']} ref={emblaRef}>
+        <div className={styles['embla__container']}>
           {slides.map((slide, idx) => (
             <div
-              className={clsx('relative', styles.embla__slide)}
+              className={clsx('relative', styles['embla__slide'])}
               key={transformedSlides[idx]}
             >
               {handleDelete && (
                 <DeleteButton element={slide} handleDelete={handleDelete} />
               )}
-              <img
-                className={styles.embla__slide__img}
-                src={transform(slide)}
-                alt="Imagen"
+              <Image
+                className={styles['embla__slide__img']}
+                src={transformedSlides[idx]}
+                alt="Imagen del producto"
+                width={150}
+                height={100}
               />
             </div>
           ))}

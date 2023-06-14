@@ -1,4 +1,5 @@
 from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.measure import Distance as DistanceRadius
 from django.db.models import F, Q
 from django_filters import rest_framework
@@ -51,16 +52,16 @@ class ListingFilterSet(rest_framework.FilterSet):
         choices=DISTANCE_CHOICES, method="filter_by_distance"
     )
 
-    distance_order = rest_framework.CharFilter(method="order_by_distance")
+    location = rest_framework.CharFilter(method="filter_by_location")
 
     favorite = rest_framework.BooleanFilter(method="filter_by_favorite")
 
     order_by = rest_framework.OrderingFilter(
         fields=(
-            ("price_per_unit", "price"),
-            ("available_quantity", "quantity"),
             ("created_at", "created_at"),
             ("updated_at", "updated_at"),
+            ("available_quantity", "quantity"),
+            ("price_per_unit", "price"),
         )
     )
 
@@ -107,18 +108,43 @@ class ListingFilterSet(rest_framework.FilterSet):
 
         return queryset.filter(pk__in=user.favorites.values_list("id", flat=True))
 
+    def filter_by_location(self, queryset, _, value):
+        # NOTE: this method is only a proxy to call filter_by_distance
+        #       because we need to pass the location to that method and
+        #       by defining this as a filter it will appear in the OpenAPI
+        #       documentation easier than doing @extend_schema in the views.py
+        distance = self.request.query_params.get("distance", 10000)
+        return self.filter_by_distance(queryset, _, distance)
+
     def filter_by_distance(self, queryset, _, value):
         user = self.request.user
-        if not value or user.is_anonymous or user.location is None:
+        device_location_wkt = self.request.query_params.get("location", None)
+        device_location = (
+            GEOSGeometry(device_location_wkt) if device_location_wkt else None
+        )
+        user_location = user.location if user.is_authenticated else None
+        location = device_location or user_location
+
+        if not value or not location:
             return queryset.none()
 
-        # Filter by those in a radius of "value" meters
-        return queryset.filter(
+        # If the user shares their device's location, use that instead of
+        # their profile's location, which they may not have set or may not
+        # reflect where they are right now.
+
+        # Filter by those in a radius of "value" meters and return in order of ascending distance
+        filtered_by_distance = queryset.filter(
             producer__user__location__distance_lte=(
-                user.location,  # POINT(X Y)
+                location,  # POINT(X Y)
                 DistanceRadius(m=int(value)),
             )
         )
+
+        ordered_by_distance = filtered_by_distance.annotate(
+            distance=Distance(F("producer__user__location"), location)
+        )
+
+        return ordered_by_distance.order_by("distance")
 
     def filter_exclude_mine(self, queryset, _, value):
         user = self.request.user
@@ -127,12 +153,17 @@ class ListingFilterSet(rest_framework.FilterSet):
 
         return queryset.exclude(producer__user=user)
 
-    def order_by_distance(self, queryset, _, value):
-        user = self.request.user
-        if value not in ["asc", "desc"] or user.is_anonymous or not user.location:
-            return queryset
+    # def order_by_distance(self, queryset, _, value):
+    #     user = self.request.user
+    #     device_location_wkt = self.request.query_params.get("location")
+    #     device_location = GEOSGeometry(device_location_wkt)
+    #     user_location = user.location if user.is_authenticated else None
+    #     location = device_location or user_location
 
-        queryset = queryset.annotate(
-            distance=Distance(F("producer__user__location"), user.location)
-        )
-        return queryset.order_by("distance" if value == "asc" else "-distance")
+    #     if value not in ["asc", "desc"] or not location:
+    #         return queryset
+
+    #     queryset = queryset.annotate(
+    #         distance=Distance(F("producer__user__location"), location)
+    #     )
+    #     return queryset.order_by("distance" if value == "asc" else "-distance")

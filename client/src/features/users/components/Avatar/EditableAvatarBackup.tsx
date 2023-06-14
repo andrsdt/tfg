@@ -13,7 +13,7 @@ type EditableAvatarProps = {
   user: Components.Schemas.CustomUserDetails;
 };
 
-const notify = () => {
+const notify = async () => {
   emitSuccess({
     title: 'Perfil actualizado',
     message: 'Se ha actualizado tu foto de perfil correctamente',

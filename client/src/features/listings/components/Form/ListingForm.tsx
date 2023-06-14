@@ -71,7 +71,7 @@ export const ListingForm = ({
                 inputProps={{
                   placeholder: 'Introduce una descripción',
                 }}
-                inputClassName="text-lg leading-5"
+                inputClassName="text-lg leading-6"
                 registration={register('description')}
                 error={formState.errors['description']}
               />

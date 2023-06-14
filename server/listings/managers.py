@@ -1,7 +1,7 @@
-from django.db import models
+from grocerin.managers import SoftDeleteManager
 
 
-class ListingManager(models.Manager):
+class ListingManager(SoftDeleteManager):
     def active(self):
         return self.filter(is_active=True)
 

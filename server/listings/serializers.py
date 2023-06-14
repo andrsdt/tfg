@@ -1,6 +1,6 @@
 from drf_extra_fields.fields import Base64ImageField
 from grocerin.validators import InadequateLanguageValidator
-from listings.business_logic import create_listing, delete_listing, update_listing
+from listings.business_logic import create_listing, update_listing
 from listings.enums import PRODUCT_UNIT_CHOICES
 from listings.models import Listing, ListingImage, ProductAllergen, ProductFeature
 from producers.serializers import BasicProducerSerializer
@@ -131,6 +131,3 @@ class ListingCreateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         return update_listing(validated_data, instance=instance)
-
-    def delete(self, instance):
-        delete_listing(instance)

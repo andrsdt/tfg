@@ -30,7 +30,7 @@ export const MessageBubble = ({
         {!isMine && <Avatar src={otherUser?.photo} className="h-8 w-8" />}
         <div
           className={clsx(
-            'hyphen flex max-w-xs flex-row items-center justify-between break-all rounded-2xl px-3 py-2',
+            'flex max-w-xs flex-row items-center justify-between break-all rounded-2xl px-3 py-2',
             isMine
               ? 'rounded-br-none bg-light-green'
               : 'rounded-bl-none bg-light-gray'
@@ -43,7 +43,6 @@ export const MessageBubble = ({
             readMoreThreshold={175}
           />
           {message.created_at && (
-            // TODO: use <date/> instead of <p/>
             <p className="ml-2 flex-none place-self-end pb-0.5 text-xs text-gray">
               {dayjs(message.created_at).format('HH:mm')}
             </p>

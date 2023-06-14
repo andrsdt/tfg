@@ -9,7 +9,7 @@
     "test:jest": "jest --watch",
     "type-check": "tsc",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix --max-warnings=-1",
+    "lint-fix": "eslint . --fix",
     "format": "npx prettier --write .",
     "prepare": "cd .. && husky install client/.husky",
     "generate-types": "npx openapi-client-axios-typegen http://grocerin.test/api/v1/schema > src/types/openapi.d.ts"

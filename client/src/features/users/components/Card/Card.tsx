@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { BasicUser } from '../../types/users';
 import { Avatar } from '../Avatar';
+import { Rating } from './Rating';
 
 type UserCardProps = {
   user: BasicUser;
@@ -20,13 +21,7 @@ export const UserCard = ({ user, className = '' }: UserCardProps) => (
         <h3 className="text-lg font-semibold">
           {user.first_name} {user.last_name}
         </h3>
-        <p>
-          {user.average_rating
-            ? `⭐ ${user.average_rating.toFixed(1)} · ${
-                user.number_ratings
-              } valoraciones`
-            : 'No hay valoraciones'}
-        </p>
+        <Rating user={user} />
       </div>
     </Link>
   </button>

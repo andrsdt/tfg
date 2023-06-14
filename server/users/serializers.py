@@ -28,6 +28,9 @@ class UpdateCustomUserSerializer(serializers.ModelSerializer):
             "location",
         ]
 
+        # TODO: check if this is needed or not (try sending a petition changing created_at)
+        # read_only_fields = ["email", "created_at", "is_staff"]
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

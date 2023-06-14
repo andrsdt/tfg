@@ -9,6 +9,7 @@ const NEXT_ROUTES = {
   FAVORITES: '/favorites',
   NOTIFICATIONS: '/notifications',
   MY_PROFILE: '/my-profile',
+  EDIT_PROFILE: '/my-profile/edit',
   MY_LISTINGS: '/my-listings',
   MY_PURCHASES: '/my-purchases',
   MY_SALES: '/my-sales',

@@ -20,7 +20,7 @@ export const WithUnitField = ({
     <FieldWrapper className="group mb-0" error={error}>
       <div
         className={clsx(
-          'flex w-min items-center rounded-md outline outline-1',
+          'flex items-center rounded-md outline outline-1',
           error
             ? 'text-red outline-light-red group-focus-within:outline-light-red'
             : 'text-gray outline-light-gray group-focus-within:outline-green',

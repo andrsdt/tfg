@@ -17,6 +17,7 @@ import { BasicUser } from '@/features/users/types/users';
 import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
+import { formatPricePerUnit, formatQuantityWithUnit } from '@/utils/formatters';
 import { emitSuccess } from '@/utils/toasts';
 import Image from 'next/image';
 import router from 'next/router';
@@ -159,18 +160,17 @@ const MarkListingAsSoldForm = ({
           <div className="flex h-full flex-col justify-between">
             <span className="mt-4 flex w-full justify-between divide-x divide-light-gray rounded-lg p-3 outline outline-1 outline-light-gray">
               <div className="pr-4">
-                <h1 className="mb-1 text-xl font-bold">{listing.title}</h1>
+                <h1 className="mb-2 text-xl font-bold">{listing.title}</h1>
                 <Image
                   src={listing.images[0].image}
                   alt="Imagen del producto"
                   width={250}
                   height={150}
-                  className="aspect-[5/3] rounded-lg object-cover"
+                  className="aspect-[5/4] rounded-lg object-cover"
                 />
               </div>
               <div className="pl-4 text-end">
                 <p className="mb-1 text-xl font-bold">Cantidad</p>
-                {/* TODO: use the new formatter formatQuantityWithUnit() */}
                 <WithUnitField
                   unit={
                     hasOneQuantity
@@ -190,7 +190,14 @@ const MarkListingAsSoldForm = ({
                     {...register('quantity', { valueAsNumber: true })}
                   />
                 </WithUnitField>
-                <p className="mb-1 text-xl font-bold">Precio total</p>
+                <p className="-mt-2 text-gray">
+                  {formatQuantityWithUnit(
+                    listing.available_quantity,
+                    listing.unit
+                  )}{' '}
+                  en venta
+                </p>
+                <p className="mb-1 mt-4 text-xl font-bold">Precio total</p>
                 <WithUnitField
                   unit="€"
                   className="h-12"
@@ -208,6 +215,9 @@ const MarkListingAsSoldForm = ({
                     {...register('total_price')}
                   />
                 </WithUnitField>
+                <p className="-mt-2 text-gray">
+                  {formatPricePerUnit(listing.price_per_unit, listing.unit)}
+                </p>
               </div>
             </span>
             <Button type="submit" disabled={isSubmitting} className="mt-4">

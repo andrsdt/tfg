@@ -5,7 +5,6 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
 
@@ -181,7 +180,7 @@ CSRF_TRUSTED_ORIGINS = [
 ALLOWED_HOSTS = ["*"]
 
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "es-es"
 
 TIME_ZONE = "UTC"
 
@@ -206,9 +205,7 @@ GDAL_LIBRARY_PATH = config("GDAL_LIBRARY_PATH", default=None)
 GEOS_LIBRARY_PATH = config("GEOS_LIBRARY_PATH", default=None)
 
 # Channels
-
 ASGI_APPLICATION = "chats.routing.application"  # routing.py will handle the ASGI
-
 # TODO: Change this to redis in production
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 

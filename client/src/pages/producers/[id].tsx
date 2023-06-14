@@ -8,6 +8,7 @@ import { Listing } from '@/features/listings/types/listings';
 import { retrieveProducer } from '@/features/producers/api/retrieve';
 import { Producer } from '@/features/producers/types/producers';
 import { Avatar } from '@/features/users/components/Avatar';
+import { Rating } from '@/features/users/components/Card/Rating';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useToggle } from '@/hooks/useToggle';
 import { transformLocationToCoordinates } from '@/utils/formatters';
@@ -72,6 +73,7 @@ const PublicProfile = ({ pageProps }: ProfileProps) => {
 
 export default PublicProfile;
 
+// TODO: extract to components
 type CollapsibleTextProps = {
   text: string;
   className?: string;
@@ -96,10 +98,11 @@ export const CollapsibleText = ({
       )}
     >
       <p
+        lang="es"
         className={clsx(
           // TODO: break-all after line-clamp?
           isCollapsed && collapsedClassName,
-          'text-md peer overflow-hidden leading-5'
+          'text-md peer overflow-hidden hyphens-auto leading-5'
         )}
       >
         {text}
@@ -127,13 +130,7 @@ const ProducerProfileHeader = ({ producer }: ProducerProfileHeaderProps) => {
         <h1 className="text-3xl font-bold leading-7">
           {user.first_name} {user.last_name}
         </h1>
-        <h2 className="text-lg">
-          {user.average_rating
-            ? `⭐ ${user.average_rating.toFixed(1)} · ${
-                user.number_ratings
-              } valoraciones`
-            : 'No hay valoraciones'}
-        </h2>
+        <Rating user={user} />
         <HollowButton
           className="mt-3 font-semibold"
           onClick={() => router.push(NEXT_ROUTES.PRODUCER_REVIEWS(user.id))}

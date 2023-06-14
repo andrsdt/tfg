@@ -1,13 +1,11 @@
 import { BackButton } from '@/components/Elements';
 import { BaseLayout } from '@/components/Layouts';
-import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import { retrieveListing } from '@/features/listings/api/retrieve';
 import { Listing } from '@/features/listings/types/listings';
 import { sendReport } from '@/features/reports/api/create';
 import { ReportForm } from '@/features/reports/components/Form';
 import { createReportSchema } from '@/features/reports/schemas/create';
-import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
 import { emitSuccess } from '@/utils/toasts';
@@ -38,8 +36,6 @@ type ReportListingProps = {
 
 const ReportListing = ({ pageProps }: ReportListingProps) => {
   const { id } = pageProps;
-  useAuth({ roles: [ROLES.PRODUCER] });
-  // TODO: auth check for producer who owns listing
   const [listing] = useRetrieveHandler<Listing, Listing>(() =>
     retrieveListing(id)
   );

@@ -10,7 +10,6 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
-        read_only_fields = ["id", "created_at", "updated_at"]
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
@@ -22,7 +21,6 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
-        read_only_fields = ["id", "created_at", "updated_at"]
 
     def validate_order(self, order):
         if order.is_reviewed:

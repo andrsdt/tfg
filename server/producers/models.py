@@ -7,10 +7,11 @@ class Producer(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True
     )
+    # TODO: allow producers to edit their biography
     biography = models.TextField(blank=True, max_length=3000)
 
-    # TODO:O impelemnt these with a ForeingnKey in their models, same as listings
-    # orders = models.ManyToManyField(Order, related_name="producers")
-    # reviews = models.ManyToManyField(Review, related_name="producers")
-
     objects = ProducerManager()
+
+    def __str__(self):
+        # Pedro Cavaco (pedro@mail.com)
+        return f"{self.user.first_name} {self.user.last_name} ({self.user.email})"

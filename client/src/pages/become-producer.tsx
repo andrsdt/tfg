@@ -8,7 +8,7 @@ import { emitSuccess } from '@/utils/toasts';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-const notifyAndMutate = (mutateUser: () => void) => {
+const notifyAndMutate = (mutateUser: () => any) => {
   emitSuccess({
     title: 'Ya eres productor',
     message: '¡Genial! Ya eres productor',
@@ -19,7 +19,7 @@ const notifyAndMutate = (mutateUser: () => void) => {
 const BecomeProducer = () => {
   const { mutateUser } = useAuth({ roles: [ROLES.NOT_PRODUCER] });
   const [handleBecomeProducer] = useSubmissionHandler(becomeProducer, {
-    onSuccess: () => notifyAndMutate(mutateUser),
+    onSuccess: async () => notifyAndMutate(mutateUser),
   });
   return (
     <BaseLayout className="p-4">

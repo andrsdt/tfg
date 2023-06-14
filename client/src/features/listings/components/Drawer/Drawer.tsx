@@ -14,8 +14,8 @@ type ListingDetailsDrawerProps = {
   listing: Listing;
 };
 
-const redirectToConversation = (conversation: Conversation) =>
-  router.push(NEXT_ROUTES.CHAT(conversation.id));
+const redirectToConversation = async (conversation: Conversation) =>
+  await router.push(NEXT_ROUTES.CHAT(conversation.id));
 
 export const ListingDetailsDrawer = ({
   listing,

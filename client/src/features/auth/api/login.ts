@@ -1,5 +1,4 @@
 import { getApiClient } from '@/lib/api';
-
 import { Components, Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 

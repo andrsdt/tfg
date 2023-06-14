@@ -50,6 +50,7 @@ export const useRetrieveHandler = <O, T>(
         throw error;
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [onError, retrieveFn, transform]
   );
 

@@ -34,15 +34,23 @@ const responseInterceptor = (response: AxiosResponse) => {
 };
 
 const errorInterceptor = (error: AxiosError) => {
+  // Don't show toasts of these errors
   const IGNORED_ERRORS = ['not_authenticated'];
-  const response = error.response?.data as APIError;
+  // Show toasts of these errors, but without the
+  // related attr at the beginning of the message
+  const IGNORED_ATTRS = ['non_field_errors'];
 
-  response.errors?.forEach((err) => {
+  const response = error.response?.data as APIError;
+  const errors = response.errors?.filter(
+    (err) => !IGNORED_ERRORS.includes(err.code)
+  );
+
+  errors?.forEach((err) => {
     const title = `${err.code}`;
-    const message = err.attr ? `${err.attr}: ${err.detail}` : err.detail;
-    if (IGNORED_ERRORS.includes(err.code)) {
-      return Promise.reject(error);
-    } else if (message) emitError({ title, message });
+    const message = IGNORED_ATTRS.includes(err.attr)
+      ? err.detail
+      : `${err.attr}: ${err.detail}`;
+    if (message) emitError({ title, message });
   });
   return Promise.reject(error);
 };

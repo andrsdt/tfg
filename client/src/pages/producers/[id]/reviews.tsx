@@ -1,11 +1,9 @@
 import { BackButton, Separator } from '@/components/Elements';
 import { BaseLayout } from '@/components/Layouts';
-import { ROLES } from '@/constants/roles';
 import NEXT_ROUTES from '@/constants/routes';
 import { listReviews } from '@/features/reviews/api/list';
 import { ReviewCard } from '@/features/reviews/components/Card';
 import { Review } from '@/features/reviews/types/reviews';
-import { useAuth } from '@/hooks/useAuth';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { groupBy } from '@/utils/transformations';
 import { uuid } from '@/utils/uuid';
@@ -27,7 +25,6 @@ type ProducerReviewsProps = {
 
 const ProducerReviews = ({ pageProps }: ProducerReviewsProps) => {
   const { id } = pageProps;
-  useAuth({ roles: [ROLES.PRODUCER] });
   const [reviews] = useRetrieveHandler<Review[], Review[]>(
     () => listReviews(id),
     {

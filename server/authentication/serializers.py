@@ -84,23 +84,17 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
             "email",  # read only
             "first_name",
             "last_name",
-            "is_producer",  # read only
-            "has_completed_onboarding",  # read only
+            "is_producer",
+            "has_completed_onboarding",
             "photo",
             "phone",
             "location",
-            "created_at",  # read only
-            "average_rating",  # TODO: read only? it's @property
-            "number_ratings",  # # TODO: read only? it's @property
-        ]
-        read_only_fields = [
-            "pk",
-            "email",
-            "is_producer",
             "created_at",
-            "has_completed_onboarding",
+            "average_rating",
+            "number_ratings",
         ]
         model = User
+        read_only_fields = ["email"]
 
     def update(self, instance, validated_data):
         updated_user = super().update(instance, validated_data)

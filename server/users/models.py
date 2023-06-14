@@ -11,19 +11,22 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
-    email = models.EmailField(_("email address"), blank=True, unique=True)
-    first_name = models.CharField(_("first name"), max_length=150, blank=True)
-    last_name = models.CharField(_("last name"), max_length=150, blank=True)
+    email = models.EmailField(_("email address"), unique=True)
+    first_name = models.CharField(_("first name"), max_length=150)
+    last_name = models.CharField(_("last name"), max_length=150)
     photo = models.ImageField(_("photo"), upload_to="users/", blank=True, null=True)
     location = models.PointField(_("location"), geography=True, null=True)
     phone = models.CharField(_("phone"), max_length=20, blank=True, null=True)
     favorites = models.ManyToManyField("listings.Listing", related_name="liked_by")
 
+    # TODO: editable=False? Can a user make himself an admin?
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
         help_text=_("Designates whether the user can log into this admin site."),
     )
+
+    # TODO: editable=False? Can a user unban himself?
     is_active = models.BooleanField(
         _("active"),
         default=True,
@@ -34,6 +37,10 @@ class User(AbstractBaseUser, PermissionsMixin, TimestampsMixin):
     )
 
     objects = UserManager()
+
+    class Meta:
+        verbose_name = _("user")
+        verbose_name_plural = _("users")
 
     def get_full_name(self):
         """

@@ -30,7 +30,6 @@ http {
     server localhost:3000;
   }
   
-
   server {
     listen 80;
     server_name grocerin.test 127.0.0.1;
@@ -41,8 +40,12 @@ http {
     location @handle_client_error {
     return 200 '{"type":"client_error","errors":[{"code":"$error_code","detail":"$error_message","attr":null}]}';
   }
+    
+    location /static/ {
+      alias C:/static/;
+    }
 
-    location ~ ^/(api|media) {
+    location ~ ^/(api|media|admin) {
       # Optimization: use caching for API responses
       # proxy_cache my_cache;
       # proxy_cache_methods GET HEAD;

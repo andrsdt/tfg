@@ -26,7 +26,6 @@ export const GenericUserNotificationCard = ({
       <div className="flex flex-col justify-between py-1">
         {/* TODO: break-all after line-clamp? */}
         <p className="line-clamp-2 text-lg leading-5">{children}</p>
-        {/* TODO: use <date/> instead of <p/> */}
         <p className="text-sm text-gray">
           {capitalize(dayjs(notification.updated_at).fromNow())}
         </p>

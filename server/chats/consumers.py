@@ -23,7 +23,11 @@ class TextRoomConsumer(WebsocketConsumer):
         )
 
         user = self.scope["user"]
-        conversation = Conversation.objects.get(id=int(self.room_name))
+        try:
+            conversation = Conversation.objects.get(id=int(self.room_name))
+        except Conversation.DoesNotExist:
+            self.close()
+
         user_belongs_to_conversation = (
             user == conversation.consumer or user == conversation.producer
         )

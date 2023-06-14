@@ -22,9 +22,7 @@ export const SignupForm = ({ className }: SignupFormProps) => {
   const { signup } = useAuth();
   const router = useRouter();
   const [handleSignup, isSubmitting] = useSubmissionHandler(signup, {
-    onSuccess: async () => {
-      router.push(NEXT_ROUTES.COMPLETE_ONBOARDING);
-    },
+    onSuccess: async () => await router.push(NEXT_ROUTES.COMPLETE_ONBOARDING),
   });
 
   return (

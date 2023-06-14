@@ -29,6 +29,7 @@ export const formatShortDate = (date: string) => dayjs(date).format('D MMM');
 export const formatPricePerUnit = (price: number, unit: keyof typeof UNITS) =>
   `${formatMoney(price)}/${UNITS[unit].translationShort}`;
 
+// (5, "UNIT") => 5 uds
 export const formatQuantityWithUnit = (
   quantity: number,
   unit: keyof typeof UNITS
@@ -50,6 +51,7 @@ export const formatSpanishPhoneNumber = (phone: string | number) => {
 // WKT is the Well-Known Text format for representing vector geometry objects
 // it's the one used by PostGIS so we have to send it in this format
 export const formatCoordinatesAsWKT = (coordinates: Coordinates) => {
+  if (!coordinates) return undefined;
   return `POINT (${coordinates.lng} ${coordinates.lat})`;
 };
 
@@ -57,7 +59,7 @@ export const formatCoordinatesAsWKT = (coordinates: Coordinates) => {
 export const formatWKTAsCoordinates = (
   wkt: string | undefined
 ): Coordinates | undefined => {
-  const coordinatesStr = wkt?.match(/POINT \((.*) (.*)\)/);
+  const coordinatesStr = RegExp(/POINT \((.*) (.*)\)/).exec(wkt);
   if (!coordinatesStr) return undefined;
 
   const [lat, lng] = coordinatesStr.slice(1).reverse();
@@ -66,7 +68,7 @@ export const formatWKTAsCoordinates = (
 
 // Given a a location from the API, transform the location to {lat, lng}
 export const transformLocationToCoordinates = (
-  location: Point | undefined
+  location: Partial<Point> | undefined
 ): Coordinates | undefined => {
   if (!location?.coordinates) return undefined;
   // Coords are stored as [lng, lat] in the DB because of the WKT standard. We flip them here again

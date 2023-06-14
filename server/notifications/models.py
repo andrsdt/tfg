@@ -15,3 +15,6 @@ class Notification(TimestampsMixin):
     is_read = models.BooleanField(default=False)
 
     objects = NotificationManager()
+
+    def __str__(self):
+        return f"{self.notification_type} - {self.receiver} - {self.created_at}"

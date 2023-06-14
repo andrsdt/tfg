@@ -3,8 +3,17 @@ import { getApiClient } from '@/lib/api';
 import { Components, Paths } from '@/types/openapi';
 import { OperationResponse } from 'openapi-client-axios';
 
+export type UpdateProfileValues = {
+  first_name: string;
+  last_name: string;
+  photo: string;
+  phone: string;
+  location: string;
+};
+
 export type UpdateProfileDTO =
   Components.Schemas.PatchedCustomUserDetailsRequest;
+
 export const updateProfile = async (
   data: UpdateProfileDTO
 ): Promise<OperationResponse<Paths.AuthUserPartialUpdate.Responses.$200>> => {

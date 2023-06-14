@@ -120,9 +120,8 @@ const Listing = ({ pageProps }: ListingProps) => {
           <p lang="es" className="mt-2 hyphens-auto text-lg">
             {listing.description}
           </p>
-          {/* TODO: use <date/> instead of <p/> */}
           <p className="mt-5 text-gray">
-            {capitalize(dayjs(listing.updated_at).fromNow())}
+            {capitalize(dayjs(listing.created_at).fromNow())}
           </p>
           <Separator />
           <FeatureList

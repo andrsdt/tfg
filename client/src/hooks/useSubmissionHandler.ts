@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export const useSubmissionHandler = (
   submitFn: (...args: any[]) => Promise<any>,
-  { onSuccess }: { onSuccess?: (...args: any[]) => Promise<void> } = {}
+  { onSuccess }: { onSuccess?: (...args: any[]) => any } = {}
 ) => {
   const [response, setResponse] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

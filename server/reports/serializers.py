@@ -7,7 +7,6 @@ class ReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = "__all__"
-        read_only_fields = ["id", "created_at", "updated_at"]
 
 
 class ReportCreateSerializer(serializers.ModelSerializer):
@@ -19,7 +18,7 @@ class ReportCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
         fields = "__all__"
-        read_only_fields = ["is_resolved", "reporter", "id", "created_at", "updated_at"]
+        read_only_fields = ["is_resolved"]
 
     def validate_order(self, order):
         if order.consumer != self.context["request"].user:

@@ -48,14 +48,15 @@ export const LocationAutocompleteField = ({
       }}
     >
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div className={clsx('relative', className)}>
+        <div className={clsx('relative w-full', className)}>
           <input
             {...getInputProps({
-              placeholder: 'Selecciona tu ubicación...',
               ...inputProps,
+              placeholder: 'Selecciona tu ubicación...',
+              className: 'w-full h-full text-xl outline-none',
             })}
           />
-          <div className="absolute top-12 z-10 rounded-3xl bg-white">
+          <div className="absolute top-12 z-10 w-full rounded-3xl bg-white">
             {loading && <div>Loading...</div>}
             {suggestions.map((suggestion) => (
               <div

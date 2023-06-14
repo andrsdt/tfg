@@ -1,5 +1,5 @@
 from django.db import models
-from grocerin.mixins import TimestampsMixin
+from grocerin.mixins import SoftDeleteMixin, TimestampsMixin
 from listings.enums import (
     PRODUCT_ALLERGEN_CHOICES,
     PRODUCT_FEATURE_CHOICES,
@@ -12,18 +12,15 @@ def listing_images_directory_path(instance, filename):
     return f"listings/{instance.listing.id}/images/{filename}"
 
 
-class Listing(TimestampsMixin):
+class Listing(TimestampsMixin, SoftDeleteMixin):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, max_length=2000)
     unit = models.CharField(max_length=10, choices=PRODUCT_UNIT_CHOICES)  # kg, unitary
     price_per_unit = models.PositiveIntegerField()
     g_per_unit = models.PositiveIntegerField(null=True)
-    # TODO: check if this ensures that at least there is 1 unit/kg available
     available_quantity = models.PositiveIntegerField()  # 10kg, 10units
     producer = models.ForeignKey("producers.Producer", on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
-    # location. TODO: set on product or on user?
-    # category = models.CharField(choices=CATEGORY_CHOICES)
 
     objects = ListingManager()
 

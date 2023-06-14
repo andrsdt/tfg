@@ -1,5 +1,5 @@
 import { LayoutWithNavbar } from '@/components/Layouts';
-import { listNearbyListings } from '@/features/listings/api/listNearby';
+import { useListNearbyListings } from '@/features/listings/api/listNearby';
 import { listRecentListings } from '@/features/listings/api/listRecent';
 import { ListingHorizontalCarousel } from '@/features/listings/components/Carousel';
 import { ListingTwoColumnsList } from '@/features/listings/components/Lists/ListingsTwoColumnsList';
@@ -12,9 +12,7 @@ const Home = () => {
   const [recentListings] = useRetrieveHandler<Listing[], Listing[]>(
     listRecentListings
   );
-  const [nearbyListings] = useRetrieveHandler<Listing[], Listing[]>(
-    listNearbyListings
-  );
+  const { nearbyListings } = useListNearbyListings();
 
   return (
     <LayoutWithNavbar className="p-6">
