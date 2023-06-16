@@ -3,8 +3,9 @@ import { Form, InputField, PasswordField } from '@/components/Form';
 import NEXT_ROUTES from '@/constants/routes';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
+import { emitSuccess } from '@/utils/toasts';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import { createSignupSchema } from '../schemas/createSignup';
 
 type SignupValues = {
@@ -18,11 +19,18 @@ type SignupFormProps = {
   className?: string;
 };
 
+const redirectAndNotify = async () => {
+  await router.push(NEXT_ROUTES.LOGIN);
+  emitSuccess({
+    message:
+      '¡Ya estás registrado! Te hemos enviado un correo electrónico para verificar tu cuenta.',
+  });
+};
+
 export const SignupForm = ({ className }: SignupFormProps) => {
   const { signup } = useAuth();
-  const router = useRouter();
   const [handleSignup, isSubmitting] = useSubmissionHandler(signup, {
-    onSuccess: async () => await router.push(NEXT_ROUTES.COMPLETE_ONBOARDING),
+    onSuccess: redirectAndNotify,
   });
 
   return (

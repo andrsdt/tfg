@@ -1,4 +1,3 @@
-import { API_URL } from '@/config';
 import { APIError } from '@/types/errors';
 import { Client } from '@/types/openapi';
 import { getCookie } from '@/utils/cookies';
@@ -7,10 +6,14 @@ import OpenAPIClientAxios, {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
+  Document,
 } from 'openapi-client-axios';
 
+import schema from 'schema.json';
+
+// TODO: download schema.json again when it changes (/api/v1/schema?format=json)
 export const api = new OpenAPIClientAxios({
-  definition: `${API_URL}/api/v1/schema/`,
+  definition: schema as Document,
 });
 
 // Fetch CSRF token when needed if it doesn't exist in cookies
@@ -47,9 +50,10 @@ const errorInterceptor = (error: AxiosError) => {
 
   errors?.forEach((err) => {
     const title = `${err.code}`;
-    const message = IGNORED_ATTRS.includes(err.attr)
-      ? err.detail
-      : `${err.attr}: ${err.detail}`;
+    const message =
+      IGNORED_ATTRS.includes(err.attr) || !err.attr
+        ? err.detail
+        : `${err.attr}: ${err.detail}`;
     if (message) emitError({ title, message });
   });
   return Promise.reject(error);

@@ -16,6 +16,9 @@ const NEXT_ROUTES = {
   BECOME_PRODUCER: '/become-producer',
   COMPLETE_ONBOARDING: '/complete-onboarding',
   SEARCH_LISTINGS: '/search',
+  GOOGLE_LOGIN: '/api/v1/auth/account/google/login/',
+  FACEBOOK_LOGIN: '/api/v1/auth/account/facebook/login/',
+  TWITTER_LOGIN: '/api/v1/auth/account/twitter_oauth2/login/',
   CHAT: (id: Id) => urlWithParams('/chats/[id]', { id }),
   PRODUCER_PROFILE: (id: Id) => urlWithParams('/producers/[id]', { id }),
   PRODUCER_REVIEWS: (id: Id) =>

@@ -1,13 +1,13 @@
 import { Avatar } from '@/features/users/components/Avatar';
-import { BasicUser, User } from '@/features/users/types/users';
+import { AnyUser } from '@/features/users/types/users';
 import dayjs from '@/lib/dayjs';
 import { capitalize } from '@/utils/formatters';
 import { Notification } from '../../types/notifications';
-import { GenericNotificationCard } from './GenericNotificationCard';
 import { UnreadIndicator } from '../UnreadIndicator';
+import { GenericNotificationCard } from './GenericNotificationCard';
 
 type GenericUserNotificationCardProps = {
-  user?: BasicUser | User;
+  user?: AnyUser;
   href: string;
   notification: Notification;
   children: React.ReactNode;

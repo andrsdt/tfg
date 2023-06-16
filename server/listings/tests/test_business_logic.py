@@ -257,7 +257,7 @@ class TestUpdateListing:
 
 @pytest.mark.django_db
 class TestDeleteListing:
-    # Tests that instance is deleted successfully
+    # Tests that instance is soft-deleted successfully
     def test_delete_instance_success(self, listing):
         # Arrange
         instance = listing
@@ -266,7 +266,7 @@ class TestDeleteListing:
         delete_listing(instance)
 
         # Assert
-        assert not instance.pk
+        assert instance.is_deleted
 
     # Tests that related images are deleted
     def test_delete_related_images(self, listing, mocker):

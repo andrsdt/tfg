@@ -51,6 +51,10 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.instagram",
     "dj_rest_auth.registration",
 ]
 
@@ -67,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "grocerin.urls"
@@ -149,38 +154,113 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVERS": [
         {
-            "url": "http://grocerin.test/api/v1",
+            "url": "http://grocerin.es/api/v1",
             "description": "Local development server",
         },
     ],
     "COMPONENT_SPLIT_REQUEST": True,  # allow file upload
 }
 
+# Email sending config
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_FROM = config("EMAIL_HOST_USER")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
 
 # Dj-rest-auth and all-auth config
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "/"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_VERIFICATION = "optional"
 LOGIN_REDIRECT_URL = "/"
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = "auth"
+
+# Social login config
+SOCIALACCOUNT_ADAPTER = "grocerin.adapters.SocialAccountAdapter"
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 2
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_UNIQUE_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {
+            "client_id": config("GOOGLE_CLIENT_ID"),
+            "secret": config("GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+    "facebook": {
+        "APP": {
+            "client_id": config("FACEBOOK_CLIENT_ID"),
+            "secret": config("FACEBOOK_CLIENT_SECRET"),
+            "key": "",
+        },
+        "METHOD": "oauth2",
+        "SCOPE": ["email", "public_profile"],
+        "AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "FIELDS": [
+            "id",
+            "email",
+            "name",
+            "first_name",
+            "last_name",
+        ],
+        "EXCHANGE_TOKEN": True,
+        "LOCALE_FUNC": lambda request: "kr_KR",
+        # 'VERIFIED_EMAIL': False,
+        "VERSION": "v2.4",
+    },
+    "instagram": {
+        "APP": {
+            "client_id": config("INSTAGRAM_CLIENT_ID"),
+            "secret": config("INSTAGRAM_CLIENT_SECRET"),
+            "key": "",
+        },
+        "METHOD": "oauth2",
+    },
+    "twitter": {
+        "APP": {
+            "client_id": config("TWITTER_CLIENT_ID"),
+            "secret": config("TWITTER_CLIENT_SECRET"),
+            "key": "",
+        },
+    },
+}
 
 # NOTE: If we don't add this, we get a 403 error when sending petitions
 # once we are logged in. I don't know why this happens, given that we are
 # sending them from the same domain bc we are using nginx
 CSRF_TRUSTED_ORIGINS = [
     "http://*.localhost",
-    "http://grocerin.test",
+    "http://grocerin.es",
 ]
 
 
 ALLOWED_HOSTS = ["*"]
 
 
-LANGUAGE_CODE = "es-es"
+LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 

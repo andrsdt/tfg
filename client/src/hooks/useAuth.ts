@@ -35,7 +35,7 @@ export const useAuth = ({
           response) as Components.Schemas.CustomUserDetails;
       } catch (error) {
         if (error.response.status !== 409) throw error;
-        router.push(NEXT_ROUTES.LOGIN);
+        await router.push(NEXT_ROUTES.LOGIN);
       }
     },
     {
@@ -65,11 +65,13 @@ export const useAuth = ({
   };
 
   const userIsProducer = async () => {
+    if (error) logout();
     const currentUser = user || (await mutate());
     return currentUser?.is_producer;
   };
 
   const userHasCompletedOnboarding = async () => {
+    if (error) logout();
     const currentUser = user || (await mutate());
     return currentUser?.has_completed_onboarding;
   };
@@ -78,6 +80,7 @@ export const useAuth = ({
     const checkRoles = async () => {
       if (roles.includes(ROLES.AUTHENTICATED) && error) {
         logout();
+        return;
       }
       if (roles.includes(ROLES.GUEST) && redirectIfAuthenticated && user) {
         router.replace(redirectIfAuthenticated);
@@ -86,13 +89,13 @@ export const useAuth = ({
         router.replace(NEXT_ROUTES.BECOME_PRODUCER);
       }
       if (roles.includes(ROLES.NOT_PRODUCER) && (await userIsProducer())) {
-        router.back();
+        router.replace(NEXT_ROUTES.HOME);
       }
       if (
         roles.includes(ROLES.HAS_NOT_COMPLETED_ONBOARDING) &&
         (await userHasCompletedOnboarding())
       ) {
-        router.back();
+        router.replace(NEXT_ROUTES.HOME);
       }
     };
     checkRoles();

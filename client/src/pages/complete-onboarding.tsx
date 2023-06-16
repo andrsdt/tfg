@@ -5,7 +5,7 @@ import { CompleteOnboardingForm } from '@/features/users/components/Forms/Comple
 import { useAuth } from '@/hooks/useAuth';
 
 const CompleteOnboarding = () => {
-  useAuth({ roles: [ROLES.HAS_NOT_COMPLETED_ONBOARDING] });
+  useAuth({ roles: [ROLES.AUTHENTICATED, ROLES.HAS_NOT_COMPLETED_ONBOARDING] });
 
   return (
     <BaseLayout className="p-4">

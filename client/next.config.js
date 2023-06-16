@@ -36,7 +36,7 @@ module.exports = withPWA({
     domains: [
       'localhost',
       '127.0.0.1',
-      'grocerin.test',
+      'grocerin.es',
       'media.istockphoto.com',
       'cdn.pixabay.com',
       'www.finedininglovers.com',

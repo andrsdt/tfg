@@ -17,7 +17,9 @@ const notifyAndMutate = (mutateUser: () => any) => {
 };
 
 const BecomeProducer = () => {
-  const { mutateUser } = useAuth({ roles: [ROLES.NOT_PRODUCER] });
+  const { mutateUser } = useAuth({
+    roles: [ROLES.AUTHENTICATED, ROLES.NOT_PRODUCER],
+  });
   const [handleBecomeProducer] = useSubmissionHandler(becomeProducer, {
     onSuccess: async () => notifyAndMutate(mutateUser),
   });
