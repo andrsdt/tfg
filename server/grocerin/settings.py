@@ -5,18 +5,12 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
-
 
 # Application definition
 INSTALLED_APPS = [
-    # Don't put "channels", only "daphne"
-    #
     "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -254,11 +248,10 @@ SOCIALACCOUNT_PROVIDERS = {
 CSRF_TRUSTED_ORIGINS = [
     "http://*.localhost",
     "http://grocerin.es",
+    "https://grocerin.ew.r.appspot.com",
 ]
 
-
-ALLOWED_HOSTS = ["*"]
-
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "grocerin.es", "grocerin.ew.r.appspot.com"]
 
 LANGUAGE_CODE = "en-us"
 
@@ -270,10 +263,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "files")
-STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
-MEDIA_URL = "/media/"
-STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "files")
+STATIC_ROOT = os.path.join(
+    os.path.dirname(BASE_DIR), config("STATIC_ROOT", default="static/")
+)  # Static bucket name
+MEDIA_URL = "media/"
+STATIC_URL = config("STATIC_URL", default="static/")
 
 # https://ubuntu.com/blog/django-behind-a-proxy-fixing-absolute-urls
 # Setup support for proxy headers
@@ -285,9 +280,17 @@ GDAL_LIBRARY_PATH = config("GDAL_LIBRARY_PATH", default=None)
 GEOS_LIBRARY_PATH = config("GEOS_LIBRARY_PATH", default=None)
 
 # Channels
-ASGI_APPLICATION = "chats.routing.application"  # routing.py will handle the ASGI
-# TODO: Change this to redis in production
+ASGI_APPLICATION = "chats.routing.application"
+
+# Use in-memory channel layer for development. Can be changed to Redis in production for better performance
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
+# Use gcloud storage in production (Implemented, uncomment to use)
+# IS_GCLOUD_DEPLOYMENT = config("IS_GCLOUD_DEPLOYMENT", default=False, cast=bool)
+# if IS_GCLOUD_DEPLOYMENT:
+#     STORAGES = {"default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"},
+#             "staticfiles": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}}
+#     GS_BUCKET_NAME = config("USER_FILES_BUCKET_NAME")
 
 # TODO: delete this when we are done with graph exports
 # GRAPH_MODELS = {

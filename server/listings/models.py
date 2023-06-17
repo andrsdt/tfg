@@ -47,7 +47,6 @@ class ListingImage(models.Model):
     listing = models.ForeignKey(
         Listing, on_delete=models.CASCADE, related_name="images"
     )
-    # TODO: delegate to a service to handle image storage in production (S3 or similar)
     image = models.ImageField(upload_to=listing_images_directory_path)
 
     def __str__(self):

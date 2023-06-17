@@ -10,14 +10,10 @@ class Conversation(TimestampsMixin):
     consumer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        # TODO: I commented this below, dunno if it will break something
-        # related_name="convo_starter",
     )
     listing = models.ForeignKey(
         "listings.Listing",
         on_delete=models.CASCADE,
-        # TODO: I commented this below, dunno if it will break something
-        # related_name="convo_listing",
     )
 
     objects = ConversationManager()

@@ -44,8 +44,6 @@ class ConversationCreateSerializer(serializers.ModelSerializer):
     consumer = serializers.HiddenField(default=serializers.CurrentUserDefault())
     listing = serializers.PrimaryKeyRelatedField(
         queryset=Listing.objects.active(),
-        # TODO: is this really required=false?
-        # required=False,
     )
 
     class Meta:
