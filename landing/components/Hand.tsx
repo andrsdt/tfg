@@ -48,8 +48,8 @@ export default function Hand() {
     >
       <Image
         className="w-full"
-        src="/assets/hand_map.png"
-        alt="Hand waving holding a phone with the BugaLink app open"
+        src="/assets/hand-map.png"
+        alt="Hand waving holding a phone with the Grocerin app open"
         width={1000}
         height={1000}
       />

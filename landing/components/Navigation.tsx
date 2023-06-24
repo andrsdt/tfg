@@ -3,8 +3,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Logo from '/public/assets/Logo.svg';
 import Cross from '/public/assets/logos/Cross.svg';
-import Menu from '/public/assets/logos/Menu.svg';
-import DropdownButton from './DropdownButton';
 
 const menuVariants: Variants = {
   closed: { opacity: 0, transition: { duration: 0.3, ease: 'easeInOut' } },
@@ -73,15 +71,6 @@ export default function Navigation() {
           </Link>
         </li>
       </ul>
-      <div className="font-montserrat hidden md:block">
-        <DropdownButton navbarBgColor={navbarBgColor} />
-      </div>
-      <button id="showMenu" className="md:hidden" onClick={() => setOpen(true)}>
-        <Menu
-          className="w-7 h-7"
-          fill={navbarBgColor === 'black' ? 'white' : 'black'}
-        />
-      </button>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -120,9 +109,6 @@ export default function Navigation() {
                 <Link href="/terms" onClick={() => setOpen(false)}>
                   Términos y condiciones
                 </Link>
-              </li>
-              <li className="py-6">
-                <DropdownButton navbarBgColor={navbarBgColor} />
               </li>
             </ul>
           </motion.div>

@@ -13,7 +13,7 @@ export default function Faq() {
             />
             <Question
               title="¿Tengo que registrarme para usar Grocerin?"
-              answer="No te preocupes, puedes explorar la aplicación sin necesidad de registrarte. Sin embargo, si quieres comprar o vender productos y, en definitiva, disfrutar de la experiencia al completo, puedes registrarte en la plataforma."
+              answer="No es necesario, puedes explorar la aplicación sin tener que registrarte. Sin embargo, si quieres comprar o vender productos y, en definitiva, disfrutar de la experiencia al completo, puedes registrarte en la plataforma."
             />
             <Question
               title="¿Cómo puedo convertirme en productor en la plataforma?"
@@ -23,7 +23,7 @@ export default function Faq() {
           <div>
             <Question
               title="¿Grocerin ofrece envío a domicilio?"
-              answer="Sí, Grocerin soporta la búsqueda de productores por ubicación y filtrada por envío a domicilio, por lo que podrás encontrar productores cerca de ti y contactar con ellos para concertar la dirección de entrega."
+              answer="Sí, Grocerin soporta la búsqueda de productores por ubicación y filtrada por envío a domicilio, por lo que podrás encontrar productores cerca de ti y contactar con ellos para concertar la dirección de entrega. Nosotros no intervenimos en la entrega."
             />
             <Question
               title="¿Qué métodos de pago acepta Grocerin?"
@@ -58,7 +58,7 @@ const Question = ({ title, answer }) => {
         </svg>
         {title}
       </h3>
-      <p className="text-gray-400">{answer}</p>
+      <p className="text-gray-400 text-justify">{answer}</p>
     </div>
   );
 };

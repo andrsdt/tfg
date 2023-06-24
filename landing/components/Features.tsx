@@ -1,39 +1,37 @@
 import Image from 'next/image';
 
-import dashboard from '/public/assets/mockups/dashboard.png';
-import details from '/public/assets/mockups/details.png';
-import payment from '/public/assets/mockups/payment.png';
-import rate from '/public/assets/mockups/rate.png';
-import timetable from '/public/assets/mockups/timetable.png';
 import chat from '/public/assets/mockups/chat.png';
+import notifications from '/public/assets/mockups/notifications.png';
+import product from '/public/assets/mockups/product.png';
+import profile from '/public/assets/mockups/profile.png';
+import review from '/public/assets/mockups/review.png';
+import search from '/public/assets/mockups/search.png';
 import { motion } from 'framer-motion';
 
 export default function Features() {
   return (
     <section className="section-size bg-white xl:px-72 xl:py-20">
       <Feature
-        title="Crea tu horario"
-        description="Tú indicas ubicación, fecha y hora, nosotros nos encargamos del resto. Al crear tu horario comenzarás a recibir recomendaciones personalizadas de otros viajeros que compartan tu misma ruta. ¡Así de fácil!"
-        images={[dashboard, timetable]}
+        title="Busca un producto"
+        description="En Grocerin encontrarás todo lo que necesitas para preparar ese plato que tanto te gusta. Haz una búsqueda rápida y ponte en contacto con el vendedor, ¡Así de fácil!"
+        images={[search, product]}
       />
       <Feature
-        title="Encuentra un conductor"
-        description="¿Has encontrado a alguien que comparta tu ruta? ¡Perfecto! Contacta con el conductor y solicítale viajar con él. Te notificaremos cuando el conductor acepte tu solicitud."
-        images={[details, chat]}
+        title="Contacta al productor"
+        description="¿Has encontrado un producto que te gusta? ¡Perfecto! Contacta con el productor y acordad un sitio para hacer la venta. Nunca antes había sido tan sencillo comer sano."
+        images={[profile, chat]}
         imagesFirst
       />
       <Feature
-        title="Paga de forma segura"
-        description="Paga cada viaje de forma segura y sin comisiones. Puedes recargar saldo, o pagar con tarjeta o PayPal. El conductor recibirá tu pago cuando confirmes que el viaje ha ido bien."
-        images={[payment, rate]}
+        title="Valora tu compra"
+        description="Una vez hayas recibido el producto, valora tu experiencia con el productor desde la aplicación. De esta forma ayudarás a otros usuarios de la comunidad a encontrar los mejores productos."
+        images={[notifications, review]}
       />
     </section>
   );
 }
 
 const Feature = ({ title, description, images, imagesFirst = false }) => {
-  // Component to render each individual feature.
-  // Only used in this file for <Features/>, so it's not exported.
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
@@ -60,7 +58,7 @@ const Feature = ({ title, description, images, imagesFirst = false }) => {
           <Image
             key={image.src}
             src={image}
-            alt={Object.keys({ image }).pop()} // Use variable name as alt
+            alt={Object.keys({ image }).pop()}
             height={500}
             sizes="(max-width: 768px) 50vw, 100vw"
           />

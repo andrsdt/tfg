@@ -9,10 +9,10 @@ export default function AboutPage() {
           <div className="my-2">
             <p className="text-xl font-bold">1. Introducción</p>
             <p>
-              Estos términos y condiciones rigen el uso de nuestro servicio
-              BugaLink y establecen las obligaciones y responsabilidades de los
-              usuarios. Al acceder y utilizar nuestro servicio, el usuario
-              acepta estos términos y condiciones.
+              Estos términos y condiciones rigen el uso del servicio Grocerin y
+              establecen las obligaciones y responsabilidades de los usuarios.
+              Al acceder y utilizar nuestro servicio, el usuario acepta estos
+              términos y condiciones.
             </p>
           </div>
           <div className="my-2">
@@ -30,11 +30,11 @@ export default function AboutPage() {
             <p>
               Los datos del usuario recopilados y almacenados serán únicamente
               aquellos necesarios durante el registro para todos los usuarios,
-              además de DNI y carnet de conducir para el caso de los usuarios
-              que quieran convertirse en Conductores. Estos datos son necesarios
-              para evitar usos ilegales de la aplicación, como personas menores
-              de edad o sin carnet de conducir actuando como conductores, dando
-              así una mayor seguridad para todos los usuarios.
+              además de número de teléfono y ubicación para el caso de los
+              usuarios que quieran convertirse en Productores. Estos datos son
+              necesarios para evitar usos ilegales de la aplicación, como
+              cuentas fraudulentas o spam, para poder ofrecer un servicio de
+              calidad a los usuarios y una mayor seguridad a la comunidad.
             </p>
           </div>
           <div className="my-2">
@@ -42,8 +42,9 @@ export default function AboutPage() {
             <p>
               Como usuario, en cualquier momento podrá eliminar su cuenta desde
               su perfil de usuario en la aplicación. Una vez eliminada la
-              cuenta, todos los datos se borrarán y no se podrá rastrear al
-              usuario en la aplicación ni en nuestra base de datos.
+              cuenta, todos los datos se anonimizarán y no se podrá rastrear al
+              usuario en la aplicación ni en nuestra base de datos, excepto
+              aquellos datos que por ley estemos obligados a conservar.
             </p>
           </div>
           <div className="my-2">

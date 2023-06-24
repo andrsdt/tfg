@@ -8,26 +8,26 @@ type Props = {
   title?: string;
 };
 
-const Layout = ({ children, title = 'BugaLink' }: Props) => (
+const Layout = ({ children, title = 'Grocerin' }: Props) => (
   <div>
     <Head>
       <title>{title}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta name="theme-color" content="#e5ffea" />
+      <meta name="theme-color" content="#fff7e3" />
       <meta
         name="description"
-        content="Encuentra a otros usuarios que compartan tu misma ruta y haz que tus viajes sean más inteligentes ♻️"
+        content="Compra y vende productos frescos del campo sin intermediarios ni comisiones 🥬"
       />
-      <meta property="og:title" content="BugaLink" />
+      <meta property="og:title" content="Grocerin" />
       <meta
         property="og:description"
-        content="Encuentra a otros usuarios que compartan tu misma ruta y haz que tus viajes sean más inteligentes ♻️"
+        content="Compra y vende productos frescos del campo sin intermediarios ni comisiones 🥬"
       />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://bugalink.es" />
-      <meta property="og:image" content="https://bugalink.es/api/og" />
-      <meta property="og:site_name" content="BugaLink" />
+      <meta property="og:url" content="https://grocerin.vercel" />
+      <meta property="og:image" content="https://grocerin.vercel.app/api/og" />
+      <meta property="og:site_name" content="Grocerin" />
       <meta property="og:locale" content="es_ES" />
 
       <link rel="shortcut icon" href="/assets/favicon.ico" />
