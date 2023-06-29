@@ -148,18 +148,3 @@ class ListingFilterSet(rest_framework.FilterSet):
             return queryset
 
         return queryset.exclude(producer__user=user)
-
-    # def order_by_distance(self, queryset, _, value):
-    #     user = self.request.user
-    #     device_location_wkt = self.request.query_params.get("location")
-    #     device_location = GEOSGeometry(device_location_wkt)
-    #     user_location = user.location if user.is_authenticated else None
-    #     location = device_location or user_location
-
-    #     if value not in ["asc", "desc"] or not location:
-    #         return queryset
-
-    #     queryset = queryset.annotate(
-    #         distance=Distance(F("producer__user__location"), location)
-    #     )
-    #     return queryset.order_by("distance" if value == "asc" else "-distance")
