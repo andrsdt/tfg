@@ -26,5 +26,4 @@ const chatStore = (set) => ({
   emptyMessages: () => set({ messages: [] }),
 });
 
-// TODO: remove devtools when deploying to production
-export const useChatStore = create(devtools<ChatStore>(chatStore)); // Store that keeps track of the current user's information.
+export const useChatStore = create<ChatStore>(chatStore); // Store that keeps track of the current user's information.

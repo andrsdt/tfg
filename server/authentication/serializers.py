@@ -73,7 +73,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 
-# NOTE: this serializer is used for GET, PUT and PATCH to /auth/user
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     photo = Base64ImageField()
     phone = PhoneNumberField(region="ES", required=False)

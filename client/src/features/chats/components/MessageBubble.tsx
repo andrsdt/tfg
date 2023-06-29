@@ -17,8 +17,6 @@ export const MessageBubble = ({
   otherUser,
   isMine,
 }: MessageBubbleProps) => {
-  // TODO: add the logic here to decide which component should render the message based on the MESSAGE_TYPE
-  // What is currently in this component should be split in two components: GenericMessageBubble({children}) and TextMessage
   return (
     <div
       className={clsx(
@@ -30,7 +28,7 @@ export const MessageBubble = ({
         {!isMine && <Avatar src={otherUser?.photo} className="h-8 w-8" />}
         <div
           className={clsx(
-            'flex max-w-xs flex-row items-center justify-between break-all rounded-2xl px-3 py-2',
+            'flex max-w-[16rem] flex-row items-center justify-between rounded-2xl px-3 py-2',
             isMine
               ? 'rounded-br-none bg-light-green'
               : 'rounded-bl-none bg-light-gray'

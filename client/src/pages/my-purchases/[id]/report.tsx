@@ -36,7 +36,6 @@ type ReportOrderProps = {
 const ReportOrder = ({ pageProps }: ReportOrderProps) => {
   const { id } = pageProps;
   useAuth({ roles: [ROLES.AUTHENTICATED] });
-  // TODO: auth check for the user who owns the order
   const [handleSubmitReport, isSubmitting] = useSubmissionHandler(sendReport, {
     onSuccess: redirectAndNotify,
   });

@@ -1,11 +1,19 @@
 import { getApiClient } from '@/lib/api';
 
-import { Paths } from '@/types/openapi';
-import { OperationResponse } from 'openapi-client-axios';
+import useSWR from 'swr';
+import { Producer } from '../types/producers';
 
-export const retrieveProducer = async (
-  id: string
-): Promise<OperationResponse<Paths.ProducersRetrieve.Responses.$200>> => {
-  const client = await getApiClient();
-  return await client.producers_retrieve(id);
+export const useRetrieveProducer = (id: string) => {
+  const { data, isLoading, error } = useSWR(
+    'producer_retrieve',
+    async () => id && (await (await getApiClient()).producers_retrieve(id))
+  );
+
+  const sanitizedResponse = (data?.data ?? data) as Producer;
+
+  return {
+    producer: sanitizedResponse,
+    isLoading,
+    isError: error,
+  };
 };

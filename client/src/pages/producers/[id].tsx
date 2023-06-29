@@ -5,13 +5,16 @@ import NEXT_ROUTES from '@/constants/routes';
 import { listRecentListingsByProducer } from '@/features/listings/api/listRecentByProducer';
 import { ListingTwoColumnsList } from '@/features/listings/components/Lists';
 import { Listing } from '@/features/listings/types/listings';
-import { retrieveProducer } from '@/features/producers/api/retrieve';
+import { useRetrieveProducer } from '@/features/producers/api/retrieve';
 import { Producer } from '@/features/producers/types/producers';
 import { Avatar } from '@/features/users/components/Avatar';
 import { Rating } from '@/features/users/components/Card/Rating';
 import { useRetrieveHandler } from '@/hooks/useRetrieveHandler';
 import { useToggle } from '@/hooks/useToggle';
-import { transformLocationToCoordinates } from '@/utils/formatters';
+import {
+  shortenName,
+  transformLocationToCoordinates,
+} from '@/utils/formatters';
 import clsx from 'clsx';
 import { Point } from 'geojson';
 import router, { useRouter } from 'next/router';
@@ -34,9 +37,7 @@ type ProfileProps = {
 const PublicProfile = ({ pageProps }: ProfileProps) => {
   const { id } = pageProps;
   const router = useRouter();
-  const [producer, isLoading, isError] = useRetrieveHandler<Producer, Producer>(
-    () => retrieveProducer(id)
-  );
+  const { producer, isLoading, isError } = useRetrieveProducer(id);
   const [recentListings, isLoadingRecentListings, isErrorRecentListings] =
     useRetrieveHandler<Listing[], Listing[]>(() =>
       listRecentListingsByProducer(id)
@@ -51,9 +52,13 @@ const PublicProfile = ({ pageProps }: ProfileProps) => {
   return (
     <LayoutWithNavbar className="p-4">
       <ProducerProfileHeader producer={producer} />
-      <h1 className="mt-4 text-2xl font-bold">Sobre el productor</h1>
+      <h1 className="mb-0.5 mt-4 text-2xl font-bold">Sobre el productor</h1>
       <CollapsibleText
-        text={producer?.biography ?? '(No hay información)'}
+        text={
+          producer?.biography?.length > 0
+            ? producer.biography
+            : '(No hay información)'
+        }
         readMoreThreshold={190}
       />
       {producer.user.location && (
@@ -73,7 +78,6 @@ const PublicProfile = ({ pageProps }: ProfileProps) => {
 
 export default PublicProfile;
 
-// TODO: extract to components
 type CollapsibleTextProps = {
   text: string;
   className?: string;
@@ -92,15 +96,15 @@ export const CollapsibleText = ({
 
   return (
     <div
+      lang="es"
       className={clsx(
-        'flex flex-col items-start text-start leading-5',
+        'flex flex-col items-start hyphens-auto text-start leading-5',
         className
       )}
     >
       <p
         lang="es"
         className={clsx(
-          // TODO: break-all after line-clamp?
           isCollapsed && collapsedClassName,
           'text-md peer overflow-hidden hyphens-auto leading-5'
         )}
@@ -127,8 +131,8 @@ const ProducerProfileHeader = ({ producer }: ProducerProfileHeaderProps) => {
     <div className="flex space-x-4">
       <Avatar src={user.photo} alt="Profile picture" className="w-32" />
       <div className="flex flex-col py-2">
-        <h1 className="text-3xl font-bold leading-7">
-          {user.first_name} {user.last_name}
+        <h1 className="mb-1 text-3xl font-bold leading-7">
+          {shortenName(user.first_name, user.last_name)}
         </h1>
         <Rating user={user} />
         <HollowButton

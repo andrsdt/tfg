@@ -40,7 +40,7 @@ type MarkListingAsSoldToUserProps = {
     // If the producer wants to mark the listing as
     // sold to an external user, the conversationId
     // will be 'external' as it can't be null
-    conversationId: string | 'external';
+    conversationId: string;
   };
 };
 
@@ -52,8 +52,6 @@ const MarkListingAsSoldToUser = ({
   const { id, conversationId } = pageProps;
   const isExternalSell = conversationId === 'external';
   useAuth({ roles: [ROLES.PRODUCER] });
-
-  // TODO: auth check for producer who owns listing
 
   const [listing] = useRetrieveHandler<Listing, Listing>(
     () => retrieveListing(id),

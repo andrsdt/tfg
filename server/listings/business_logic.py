@@ -6,7 +6,6 @@ from users.models import User
 
 @transaction.atomic
 def create_listing(validated_data):
-    # TODO: use individual params instead of validated_data (**validated_data in serializers)
     listing = _create_listing_instance(validated_data)
     _set_listing_images(validated_data.get("images", []), listing)
     _set_listing_allergens(validated_data.get("allergens", []), listing)
@@ -16,7 +15,6 @@ def create_listing(validated_data):
 
 @transaction.atomic
 def update_listing(validated_data, instance):
-    # TODO: use individual params instead of validated_data (**validated_data in serializers)
     _update_listing_instance(validated_data, instance)
     _set_listing_images(validated_data.get("images"), instance)
     _set_listing_allergens(validated_data.get("allergens"), instance)
@@ -26,8 +24,6 @@ def update_listing(validated_data, instance):
 
 @transaction.atomic
 def delete_listing(instance: Listing):
-    # NOTE: are images, features and allergens deleted automatically? check this
-    # (I think they have on_delete=models.CASCADE, so they should be deleted)
     instance.delete()
 
 
@@ -76,10 +72,6 @@ def _set_listing_images(images, listing):
     if images is None:
         return
 
-    # NOTE: this is currently deleting all images and uploading the new ones.
-    # This is because names are generated via uuid and there is no way to
-    # match new images to old ones. This is could have performance implications
-    # in the future, if the load is too big, or excessive S3 bandwith usage.
     ListingImage.objects.filter(listing=listing).exclude(image__in=images).delete()
     for image in images:
         ListingImage.objects.update_or_create(listing=listing, image=image)

@@ -40,7 +40,7 @@ export default function Hand() {
 
   return (
     <motion.div
-      className="z-0 place-self-end md:block mt-8 md:mt-0 md:w-1/2"
+      className="z-0 place-self-end md:block mt-8 md:mt-0 w-full md:w-1/2"
       variants={currentAnimation}
       initial="initial"
       animate="animate"

@@ -11,7 +11,6 @@ type ReviewCardProps = { review: Review };
 export const ReviewCard = ({ review }: ReviewCardProps) => {
   const listing = review.order.listing;
   const reviewer = review.order.consumer;
-  // TODO: const isAnonymousReview -> when there is no reviewer in the serializer (nullable field)
   return (
     <div className="flex space-x-2">
       <Link

@@ -32,7 +32,6 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("El producto no está activo")
         return listing
 
-    # TODO: extract these validations to validators.py? for easier testing
     def validate(self, data):
         listing = data["listing"]
         quantity = data["quantity"]

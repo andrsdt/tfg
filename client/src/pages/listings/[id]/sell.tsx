@@ -29,7 +29,6 @@ type MarkListingAsSoldProps = {
 const MarkListingAsSold = ({ pageProps }: MarkListingAsSoldProps) => {
   const { id } = pageProps;
   useAuth({ roles: [ROLES.PRODUCER] });
-  // TODO: auth check for producer who owns listing
   const [listing] = useRetrieveHandler<Listing, Listing>(
     () => retrieveListing(id),
     {

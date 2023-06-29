@@ -45,7 +45,9 @@ const Listing = ({ pageProps }: ListingProps) => {
     () => retrieveListing(id),
     {
       onSuccess: (data) => setIsActive(data.is_active),
-      onError: () => router.replace(NEXT_ROUTES.HOME),
+      onError: async () => {
+        await router.replace(NEXT_ROUTES.HOME);
+      },
     }
   );
   const [disableListing, isSubmittingDisable] = useSubmissionHandler(

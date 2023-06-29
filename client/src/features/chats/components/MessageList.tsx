@@ -30,7 +30,7 @@ export const MessageList = ({ conversation }: MessageListProps) => {
           <div key={date} className="flex flex-col space-y-3">
             <div className="text-center text-sm text-gray">
               {/* If it's this year -> 22 de mayo */}
-              {/* If it's last year -> 14 de diciembre de 2022 */}
+              {/* If it's earlier -> 14 de diciembre de 2022 */}
               {formatDate(date, dayjs(date).year() < dayjs().year())}
             </div>
             {messages?.map((message: Message) => (

@@ -11,7 +11,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.25, duration: 1, ease: 'easeInOut' }}
-        className="text-left md:flex-1 md:mr-10"
+        className="text-left flex-1 md:flex-1 md:mr-10"
       >
         <div className="flex flex-col text-6xl xl:text-7xl font-caveat font-bold mb-2">
           <p>Del campo</p>

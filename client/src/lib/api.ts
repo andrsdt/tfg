@@ -11,7 +11,6 @@ import OpenAPIClientAxios, {
 
 import schema from 'schema.json';
 
-// TODO: download schema.json again when it changes (/api/v1/schema?format=json)
 export const api = new OpenAPIClientAxios({
   definition: schema as Document,
 });

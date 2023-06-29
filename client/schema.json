@@ -434,6 +434,26 @@
         }
       }
     },
+    "/auth/user/delete/": {
+      "delete": {
+        "operationId": "auth_user_delete_destroy",
+        "description": "A viewset for deleting the user's account.",
+        "tags": ["auth"],
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No response body"
+          }
+        }
+      }
+    },
     "/chats/": {
       "get": {
         "operationId": "chats_list",
@@ -862,17 +882,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PatchedListingRequest"
+                "$ref": "#/components/schemas/PatchedListingCreateRequest"
               }
             },
             "application/x-www-form-urlencoded": {
               "schema": {
-                "$ref": "#/components/schemas/PatchedListingRequest"
+                "$ref": "#/components/schemas/PatchedListingCreateRequest"
               }
             },
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/PatchedListingRequest"
+                "$ref": "#/components/schemas/PatchedListingCreateRequest"
               }
             }
           }
@@ -890,7 +910,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Listing"
+                  "$ref": "#/components/schemas/ListingCreate"
                 }
               }
             },
@@ -1278,6 +1298,114 @@
             "description": ""
           }
         }
+      },
+      "put": {
+        "operationId": "producers_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique value identifying this producer.",
+            "required": true
+          }
+        ],
+        "tags": ["producers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProducerRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ProducerRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ProducerRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producer"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "producers_partial_update",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "A unique value identifying this producer.",
+            "required": true
+          }
+        ],
+        "tags": ["producers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedProducerRequest"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedProducerRequest"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/PatchedProducerRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          },
+          {
+            "jwtAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Producer"
+                }
+              }
+            },
+            "description": ""
+          }
+        }
       }
     },
     "/reports/": {
@@ -1606,12 +1734,17 @@
           "number_ratings": {
             "type": "integer",
             "readOnly": true
+          },
+          "is_producer": {
+            "type": "boolean",
+            "readOnly": true
           }
         },
         "required": [
           "average_rating",
           "first_name",
           "id",
+          "is_producer",
           "last_name",
           "number_ratings"
         ]
@@ -2528,12 +2661,9 @@
           }
         }
       },
-      "PatchedListingRequest": {
+      "PatchedListingCreateRequest": {
         "type": "object",
         "properties": {
-          "is_deleted": {
-            "type": "boolean"
-          },
           "title": {
             "type": "string",
             "minLength": 1,
@@ -2541,31 +2671,62 @@
           },
           "description": {
             "type": "string",
-            "nullable": true,
             "minLength": 1,
             "maxLength": 2000
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListingImageRequest"
+            }
           },
           "unit": {
             "$ref": "#/components/schemas/UnitEnum"
           },
           "price_per_unit": {
             "type": "integer",
-            "maximum": 2147483647,
-            "minimum": 0
+            "maximum": 100000,
+            "minimum": 1
           },
           "g_per_unit": {
             "type": "integer",
-            "maximum": 2147483647,
-            "minimum": 0,
-            "nullable": true
+            "maximum": 100000,
+            "minimum": 0
           },
           "available_quantity": {
             "type": "integer",
-            "maximum": 2147483647,
-            "minimum": 0
+            "maximum": 10000,
+            "minimum": 1
+          },
+          "allergens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductAllergenRequest"
+            }
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductFeatureRequest"
+            }
+          },
+          "is_deleted": {
+            "type": "boolean"
           },
           "is_active": {
             "type": "boolean"
+          }
+        }
+      },
+      "PatchedProducerRequest": {
+        "type": "object",
+        "properties": {
+          "is_deleted": {
+            "type": "boolean"
+          },
+          "biography": {
+            "type": "string",
+            "maxLength": 3000
           }
         }
       },
@@ -2580,12 +2741,27 @@
             ],
             "readOnly": true
           },
+          "is_deleted": {
+            "type": "boolean"
+          },
           "biography": {
             "type": "string",
             "maxLength": 3000
           }
         },
         "required": ["user"]
+      },
+      "ProducerRequest": {
+        "type": "object",
+        "properties": {
+          "is_deleted": {
+            "type": "boolean"
+          },
+          "biography": {
+            "type": "string",
+            "maxLength": 3000
+          }
+        }
       },
       "ProductAllergen": {
         "type": "object",
@@ -2928,7 +3104,7 @@
   },
   "servers": [
     {
-      "url": "http://grocerin.es/api/v1",
+      "url": "http://localhost/api/v1",
       "description": "Local development server"
     }
   ]

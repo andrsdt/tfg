@@ -2,6 +2,7 @@ import { BackButton } from '@/components/Elements';
 import NEXT_ROUTES from '@/constants/routes';
 import { BasicListing } from '@/features/listings/types/listings';
 import { Avatar } from '@/features/users/components/Avatar';
+import { AuthenticatedUser } from '@/features/users/types/users';
 import { useAuth } from '@/hooks/useAuth';
 import { getOtherUser } from '@/utils/conversation';
 import { formatPricePerUnit } from '@/utils/formatters';
@@ -9,18 +10,17 @@ import { emitInfo } from '@/utils/toasts';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import router from 'next/router';
 import { Conversation } from '../types/conversations';
 
 type ChatHeaderProps = { conversation: Conversation };
 
-const handleClickListing = (listing: BasicListing) => {
-  if (listing.is_active) {
-    router.push(NEXT_ROUTES.DETAILS_LISTING(listing.id));
-  } else {
+const handleClickListing = (listing: BasicListing, user: AuthenticatedUser) => {
+  if (!listing.is_active && listing.producer.user.id !== user.pk) {
     emitInfo({
       message: 'El productor ha desactivado temporalmente este producto',
     });
+  } else {
+    window.location.href = NEXT_ROUTES.DETAILS_LISTING(listing.id);
   }
 };
 
@@ -29,13 +29,15 @@ export const ChatHeader = ({ conversation }: ChatHeaderProps) => {
   const { user } = useAuth();
   const otherUser = getOtherUser(conversation, user);
   const { listing } = conversation;
+
   if (!listing || !otherUser) return <></>;
+
   return (
     <span className="flex items-center bg-green p-4 text-white">
       <span className="flex w-full items-center">
         <BackButton href={NEXT_ROUTES.CHATS} className="h-8 w-8" />
         <button
-          onClick={() => handleClickListing(listing)}
+          onClick={() => handleClickListing(listing, user)}
           className={clsx(
             'flex w-full space-x-3 px-2 text-start text-xl',
             !listing?.is_active && 'grayscale'
@@ -55,10 +57,15 @@ export const ChatHeader = ({ conversation }: ChatHeaderProps) => {
         </button>
       </span>
       <Link
-        // TODO: WHEN IT'S THE PRODUCER THE ONE VIEWING THIS, IT
-        // SHOULD NOT LINK ANYWHERE IF THE OTHER USER IS NOT A PRODUCER
-        href={NEXT_ROUTES.PRODUCER_PROFILE(otherUser.id)}
-        className="aspect-square h-12 w-12"
+        href={
+          otherUser.is_producer
+            ? NEXT_ROUTES.PRODUCER_PROFILE(otherUser.id)
+            : '#'
+        }
+        className={clsx(
+          !otherUser.is_producer && 'pointer-events-none',
+          'aspect-square h-12 w-12'
+        )}
       >
         <Avatar src={otherUser?.photo} className="h-full w-full" />
       </Link>

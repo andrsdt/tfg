@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     "django_phonenumbers",
     "phonenumber_field",
     "django_cleanup.apps.CleanupConfig",
-    # "django_extensions", # TODO: delete this when we are done with graph exports
     # Auth modules
     "rest_framework.authtoken",
     "dj_rest_auth",
@@ -148,7 +147,7 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVERS": [
         {
-            "url": "http://grocerin.es/api/v1",
+            "url": "http://localhost/api/v1",
             "description": "Local development server",
         },
     ],
@@ -242,9 +241,6 @@ SOCIALACCOUNT_PROVIDERS = {
     },
 }
 
-# NOTE: If we don't add this, we get a 403 error when sending petitions
-# once we are logged in. I don't know why this happens, given that we are
-# sending them from the same domain bc we are using nginx
 CSRF_TRUSTED_ORIGINS = [
     "http://*.localhost",
     "http://grocerin.es",
@@ -263,7 +259,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "files")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "files/")
 STATIC_ROOT = os.path.join(
     os.path.dirname(BASE_DIR), config("STATIC_ROOT", default="static/")
 )  # Static bucket name
@@ -287,27 +283,10 @@ CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}
 
 # Use gcloud storage in production (Implemented, uncomment to use)
 # IS_GCLOUD_DEPLOYMENT = config("IS_GCLOUD_DEPLOYMENT", default=False, cast=bool)
+# IS_GCLOUD_DEPLOYMENT = True
 # if IS_GCLOUD_DEPLOYMENT:
-#     STORAGES = {"default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"},
-#             "staticfiles": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"}}
+#     STORAGES = {
+#         "default": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"},
+#         "staticfiles": {"BACKEND": "storages.backends.gcloud.GoogleCloudStorage"},
+#     }
 #     GS_BUCKET_NAME = config("USER_FILES_BUCKET_NAME")
-
-# TODO: delete this when we are done with graph exports
-# GRAPH_MODELS = {
-#     "all_applications": True,
-#     "group_models": True,
-#     "include_models": [
-#         "User",
-#         "Producer",
-#         "Listing",
-#         "ListingImage",
-#         "ProductAllergen",
-#         "ProductFeature",
-#         "Order",
-#         "Notification",
-#         "Conversation",
-#         "Message",
-#         "Review",
-#         "Report",
-#     ],
-# }

@@ -6,6 +6,7 @@ from listings.enums import (
     PRODUCT_UNIT_CHOICES,
 )
 from listings.managers import ListingManager
+from rest_framework.serializers import ValidationError
 
 
 def listing_images_directory_path(instance, filename):
@@ -31,6 +32,10 @@ class Listing(TimestampsMixin, SoftDeleteMixin):
         return user.favorites.filter(id=self.id).exists()
 
     def set_active(self):
+        if self.available_quantity <= 0:
+            raise ValidationError(
+                "No puedes reactivar un producto del que no hay stock. Actualiza la cantidad disponible e inténtalo de nuevo."
+            )
         self.is_active = True
         self.save()
 

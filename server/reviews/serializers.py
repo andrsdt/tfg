@@ -13,9 +13,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
-    # TODO: pretty error?
     rating = serializers.IntegerField(min_value=1, max_value=5)
-    # TODO: comment max length field with pretty error message
     comment = serializers.CharField(max_length=500, required=False)
 
     class Meta:
@@ -29,7 +27,6 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
             )
         return order
 
-    # TODO: redundant?
     def validate_rating(self, rating):
         if rating < 1 or rating > 5:
             raise serializers.ValidationError(

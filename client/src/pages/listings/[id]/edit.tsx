@@ -41,7 +41,6 @@ type EditListingProps = {
 const EditListing = ({ pageProps }: EditListingProps) => {
   const listingId = pageProps.id;
   useAuth({ roles: [ROLES.PRODUCER] });
-  // TODO: auth check for producer who owns listing
   const [existingListing] = useRetrieveHandler(
     () => retrieveListing(listingId),
     {

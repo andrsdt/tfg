@@ -50,4 +50,3 @@ urlpatterns = (
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
-# TODO: static files won't be served in production, so we need to configure our web server (or S3 ideally) to serve them

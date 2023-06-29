@@ -62,7 +62,6 @@ const MessageInput = ({
 
   const [message, setMessage] = useState('');
 
-  // TODO: should this be a form
   return (
     <div className="absolute bottom-0 w-full p-4">
       <form

@@ -23,6 +23,7 @@ class ListingViewSet(viewsets.ModelViewSet):
             "retrieve": [AllowAny],
             "create": [IsProducer],
             "update": [IsListingOwner],
+            "partial_update": [IsListingOwner],
             "destroy": [IsListingOwner],
             "like": [IsAuthenticated],
             "dislike": [IsAuthenticated],
@@ -36,7 +37,9 @@ class ListingViewSet(viewsets.ModelViewSet):
         serializers = {
             "create": ListingCreateSerializer,
             "update": ListingCreateSerializer,
+            "partial_update": ListingCreateSerializer,
         }
+
         return serializers.get(self.action, default_serializer)
 
     def get_queryset(self):
@@ -50,6 +53,7 @@ class ListingViewSet(viewsets.ModelViewSet):
             "list": active_listings | my_listings,
             "retrieve": active_listings | my_listings,
             "update": my_listings,
+            "partial_update": my_listings,
             "activate": my_listings,
             "deactivate": my_listings,
             "like": active_listings | my_listings,
@@ -85,7 +89,7 @@ class ListingViewSet(viewsets.ModelViewSet):
         listing.set_inactive()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    # NOTE: destroy does not call any serializers,
+    # Destroy does not call any serializers,
     # therefore it's defined in the views.py instead
     def perform_destroy(self, instance):
         delete_listing(instance)

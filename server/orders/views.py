@@ -12,14 +12,12 @@ class OrderViewSet(
     mixins.RetrieveModelMixin,
     GenericViewSet,
 ):
-    # TODO: make the queryset be my_orders()?
     queryset = Order.objects.all()
     filterset_class = OrderFilterSet
 
     # https://www.django-rest-framework.org/api-guide/viewsets/#introspecting-viewset-actions
     def get_permissions(self):
         permissions = {
-            # TODO: Does "IsListingOwner" work sense here? "obj" is an Order, not a Listing
             "create": [IsListingOwner],
             "list": [ParticipatesInOrder],
             "retrieve": [ParticipatesInOrder],

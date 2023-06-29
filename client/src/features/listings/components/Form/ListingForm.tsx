@@ -96,7 +96,6 @@ export const ListingForm = ({
                 title="Pongo en venta..."
                 showIf={hasChosenListingUnit}
               >
-                {/* TODO: use the new formatter formatQuantityWithUnit() */}
                 <WithUnitField
                   unit={
                     hasOneQuantity
@@ -127,11 +126,6 @@ export const ListingForm = ({
                   <CurrencyInput
                     className="w-24 text-center outline-none"
                     allowNegativeValue={false}
-                    // TODO: fix bug where the value disappears when
-                    // the user adds an allergen/features. We can't
-                    // use the workaround below because it causes
-                    // NaN errors and allows infinite decimals
-                    // value={watch('price_per_unit')}
                     {...register('price_per_unit')}
                   />
                 </WithUnitField>

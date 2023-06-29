@@ -39,9 +39,6 @@ class NotificationViewSet(mixins.ListModelMixin, GenericViewSet):
     def list(self, request):
         super_response = super().list(request)
         # When the user retrieves their notifications, mark them as read
-        # TODO: in the future, mark them as read when the user clicks on
-        # them. This would require a new endpoint to mark a single notification
-        # as read.
         mark_all_notifications_as_read(request.user)
         return super_response
 

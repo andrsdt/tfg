@@ -37,7 +37,7 @@ export const ListingCard = ({
           )}
           <Image
             className="aspect-[5/4] rounded-lg object-cover"
-            src={listing?.images[0].image}
+            src={listing?.images[0]?.image}
             alt={listing?.title}
             width={250}
             height={300}

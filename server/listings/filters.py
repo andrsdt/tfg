@@ -109,10 +109,6 @@ class ListingFilterSet(rest_framework.FilterSet):
         return queryset.filter(pk__in=user.favorites.values_list("id", flat=True))
 
     def filter_by_location(self, queryset, _, value):
-        # NOTE: this method is only a proxy to call filter_by_distance
-        #       because we need to pass the location to that method and
-        #       by defining this as a filter it will appear in the OpenAPI
-        #       documentation easier than doing @extend_schema in the views.py
         distance = self.request.query_params.get("distance", 10000)
         return self.filter_by_distance(queryset, _, distance)
 

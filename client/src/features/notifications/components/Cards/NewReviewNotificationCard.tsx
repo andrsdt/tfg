@@ -18,7 +18,6 @@ export const NewReviewNotificationCard = ({
     retrieveReview(reviewId)
   );
 
-  // TODO: notification skeleton
   if (!review) return <></>;
 
   return (

@@ -8,9 +8,6 @@ export const ListingSearchBar = () => {
   const searchParams = useSearchParams();
   const [searchWord, setSearchWord] = useState('');
 
-  // TODO: would it be possible to initialize the useState with the value of the searchParams?
-  // I don't know since this is an inner component, not a next.js page itself. Maybe if we pass
-  // the searchParams as a prop to this component?
   useEffect(() => {
     setSearchWord(searchParams.get('q') || '');
   }, [searchParams]);

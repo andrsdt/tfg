@@ -29,8 +29,6 @@ export const useChat = (id: string) => {
       reconnectAttempts: 10,
       reconnectInterval: 3000,
       onClose: async () => {
-        // TODO: maybe this will also send user to home when the websocket has to reconnect.
-        // Specify a reason in the close() -> throw an error maybe?
         await router.replace(NEXT_ROUTES.HOME);
       },
       onMessage: (event) => {

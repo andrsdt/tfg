@@ -1,6 +1,6 @@
 import { ToastManager } from '@/components/Elements/Toast';
 import { PhoneLayout } from '@/components/Layouts';
-import { API_URL, GOOGLE_MAPS_API_KEY } from '@/config';
+import { GOOGLE_MAPS_API_KEY } from '@/config';
 import { COLORS } from '@/constants';
 import '@/styles/globals.css';
 import { AppProps } from 'next/app';
@@ -39,8 +39,6 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
           type="image/png"
           sizes="32x32"
         />
-        {/* TODO: take the api key somewhere so it doesn't leak on the client */}
-        {/* TODO: check optimizations at https://nextjs.org/docs/pages/building-your-application/optimizing/scripts*/}
         <script
           src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`}
         />
@@ -58,7 +56,6 @@ const MyApp = ({ Component, router, ...pageProps }: AppProps) => {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="/" />
-        <meta property="og:image" content={`${API_URL}/api/og`} />
         <meta property="og:site_name" content="Grocerin" />
         <meta property="og:locale" content="es_ES" />
       </Head>

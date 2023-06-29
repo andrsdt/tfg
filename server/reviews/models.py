@@ -9,7 +9,6 @@ class Review(TimestampsMixin):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name="review")
     rating = models.PositiveIntegerField()
     comment = models.TextField(max_length=150, null=True)
-    # TODO: is_anonymous
 
     objects = ReviewManager()
 

@@ -10,6 +10,8 @@ const NEXT_ROUTES = {
   NOTIFICATIONS: '/notifications',
   MY_PROFILE: '/my-profile',
   EDIT_PROFILE: '/my-profile/edit',
+  EDIT_PRODUCER: '/my-profile/edit-producer',
+  CHANGE_PASSWORD: '/my-profile/change-password',
   MY_LISTINGS: '/my-listings',
   MY_PURCHASES: '/my-purchases',
   MY_SALES: '/my-sales',
@@ -19,6 +21,7 @@ const NEXT_ROUTES = {
   GOOGLE_LOGIN: '/api/v1/auth/account/google/login/',
   FACEBOOK_LOGIN: '/api/v1/auth/account/facebook/login/',
   TWITTER_LOGIN: '/api/v1/auth/account/twitter_oauth2/login/',
+  TERMS_AND_CONDITIONS: 'grocerin.vercel.app/terms',
   CHAT: (id: Id) => urlWithParams('/chats/[id]', { id }),
   PRODUCER_PROFILE: (id: Id) => urlWithParams('/producers/[id]', { id }),
   PRODUCER_REVIEWS: (id: Id) =>

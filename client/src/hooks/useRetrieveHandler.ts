@@ -35,9 +35,6 @@ export const useRetrieveHandler = <O, T>(
       try {
         const response = await retrieveFn(...args);
 
-        // TODO: sometimes response is an <OperationResponse<O>>
-        // but some other it's already <O>, thus the workaround. I have
-        // to look into this, it could be a bug in openapi-client-axios.
         const sanitizedResponse = (response?.data ?? response) as O;
         const transformedResponse = await transform(sanitizedResponse);
         setData(transformedResponse);

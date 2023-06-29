@@ -45,10 +45,6 @@ def test_constructor_with_curse_word(curse: str):
     assert validator.value == curse
 
 
-# TODO: use parametrized tests for testing several inputs
-# https://stackoverflow.com/questions/66867647/pytest-run-same-tests-for-different-sets-of-input-data
-
-
 def test_constructor_with_empty_string():
     validator = InadequateLanguageValidator("")
     assert validator.value == ""

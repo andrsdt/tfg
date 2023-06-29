@@ -10,6 +10,7 @@ from rest_framework.viewsets import GenericViewSet
 class ProducerViewSet(
     mixins.RetrieveModelMixin,
     mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
     GenericViewSet,
 ):
     queryset = Producer.objects.all()
@@ -19,6 +20,8 @@ class ProducerViewSet(
         permissions = {
             "create": [IsAuthenticated, Not(IsProducer)],
             "retrieve": [AllowAny],
+            "update": [IsProducer],
+            "partial_update": [IsProducer],
         }
 
         default_permission = [AllowAny]

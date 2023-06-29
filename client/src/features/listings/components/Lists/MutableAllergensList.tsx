@@ -54,7 +54,6 @@ export const MutableAllergensList = ({
           Añadir alérgenos...
         </button>
       )}
-      {/* TODO: turn into functional component */}
       {ChooseAllergensDialog(
         isOpenModal,
         toggleModal,

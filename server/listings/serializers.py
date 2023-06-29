@@ -77,7 +77,6 @@ class ListingCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
         fields = "__all__"
-        # TODO: exclude id, producer, is_active, created_at, updated_at?
 
     title = serializers.CharField(
         required=True,
@@ -125,8 +124,6 @@ class ListingCreateSerializer(serializers.ModelSerializer):
         return list(map(lambda feature: feature["feature"], features))
 
     def create(self, validated_data):
-        # TODO: do **validated_data instead of validated_data and
-        # change the method to accept individual parameters
         return create_listing(validated_data)
 
     def update(self, instance, validated_data):

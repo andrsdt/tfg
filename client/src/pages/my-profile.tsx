@@ -16,6 +16,7 @@ import {
   EnvelopeIcon,
   LockClosedIcon,
   PhoneIcon,
+  PencilIcon,
   QuestionMarkCircleIcon,
   RectangleStackIcon,
 } from '@heroicons/react/24/outline';
@@ -25,7 +26,6 @@ import Link from 'next/link';
 const Profile = () => {
   const { user, logout } = useAuth({ roles: [ROLES.AUTHENTICATED] });
 
-  // TODO: skeleton loading for user
   if (!user) return <></>;
 
   return (
@@ -37,7 +37,6 @@ const Profile = () => {
       {user.is_producer && (
         <>
           <Rating user={user} />
-          {/* NOTE: this is working because producer uses the user.id as its PK too */}
           <Link
             href={NEXT_ROUTES.PRODUCER_PROFILE(user.pk)}
             className="mt-1 text-gray underline"
@@ -82,6 +81,13 @@ const Profile = () => {
           />
         </ProfileBox>
         <ProfileBox>
+          {user.is_producer && (
+            <ProfileButton
+              title="Editar biografía"
+              Icon={<PencilIcon />}
+              href={NEXT_ROUTES.EDIT_PRODUCER}
+            />
+          )}
           <ProfileButton
             title="Editar perfil"
             Icon={<RectangleStackIcon />}
@@ -92,20 +98,19 @@ const Profile = () => {
             <ProfileButton
               title={formatSpanishPhoneNumber(user.phone)}
               Icon={<PhoneIcon />}
-              href=""
             />
           )}
           <ProfileButton
             title="Cambiar contraseña..."
             Icon={<LockClosedIcon />}
-            href=""
+            href={NEXT_ROUTES.CHANGE_PASSWORD}
           />
         </ProfileBox>
         <ProfileBox>
           <ProfileButton
             title="Ayuda"
             Icon={<QuestionMarkCircleIcon />}
-            href=""
+            href="mailto:app.grocerin@gmail.com"
           />
           <ProfileButton
             title="Cerrar sesión"

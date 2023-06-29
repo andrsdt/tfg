@@ -14,13 +14,13 @@ export const formatMoney = (amountInCents: number) => {
   });
 };
 
-// 20 de Mayo de 2023
+// 20/06/2023 -> 20 de Mayo de 2023
 export const formatDate = (date: string, withYear = false) => {
-  return new Date(date).toLocaleDateString('es-ES', {
-    year: withYear ? 'numeric' : undefined,
-    month: 'long',
-    day: 'numeric',
-  });
+  const res = dayjs(date, 'DD/MM/YYYY').format(
+    'D [de] MMMM' + (withYear ? ' [de] YYYY' : '')
+  );
+
+  return res == 'Invalid Date' ? '' : res;
 };
 
 // Date to "8 feb"
@@ -93,7 +93,6 @@ export const parseMoneyString = (moneyString: string) => {
   );
 };
 
-// TODO: test with names with more than 2 words or propositions. There is plenty of room for improvement here
 export const shortenName = (firstName: string, lastName: string) => {
   if (!firstName || !lastName) return '';
   // Pablo López Benítez' -> 'Pablo López'

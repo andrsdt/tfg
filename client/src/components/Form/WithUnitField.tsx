@@ -16,7 +16,6 @@ export const WithUnitField = ({
   error,
 }: WithUnitFieldProps) => {
   return (
-    // TODO: There must be a better way to apply outline-green to the inner group without having to add a group parent
     <FieldWrapper className="group mb-0" error={error}>
       <div
         className={clsx(

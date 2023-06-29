@@ -37,9 +37,7 @@ module.exports = withPWA({
       'localhost',
       '127.0.0.1',
       'grocerin.es',
-      'media.istockphoto.com',
-      'cdn.pixabay.com',
-      'www.finedininglovers.com',
+      'grocerin.ew.r.appspot.com',
     ],
   },
 });

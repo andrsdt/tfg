@@ -1,15 +1,10 @@
-import {
-  BackButton,
-  ThreeDotsDropdown,
-  Separator,
-} from '@/components/Elements';
-import { Menu } from '@headlessui/react';
+import { BackButton, Separator } from '@/components/Elements';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { AllergensFilter } from './Filters/AllergensFilter';
-import { FeaturesFilter } from './Filters/FeaturesFilter';
-import { ListingSearchBar } from './SearchBar';
 import { DistanceFilter } from './Filters/DistanceFilter';
+import { FeaturesFilter } from './Filters/FeaturesFilter';
 import { PriceFilter } from './Filters/PriceFilter';
+import { ListingSearchBar } from './SearchBar';
 
 type SearchHeaderProps = {
   numberOfListings: number | undefined;
@@ -34,7 +29,6 @@ export const SearchHeader = ({ numberOfListings }: SearchHeaderProps) => {
       <span className="flex w-full items-center justify-between space-x-2">
         <BackButton className="mr-2 w-10" />
         <ListingSearchBar />
-        <SearchOptionsDropdown />
       </span>
       <Separator className="-mx-4" />
       <FilterPicker />
@@ -43,30 +37,8 @@ export const SearchHeader = ({ numberOfListings }: SearchHeaderProps) => {
   );
 };
 
-const SearchOptionsDropdown = () => {
-  return (
-    <ThreeDotsDropdown buttonClassName="relative h-10 w-10 -mr-2">
-      <div className="absolute -top-4 right-4 origin-top-right justify-between rounded-xl bg-white p-4 shadow-lg">
-        {/* TODO: add meaningful options */}
-        <Menu.Item>
-          <p>Opción A</p>
-        </Menu.Item>
-        <Separator />
-        <Menu.Item>
-          <p>Opción B</p>
-        </Menu.Item>
-        <Separator />
-        <Menu.Item>
-          <p>Opción C</p>
-        </Menu.Item>
-      </div>
-    </ThreeDotsDropdown>
-  );
-};
-
 const FilterPicker = () => {
   return (
-    // TODO: make carousel
     <div className="-mx-4 flex items-center justify-start space-x-2 overflow-x-scroll px-4 pt-4">
       <FunnelIcon className="h-8 w-8 flex-none" />
       <hr className="h-9 w-px flex-none bg-light-gray text-light-gray" />
@@ -74,7 +46,6 @@ const FilterPicker = () => {
       <AllergensFilter />
       <FeaturesFilter />
       <PriceFilter />
-      {/* TODO: add the rest of filters (look at the backend's available queryParams for the filter) */}
     </div>
   );
 };

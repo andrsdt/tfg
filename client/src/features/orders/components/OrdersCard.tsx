@@ -32,11 +32,10 @@ export const OrderCard = ({
       }
     >
       <Image
-        // TODO: from the backend, only return the first image
-        src={order.listing.images[0].image}
+        src={order.listing.images[0]?.image}
         width={80}
         height={60}
-        className="aspect-[8/7] rounded-lg object-cover"
+        className="aspect-[8/7] h-[4.5rem] w-20 rounded-lg object-cover"
         alt="Imagen del producto"
       />
       <div className="grid w-full grid-rows-2 space-y-1">

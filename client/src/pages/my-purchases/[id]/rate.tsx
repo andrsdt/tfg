@@ -33,7 +33,6 @@ type RateOrderProps = {
   };
 };
 
-// TODO: move this to another file
 export type ReviewListingValues = {
   rating: number;
   comment: string;
@@ -51,7 +50,6 @@ const redirectAndNotify = async () => {
 const RateOrder = ({ pageProps }: RateOrderProps) => {
   const { id } = pageProps;
   useAuth({ roles: [ROLES.AUTHENTICATED] });
-  // TODO: auth check for user who has bought the listing
   const [order] = useRetrieveHandler<Order, Order>(() => retrieveOrder(id), {
     onError: async () => await router.replace(NEXT_ROUTES.HOME),
   });
@@ -98,7 +96,6 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
           </Link>
         </div>
       </div>
-      {/* TODO: extract form and logic to @/features/reviews folder */}
       <Form<ReviewListingValues, typeof createReviewSchema>
         onSubmit={handleCreateReview}
         schema={createReviewSchema}
@@ -114,7 +111,6 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
                   control={control}
                   defaultValue={0}
                   render={({ field }) => (
-                    // TODO: check if this looks OK (probably not anymore)
                     <Stars
                       value={field.value}
                       setValue={(value) => field.onChange(value)}

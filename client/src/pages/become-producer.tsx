@@ -1,6 +1,7 @@
 import { CloseButton } from '@/components/Elements/Button';
 import { BaseLayout } from '@/components/Layouts';
 import { ROLES } from '@/constants/roles';
+import NEXT_ROUTES from '@/constants/routes';
 import { becomeProducer } from '@/features/producers/api/create';
 import { useAuth } from '@/hooks/useAuth';
 import { useSubmissionHandler } from '@/hooks/useSubmissionHandler';
@@ -42,7 +43,10 @@ const BecomeProducer = () => {
         </button>
         <p className="text-sm text-gray">
           Al convertirte en productor aceptas nuestros{' '}
-          <Link href="#" className="text-green hover:underline">
+          <Link
+            href={NEXT_ROUTES.TERMS_AND_CONDITIONS}
+            className="text-green hover:underline"
+          >
             términos y condiciones
           </Link>
         </p>

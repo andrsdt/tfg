@@ -22,7 +22,6 @@ export const ListingDetailsDrawer = ({
 }: ListingDetailsDrawerProps) => {
   const { user } = useAuth();
 
-  // TODO: use the new formatter formatQuantityWithUnit()
   const unit = UNITS[listing.unit].translationShort;
   const unitPlural = UNITS[listing.unit].translationShortPlural;
   const hasOneUnit = listing.available_quantity === 1;
@@ -35,7 +34,6 @@ export const ListingDetailsDrawer = ({
       <UserCard user={listing.producer.user} />
       <Separator />
       <span className="grid grid-cols-3">
-        {/* TODO: replace the raw enum with a prettify form (using the UNITS constant and translation like in allergens) */}
         <Entry
           title={`Precio (por ${unit})`}
           value={formatMoney(listing.price_per_unit)}

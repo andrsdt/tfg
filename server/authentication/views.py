@@ -4,6 +4,9 @@ from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.mixins import DestroyModelMixin
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 
 class CsrfTokenViewSet(GenericViewSet):
@@ -20,3 +23,14 @@ class CsrfTokenViewSet(GenericViewSet):
         Retrieves the CSRF token and sets it as a cookie.
         """
         return Response()
+
+
+class DeleteUserViewSet(GenericViewSet, DestroyModelMixin):
+    """
+    A viewset for deleting the user's account.
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user

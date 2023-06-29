@@ -101,7 +101,6 @@ def delete_reminder_complete_profile_notification(receiver: User):
     ).delete()
 
 
-# TODO: implement reports
 def send_report_confirmation_notification(receiver: User, report):
     """
     Send a notification to the receiver to confirm that their report has been received

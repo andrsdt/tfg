@@ -10,16 +10,13 @@ export const createListingSchema = z.object({
     .max(2000, 'La descripción no puede tener más de 2000 caracteres')
     .nullable(),
   images: z
-    // TODO: array of files
     .array(z.any())
     .min(1, 'Introduce al menos una imagen')
     .max(10, 'No puedes introducir más de 10 imágenes'),
   allergens: z.optional(z.array(z.string())),
   features: z.optional(z.array(z.string())),
-  // TODO: validate as type enum
   unit: z.string().min(1, ' '),
   price_per_unit: z.preprocess(
-    // TODO: use the new parseMoneyString
     (v) => Number(v) * 100, // backend handles money in cents
     z
       .number()

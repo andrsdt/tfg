@@ -40,7 +40,6 @@ export const GenericListingWithUserNotificationCard = ({
         />
       </>
       <div className="flex flex-col justify-between py-1">
-        {/* TODO: break-all after line-clamp? */}
         <p className="line-clamp-2 text-lg leading-5">{children}</p>
         <p className="text-sm text-gray">
           {capitalize(dayjs(notification.updated_at).fromNow())}
