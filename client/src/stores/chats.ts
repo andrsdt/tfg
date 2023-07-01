@@ -4,7 +4,6 @@
 
 import { Message } from '@/features/chats/types/conversations';
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
 
 type ChatStore = {
   messages: Message[];
