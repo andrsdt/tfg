@@ -19,6 +19,3 @@ venv.bak/
 
 # pycache
 *.pyc
-
-# Local files
-server/files/

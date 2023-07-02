@@ -1,17 +1,19 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]
-then
-    echo "Waiting for postgres..."
-
-    while ! nc -z $SQL_HOST $SQL_PORT; do
-      sleep 0.1
-    done
-
-    echo "PostgreSQL started"
-fi
+# Wait until Postgres is ready
+while ! nc -z db 5432; do
+    sleep 1
+done
 
 python manage.py migrate
-python manage.py runserver
+
+# Populate the database if it's empty
+if [ "$(python manage.py count_users)" = "0" ]; then
+    echo "Populating database..."
+    python manage.py flush --no-input
+    python manage.py loaddata fixture.json
+fi
+
+python manage.py runserver 0.0.0.0:8000
 
 exec "$@"

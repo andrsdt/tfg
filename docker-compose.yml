@@ -6,8 +6,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile.prod
     volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+      - ./nginx/nginx-docker.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
     depends_on:
@@ -26,10 +25,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile.prod
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - static_volume:/home/app/web/static
-      - media_volume:/home/app/web/media
+    command: sh ./entrypoint.prod.sh
     expose:
       - 8000
     env_file:
@@ -42,9 +38,9 @@ services:
       dockerfile: Dockerfile.prod
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
     env_file:
       - ./db/.env
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
