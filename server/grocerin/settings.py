@@ -259,12 +259,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "files/")
-STATIC_ROOT = os.path.join(
-    os.path.dirname(BASE_DIR), config("STATIC_ROOT", default="static/")
-)  # Static bucket name
-MEDIA_URL = "media/"
-STATIC_URL = config("STATIC_URL", default="static/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "files")
+STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
+MEDIA_URL = "/media/"
+STATIC_URL = "/static/"
 
 # https://ubuntu.com/blog/django-behind-a-proxy-fixing-absolute-urls
 # Setup support for proxy headers

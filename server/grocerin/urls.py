@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import include
-from django.conf.urls.static import static
+from django.views.static import serve
 from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
@@ -33,20 +33,24 @@ debug_urlpatterns = (
     else []
 )
 
-urlpatterns = (
-    debug_urlpatterns
-    + [
-        path("admin/", admin.site.urls),
-        # Endpoints
-        path("api/v1/", include("authentication.urls")),
-        path("api/v1/", include("users.urls")),
-        path("api/v1/", include("producers.urls")),
-        path("api/v1/", include("listings.urls")),
-        path("api/v1/", include("orders.urls")),
-        path("api/v1/", include("reviews.urls")),
-        path("api/v1/", include("chats.urls")),
-        path("api/v1/", include("notifications.urls")),
-        path("api/v1/", include("reports.urls")),
+urlpatterns = debug_urlpatterns + [
+    path("admin/", admin.site.urls),
+    # Endpoints
+    path("api/v1/", include("authentication.urls")),
+    path("api/v1/", include("users.urls")),
+    path("api/v1/", include("producers.urls")),
+    path("api/v1/", include("listings.urls")),
+    path("api/v1/", include("orders.urls")),
+    path("api/v1/", include("reviews.urls")),
+    path("api/v1/", include("chats.urls")),
+    path("api/v1/", include("notifications.urls")),
+    path("api/v1/", include("reports.urls")),
+]
+
+if not settings.DEBUG:
+    urlpatterns += [
+        # Serve static files
+        path("static/<path:path>", serve, {"document_root": settings.STATIC_ROOT}),
+        # Serve media files
+        path("media/<path:path>", serve, {"document_root": settings.MEDIA_ROOT}),
     ]
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-)
