@@ -21,7 +21,7 @@ const NEXT_ROUTES = {
   GOOGLE_LOGIN: '/api/v1/auth/account/google/login/',
   FACEBOOK_LOGIN: '/api/v1/auth/account/facebook/login/',
   TWITTER_LOGIN: '/api/v1/auth/account/twitter_oauth2/login/',
-  TERMS_AND_CONDITIONS: 'grocerin.vercel.app/terms',
+  TERMS_AND_CONDITIONS: 'https://grocerin.vercel.app/terms',
   CHAT: (id: Id) => urlWithParams('/chats/[id]', { id }),
   PRODUCER_PROFILE: (id: Id) => urlWithParams('/producers/[id]', { id }),
   PRODUCER_REVIEWS: (id: Id) =>
