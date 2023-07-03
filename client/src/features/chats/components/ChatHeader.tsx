@@ -49,6 +49,7 @@ export const ChatHeader = ({ conversation }: ChatHeaderProps) => {
             width={60}
             height={60}
             className="h-14 w-14 rounded-lg object-cover"
+            unoptimized
           />
           <div className="flex flex-col">
             <b className="line-clamp-1 break-all">{listing.title}</b>
