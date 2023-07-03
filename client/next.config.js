@@ -40,4 +40,6 @@ module.exports = withPWA({
       'grocerin.ew.r.appspot.com',
     ],
   },
+
+  output: 'standalone',
 });
