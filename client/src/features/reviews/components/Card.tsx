@@ -27,6 +27,7 @@ export const ReviewCard = ({ review }: ReviewCardProps) => {
           width={80}
           height={65}
           className="aspect-[5/4] rounded-lg object-cover"
+          unoptimized
         />
       </Link>
       <div className="w-full truncate">

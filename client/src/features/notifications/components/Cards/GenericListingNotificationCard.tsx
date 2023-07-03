@@ -28,6 +28,7 @@ export const GenericListingNotificationCard = ({
         width={80}
         height={80}
         className="mr-4 h-20 w-20 rounded-xl object-cover"
+        unoptimized
       />
       <div className="flex flex-col justify-between py-1">
         <p className="line-clamp-2 text-lg leading-5">{children}</p>

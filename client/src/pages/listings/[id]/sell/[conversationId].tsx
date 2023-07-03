@@ -165,6 +165,7 @@ const MarkListingAsSoldForm = ({
                   width={250}
                   height={150}
                   className="aspect-[5/4] rounded-lg object-cover"
+                  unoptimized
                 />
               </div>
               <div className="pl-4 text-end">

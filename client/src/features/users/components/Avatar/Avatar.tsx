@@ -20,6 +20,7 @@ export const Avatar = ({
     src={src?.length > 0 ? src : '/placeholders/avatar.png'}
     alt={alt}
     className={clsx('aspect-square rounded-full object-cover', className)}
+    unoptimized
     {...props}
   />
 );

@@ -53,6 +53,7 @@ export const MutableCarousel = ({
                 alt="Imagen del producto"
                 width={150}
                 height={100}
+                unoptimized
               />
             </div>
           ))}
@@ -127,6 +128,7 @@ const CarouselWaitingForUpload = ({
     width={500}
     height={320}
     className={clsx('w-full', className)}
+    unoptimized
   />
 );
 

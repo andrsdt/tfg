@@ -41,6 +41,7 @@ export const ListingCard = ({
             alt={listing?.title}
             width={250}
             height={300}
+            unoptimized
           />
           {!listing.is_active && (
             <p className="absolute-center absolute rounded-full bg-light-red px-3 py-2 text-white opacity-80 outline outline-light-gray">

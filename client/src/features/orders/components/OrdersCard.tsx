@@ -37,6 +37,7 @@ export const OrderCard = ({
         height={60}
         className="aspect-[8/7] h-[4.5rem] w-20 rounded-lg object-cover"
         alt="Imagen del producto"
+        unoptimized
       />
       <div className="grid w-full grid-rows-2 space-y-1">
         <div className="flex justify-between text-2xl font-bold">

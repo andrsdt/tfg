@@ -86,6 +86,7 @@ const RateOrder = ({ pageProps }: RateOrderProps) => {
               alt="Foto del producto"
               width={300}
               height={240}
+              unoptimized
             />
             <h1 className="mt-2 text-center text-3xl font-bold text-black">
               {order.listing.title}
